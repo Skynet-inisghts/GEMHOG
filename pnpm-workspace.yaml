@@ -1,0 +1,7 @@
+packages:
+  - "."
+
+# unrs-resolver (an eslint-config-next dependency) ships a native binary and
+# needs its postinstall script; nothing else in the tree runs install scripts.
+allowBuilds:
+  unrs-resolver: true

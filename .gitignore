@@ -1,0 +1,14 @@
+# dependencies and builds
+node_modules/
+.next/
+out/
+.gemhog-build/
+*.tsbuildinfo
+next-env.d.ts
+
+# local environment; keys never enter the repo
+.env
+.env.local
+
+# editor and OS noise
+.DS_Store

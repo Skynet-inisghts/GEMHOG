@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [22, 24]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.15.1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm check
+
+  no-signer:
+    # gemhog is read only. This job fails the build if a write path appears
+    # anywhere the engine, the site or the CLI could reach it.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: refuse signing primitives
+        run: |
+          set -e
+          if grep -rnE 'PRIVATE_KEY|privateKeyToAccount|signTransaction|sendTransaction|writeContract|walletClient|signMessage' \
+              --include='*.ts' --include='*.tsx' --include='*.js' --include='*.mjs' lib app bin; then
+            echo "::error::a signing or write primitive reached the source tree"
+            exit 1
+          fi
+          echo "clean: no signer, no write path"
