@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.7.3 — 2026-09-12
+
+- The hero pig now digs. A 28-frame pixel loop (sniff, burrow, surface with the diamond, lose it to the dirt again) replaces the static sprite — CSS `steps()` over a sprite sheet, integer scaling only, pixels stay crisp. `prefers-reduced-motion` gets the single stone-in-mouth frame.
+- The same loop is the terminal's loader while a grade is computed, with a one-line "sniffing…" status.
+- The animation source lives in `assets/anim/` (sprite sheet, frames, the generating script).
+
 ## 0.7.2 — 2026-09-12
 
 - Load armour for the public API. Concurrent identical requests now share one chain read (a viral token means one check per instance, not a hundred), certificates cache with an age-aware TTL (a week-old grade is frozen; re-reading it every minute only burned the RPC), and per-IP token buckets answer 429 politely instead of melting.

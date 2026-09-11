@@ -52,7 +52,7 @@ export default function Home() {
               <span className="assay-gem g1" aria-hidden="true">◆</span>
               <span className="assay-gem g2" aria-hidden="true">◇</span>
               <span className="assay-gem g3" aria-hidden="true">◆</span>
-              <Image src="/sprite-sniffer.png" width={250} height={275} alt="GEMHOG pixel pig sniffing a diamond" priority />
+              <div className="gemhog-dig" role="img" aria-label="The GEMHOG pig digging through the dirt and finding a diamond, on a loop" />
             </div>
           </div>
           <div className="assay-cert" aria-label="Sample certificate shape">

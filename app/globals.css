@@ -167,6 +167,27 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 .grade-scale .gs-si { color: var(--grade-si); }
 .grade-scale .gs-i { color: var(--grade-i); }
 
+/* The dig loop: 28 frames, 104x84 native, 90 ms per frame (assets/anim).
+   Scale only with an integer --px; pixels smear under any fractional scale. */
+.gemhog-dig {
+  --px: 3;
+  width: calc(104px * var(--px));
+  height: calc(84px * var(--px));
+  background: url("/gemhog-dig-sheet.png") 0 0 / calc(2912px * var(--px)) calc(84px * var(--px)) no-repeat;
+  image-rendering: pixelated;
+  animation: gemhog-dig 2520ms steps(28) infinite;
+}
+@keyframes gemhog-dig {
+  to { background-position: calc(-2912px * var(--px)) 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gemhog-dig { animation: none; background-position: calc(-1976px * var(--px)) 0; } /* frame 19: stone in the mouth */
+}
+.term-sniffing { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 26px 0; }
+.term-sniffing .gemhog-dig { --px: 2; }
+.term-sniffing p { margin: 0; color: var(--muted); font-size: 13.5px; }
+.term-sniffing b { color: var(--accent); font-weight: 400; }
+
 /* Statement band */
 .statement {
   min-height: 52px;
@@ -536,7 +557,7 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
   .hero-copy { padding: 30px 16px 20px; }
   .hero-actions a { width: 100%; justify-content: center; }
   .assay { padding: 14px; }
-  .assay-pig img { width: 190px; height: auto; }
+  .assay-pig .gemhog-dig { --px: 2; }
   .surfaces, .pulse, .token-rail { border-left: 0; border-right: 0; }
   .pulse small { margin-left: 0; }
   .site-footer { flex-direction: column; align-items: flex-start; }

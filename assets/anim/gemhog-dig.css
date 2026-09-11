@@ -1,0 +1,17 @@
+/* Gemhog hero loop: 28 frames, 104x84 native, 90 ms per frame.
+   Scale with --px (integer), stays crisp thanks to image-rendering: pixelated. */
+.gemhog-dig {
+  --px: 8;
+  width: calc(104px * var(--px));
+  height: calc(84px * var(--px));
+  background: url("gemhog-dig-sheet.png") 0 0 / calc(2912px * var(--px)) calc(84px * var(--px)) no-repeat;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  animation: gemhog-dig 2520ms steps(28) infinite;
+}
+@keyframes gemhog-dig {
+  to { background-position: calc(-2912px * var(--px)) 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gemhog-dig { animation: none; background-position: calc(-1976px * var(--px)) 0; }  /* frame 19: stone in the mouth */
+}

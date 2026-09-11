@@ -166,7 +166,10 @@ export default function TerminalClient() {
           )}
 
           {result.kind === "loading" && (
-            <div className="term-empty"><b className="term-blink">&gt;</b><p>reading launch, cohort, transfers, holders and escrow…</p></div>
+            <div className="term-sniffing">
+              <div className="gemhog-dig" role="img" aria-label="The GEMHOG pig digging while the grade is computed" />
+              <p><b>sniffing…</b> reading launch, cohort, transfers, holders and escrow</p>
+            </div>
           )}
 
           {result.kind === "error" && <div className="term-error">{result.message}</div>}
