@@ -51,19 +51,16 @@ async function searchDexScreener(ticker: string): Promise<ResolveCandidate[]> {
 }
 
 async function searchBlockscout(ticker: string): Promise<ResolveCandidate[]> {
-  const key = process.env.BLOCKSCOUT_API_KEY?.trim();
-  if (!key) return [];
+  const { blockscoutFetch, blockscoutKey } = await import("./blockscout.js");
+  if (!blockscoutKey()) return [];
   try {
-    const res = await fetch(`${SOURCES.blockscout}/api/v2/search?q=${encodeURIComponent(ticker)}&apikey=${key}`, {
-      headers: { accept: "application/json", "user-agent": "gemhog/0.2" },
-      signal: AbortSignal.timeout(12_000),
-    });
-    const data = (await res.json()) as { items?: { type: string; address?: string; symbol?: string; name?: string }[] };
+    const data = (await blockscoutFetch(`/api/v2/search?q=${encodeURIComponent(ticker)}`)) as { items?: { type: string; address?: string; address_hash?: string; symbol?: string; name?: string }[] };
     const out: ResolveCandidate[] = [];
     for (const item of data.items ?? []) {
-      if (item.type !== "token" || !item.address) continue;
+      const raw = item.address_hash ?? item.address;
+      if (item.type !== "token" || !raw) continue;
       if ((item.symbol ?? "").toUpperCase() !== ticker.toUpperCase()) continue;
-      out.push({ token: getAddress(item.address), symbol: item.symbol ?? ticker, name: item.name ?? "" });
+      out.push({ token: getAddress(raw), symbol: item.symbol ?? ticker, name: item.name ?? "" });
     }
     return out;
   } catch {

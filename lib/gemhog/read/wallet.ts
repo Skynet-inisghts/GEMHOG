@@ -1,6 +1,7 @@
 import { getAddress, type Address } from "viem";
 import { erc20Abi, factoryAbi } from "../abi/pons.js";
-import { ADDR, publicClient, SOURCES } from "../chain.js";
+import { ADDR, publicClient } from "../chain.js";
+import { blockscoutFetch, BlockscoutError } from "../blockscout.js";
 
 /**
  * Every ERC-20 a wallet holds, narrowed to tokens the pons factory knows.
@@ -33,21 +34,20 @@ interface BlockscoutTokenItem {
 }
 
 async function fetchWalletErc20(wallet: Address): Promise<{ address: Address; symbol: string; name: string; decimals: number; balance: bigint }[]> {
-  const key = process.env.BLOCKSCOUT_API_KEY?.trim();
   const out: { address: Address; symbol: string; name: string; decimals: number; balance: bigint }[] = [];
   let params = "type=ERC-20";
   for (let page = 0; page < 4; page++) {
-    const url = `${SOURCES.blockscout}/api/v2/addresses/${wallet}/tokens?${params}${key ? `&apikey=${key}` : ""}`;
-    const res = await fetch(url, { headers: { accept: "application/json", "user-agent": "gemhog/0.3" }, signal: AbortSignal.timeout(15_000) });
-    const text = await res.text();
-    if (res.status === 403 && /just a moment|cloudflare|challenge/i.test(text)) {
-      throw new WalletListError(
-        "Blockscout answers this network with a bot challenge; set BLOCKSCOUT_API_KEY (free at dev.blockscout.com) or run from another network",
-        "challenge",
-      );
+    let data: { items?: BlockscoutTokenItem[]; next_page_params?: Record<string, string | number> | null };
+    try {
+      data = (await blockscoutFetch(`/api/v2/addresses/${wallet}/tokens?${params}`)) as typeof data;
+    } catch (error) {
+      if (error instanceof BlockscoutError) {
+        // A rate-limited later page still returns what the earlier pages found.
+        if (error.reason === "rate-limit" && out.length) break;
+        throw new WalletListError(error.message, error.reason === "challenge" ? "challenge" : "http");
+      }
+      throw error;
     }
-    if (!res.ok) throw new WalletListError(`Blockscout returned HTTP ${res.status}`, "http");
-    const data = JSON.parse(text) as { items?: BlockscoutTokenItem[]; next_page_params?: Record<string, string | number> | null };
     for (const item of data.items ?? []) {
       const raw = item.token.address_hash ?? item.token.address;
       if (!raw || item.token.type !== "ERC-20" || !item.value || item.value === "0") continue;

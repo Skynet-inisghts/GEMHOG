@@ -56,7 +56,7 @@ The page lists every pons token the address holds with its balance and share of 
 pnpm gemhog holders <PUBLIC_WALLET>
 ```
 
-Wallet listings come from the Blockscout API. On networks where Blockscout fronts its API with a bot challenge, set a free `BLOCKSCOUT_API_KEY` from dev.blockscout.com in `.env`; grading itself never needs it.
+Wallet listings come from the Blockscout API, which requires a key: get **your own** free one at [dev.blockscout.com](https://dev.blockscout.com) (Get Started for Free, then create an API key) and put it in `.env` as `BLOCKSCOUT_API_KEY`. Keys are personal and rate-limited (~5 requests per second on the free plan) — gemhog spaces its Blockscout requests to stay under that, and never ships anyone's key in the repository. Grading itself never needs the key.
 
 ## Start in one minute
 

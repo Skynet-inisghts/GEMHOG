@@ -53,20 +53,20 @@ async function probeEndpoint(url: string): Promise<{ ok: boolean; detail: string
 
 async function probeJson(url: string, accept: (data: unknown) => boolean, detail: (data: unknown) => string): Promise<{ ok: boolean; detail: string }> {
   const res = await fetch(url, { headers: { accept: "application/json", "user-agent": "gemhog/0.1" }, signal: AbortSignal.timeout(12_000) });
-  const text = await res.text();
-  if (res.status === 403 && /just a moment|cloudflare|challenge/i.test(text)) {
-    // The hosted Blockscout fronts its API with a browser challenge on some
-    // networks. A free key from dev.blockscout.com passes it; so does another IP.
-    return { ok: false, detail: "Cloudflare bot challenge on this network; set BLOCKSCOUT_API_KEY (free at dev.blockscout.com) or try another IP" };
-  }
-  const data: unknown = JSON.parse(text);
+  const data: unknown = JSON.parse(await res.text());
   return { ok: res.ok && accept(data), detail: detail(data) };
 }
 
-/** Hosted Blockscout accepts a free key as a query parameter; without one some networks are challenged. */
-function blockscoutUrl(path: string): string {
-  const key = process.env.BLOCKSCOUT_API_KEY?.trim();
-  return `${SOURCES.blockscout}${path}${key ? `${path.includes("?") ? "&" : "?"}apikey=${key}` : ""}`;
+/** Blockscout goes through its own gate: x-api-key auth, 5 req/s spacing, challenge detection. */
+async function probeBlockscout(): Promise<{ ok: boolean; detail: string }> {
+  const { blockscoutFetch, blockscoutKey } = await import("./blockscout.js");
+  try {
+    const data = (await blockscoutFetch(`/api/v2/tokens/${EXAMPLE_TOKEN}`)) as { symbol?: string };
+    const keyNote = blockscoutKey() ? " (keyed)" : "";
+    return { ok: typeof data.symbol === "string", detail: `knows $${data.symbol ?? "?"}${keyNote}` };
+  } catch (e) {
+    return { ok: false, detail: (e as Error).message.slice(0, 120) };
+  }
 }
 
 /**
@@ -120,7 +120,7 @@ export async function runDoctor(): Promise<DoctorReport> {
     Promise.all(endpoints.map((e) => timed(`rpc ${e.label}${e.logs ? " (logs)" : ""}`, () => probeEndpoint(e.url)))),
     probeFactory().catch((e: Error) => [{ name: "pons factory", ok: false, latencyMs: 0, detail: e.message.split("\n")[0].slice(0, 120) }]),
     timed("pons api", () => probeJson(`${SOURCES.ponsApi}/health`, (d) => (d as { ok?: boolean }).ok === true, () => "health ok")),
-    timed("blockscout", () => probeJson(blockscoutUrl(`/api/v2/tokens/${EXAMPLE_TOKEN}`), (d) => typeof (d as { symbol?: string }).symbol === "string", (d) => `knows $${(d as { symbol?: string }).symbol ?? "?"}`)),
+    timed("blockscout", () => probeBlockscout()),
     timed("dexscreener", () => probeJson(`${SOURCES.dexscreener}/latest/dex/tokens/${EXAMPLE_TOKEN}`, (d) => Array.isArray((d as { pairs?: unknown }).pairs), (d) => `${((d as { pairs?: unknown[] }).pairs ?? []).length} pairs for the example token`)),
   ]);
   const checks = [...endpointChecks, ...factoryChecks, ponsApi, blockscout, dexscreener];
