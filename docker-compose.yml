@@ -1,0 +1,35 @@
+# The two-process pair for running the bot anywhere: gemhog serve (the
+# engine's local JSON API) and the aiogram bot next to it. The bot needs
+# TELEGRAM_BOT_TOKEN in the environment; nothing else is required.
+services:
+  serve:
+    image: node:22-slim
+    working_dir: /app
+    volumes:
+      - .:/app
+      - gemhog-state:/root/.gemhog
+    command: sh -c "corepack enable && pnpm install --frozen-lockfile && pnpm build:cli && node bin/gemhog.mjs serve --port 4664"
+    environment:
+      - RPC_URL=${RPC_URL:-}
+      - BLOCKSCOUT_API_KEY=${BLOCKSCOUT_API_KEY:-}
+    network_mode: host
+
+  bot:
+    image: python:3.11-slim
+    working_dir: /app/bot
+    volumes:
+      - .:/app
+      - bot-state:/state
+    command: sh -c "pip install -r requirements.txt && python main.py"
+    environment:
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - GEMHOG_SERVE_URL=http://127.0.0.1:4664
+      - GEMHOG_BOT_DB=/state/state.db
+      - GEMHOG_SITE_URL=${GEMHOG_SITE_URL:-}
+    network_mode: host
+    depends_on:
+      - serve
+
+volumes:
+  gemhog-state:
+  bot-state:

@@ -48,7 +48,7 @@ const program = new Command();
 program
   .name("gemhog")
   .description("Diamond-hands terminal for Pons V2 tokens on Robinhood Chain. Read only: no keys, no signing, no transactions.")
-  .version("0.4.0");
+  .version("0.5.0");
 
 program
   .command("doctor")
@@ -137,7 +137,7 @@ program
     const { loadEnv } = await engine("env");
     loadEnv();
     const { runHunt, renderHunt, gradeAtLeast } = await engine("hunt");
-    const { saveHunt } = await engine("state");
+    const { saveHunt, appendAlert } = await engine("state");
     const window = await parseWindow(opts.window);
     const progress = opts.format === "text" && !opts.output ? (msg) => process.stderr.write(msg + "\n") : undefined;
     const huntOptions = {
@@ -172,6 +172,7 @@ program
           known.set(key, row.score);
           if (gradeAtLeast(row.grade, "VS1") && !alerted.has(key)) {
             alerted.add(key);
+            appendAlert({ at: new Date().toISOString(), grade: row.grade, score: row.score, symbol: row.symbol, token: row.token });
             if (alertsConfigured()) await sendAlert(`GEMHOG ${row.grade} ${row.score}/100 $${row.symbol}\n${row.token}`);
           }
         }
@@ -240,6 +241,19 @@ program
     result = { ...result, rows: result.rows.slice(0, 10) };
     const text = opts.format === "json" ? JSON.stringify(result, null, 2) : renderHunt(result, opts.format === "markdown");
     await deliver(text, opts.output);
+  });
+
+program
+  .command("serve")
+  .description("local JSON API for the Telegram bot: /check/:token /top /holders/:wallet /alerts?since= /health; binds to 127.0.0.1 only")
+  .option("--port <port>", "port to listen on", "4664")
+  .action(async (opts) => {
+    const { loadEnv } = await engine("env");
+    loadEnv();
+    const { startServe } = await engine("serve");
+    const { port } = await startServe(Number(opts.port) || 4664);
+    process.stderr.write(`gemhog serve · http://127.0.0.1:${port} · routes: /check/:token /top /holders/:wallet /alerts?since= /health · ctrl-c to stop\n`);
+    await new Promise(() => {});
   });
 
 program

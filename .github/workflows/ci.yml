@@ -25,6 +25,16 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm check
 
+  bot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r bot/requirements-dev.txt
+      - run: cd bot && pytest -q
+
   no-signer:
     # gemhog is read only. This job fails the build if a write path appears
     # anywhere the engine, the site or the CLI could reach it.

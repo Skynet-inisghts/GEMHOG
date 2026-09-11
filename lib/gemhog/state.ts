@@ -28,3 +28,40 @@ export function loadHunt(): HuntResult | null {
 }
 
 export const huntStatePath = (): string => file;
+
+/**
+ * Alerts from hunt --follow: append-only log of VS1+ findings, read back by
+ * `gemhog serve` for the bot's /alerts subscription. Capped so the file never
+ * grows past a day of digging.
+ */
+
+export interface AlertEntry {
+  at: string;
+  grade: string;
+  score: number;
+  symbol: string;
+  token: string;
+}
+
+const alertsFile = join(dir, "alerts.json");
+const ALERTS_CAP = 500;
+
+export function appendAlert(entry: AlertEntry): void {
+  try {
+    mkdirSync(dir, { recursive: true });
+    const list = loadAlerts();
+    list.push(entry);
+    writeFileSync(alertsFile, JSON.stringify(list.slice(-ALERTS_CAP), null, 1));
+  } catch { /* alerts are a convenience; a failed append never fails the hunt */ }
+}
+
+export function loadAlerts(sinceIso?: string): AlertEntry[] {
+  try {
+    const list = JSON.parse(readFileSync(alertsFile, "utf8")) as AlertEntry[];
+    if (!sinceIso) return list;
+    const since = Date.parse(sinceIso);
+    return list.filter((a) => Date.parse(a.at) > since);
+  } catch {
+    return [];
+  }
+}

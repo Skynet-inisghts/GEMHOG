@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.5.0 — 2026-09-11
+
+- `gemhog serve`: the engine as a local JSON API for the bot — `/check/:token`, `/top`, `/holders/:wallet`, `/alerts?since=`, `/health` — bound to 127.0.0.1 only, by design.
+- The Telegram bot (`bot/`, Python 3.11, aiogram 3): `/check` (a bare pasted address works too), `/top` (the list is allowed here — this is the owner's bot; the public API still returns counters only), `/watch` with 15-minute re-grades and change messages, `/alerts on|off` fed by `hunt --follow`. English, no emoji, except one diamond before VVS2 and better. Not one line of grading logic.
+- `hunt --follow` now appends VS1+ findings to `~/.gemhog/alerts.json`, which serve exposes for the bot; Telegram delivery stays env-gated as before.
+- SQLite bot state (watches, subscriptions, sent alerts) that survives restarts without double-sending.
+- `docker-compose.yml` with the serve + bot pair; `docs/BOT.md` with the full contract.
+- Tests: pytest for formatting and for the API client against a mocked serve; `test/serve.test.mjs` for the serve contract's offline surface; a python job in CI.
+
 ## 0.4.0 — 2026-09-11
 
 - `gemhog hunt`: the flagship. Indexes every launch in the window (6,000+ over 6h), enriches each with three multicall reads, and grades funded candidates best-funded first inside a time budget — 76s for a full 6h window on the public RPC, no 429 crashes.
