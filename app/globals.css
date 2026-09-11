@@ -150,6 +150,10 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 .assay-cert .cert-grade b { font-family: var(--font-display); font-weight: 400; font-size: 30px; color: var(--grade-vvs); letter-spacing: 0.04em; }
 .assay-cert .cert-grade span { font-size: 15px; color: #efe9ee; }
 .assay-cert .cert-note { color: var(--faint); font-size: 11px; }
+.cert-label { margin-bottom: 8px; color: var(--faint); font-size: 11px; letter-spacing: 0.05em; }
+.grade-scale-wrap { display: flex; flex-direction: column; }
+.grade-scale-ends { display: flex; justify-content: space-between; gap: 12px; margin-top: 7px; color: var(--faint); font-size: 10.5px; }
+.grade-scale-ends span:first-child { color: var(--accent-deep); }
 .grade-scale { display: flex; flex-wrap: wrap; gap: 6px; }
 .grade-scale i {
   padding: 4px 7px;

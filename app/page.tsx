@@ -56,16 +56,31 @@ export default function Home() {
             </div>
           </div>
           <div className="assay-cert" aria-label="Sample certificate shape">
+            <div className="cert-label">what a certificate looks like</div>
             <div className="cert-grade"><b>VVS1</b><span>87 / 100</span></div>
-            <div>cut 34/40 · clarity 16/20 · color 17/20 · carat 20/20</div>
+            <div>cut 34/40 (retention) · clarity 16/20 (spread) · color 17/20 (dev) · carat 20/20 (weight)</div>
             <div>early cohort 142 wallets · still holding 84% at 1h</div>
             <div className="cert-note">sample numbers · run a real check in the terminal</div>
           </div>
-          <div className="grade-scale" aria-label="The clarity scale from FL to I3">
-            <i className="gs-vvs">FL</i><i className="gs-vvs">IF</i><i className="gs-vvs">VVS1</i><i className="gs-vvs">VVS2</i>
-            <i className="gs-vs">VS1</i><i className="gs-vs">VS2</i>
-            <i className="gs-si">SI1</i><i className="gs-si">SI2</i>
-            <i className="gs-i">I1</i><i className="gs-i">I2</i><i className="gs-i">I3</i>
+          <div className="grade-scale-wrap">
+            <div className="cert-label">every token lands on the diamond clarity scale</div>
+            <div className="grade-scale" aria-label="The clarity scale from FL to I3">
+              <i className="gs-vvs" title="flawless: the early buyers hold everything">FL</i>
+              <i className="gs-vvs" title="internally flawless">IF</i>
+              <i className="gs-vvs" title="very very slightly included">VVS1</i>
+              <i className="gs-vvs" title="very very slightly included">VVS2</i>
+              <i className="gs-vs" title="very slightly included">VS1</i>
+              <i className="gs-vs" title="very slightly included">VS2</i>
+              <i className="gs-si" title="slightly included: the cohort is thinning">SI1</i>
+              <i className="gs-si" title="slightly included: the cohort is thinning">SI2</i>
+              <i className="gs-i" title="included: the early buyers are gone">I1</i>
+              <i className="gs-i" title="included: the early buyers are gone">I2</i>
+              <i className="gs-i" title="included: everyone left">I3</i>
+            </div>
+            <div className="grade-scale-ends">
+              <span>diamond hands, everyone stayed</span>
+              <span>dumped, everyone left</span>
+            </div>
           </div>
         </div>
       </section>
