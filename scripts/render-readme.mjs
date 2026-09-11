@@ -291,6 +291,79 @@ ${lines.join("\n")}`;
   await writeFile(`${outDir}json-export.svg`, windowFrame({ width, height, title: "gemhog / certificate export", tag: "SYNTHETIC DEMO / JSON EXCERPT", body }) + "\n");
 }
 
+/* --------------------------------------------------------- terminal desk */
+
+/**
+ * A dense terminal-style study: 24 synthetic cohorts and their retention
+ * through the checkpoints, graded by the real formulas. Documentation
+ * artwork built from the engine's math, not a live feed and not a TUI mode.
+ */
+async function renderTerminalDesk() {
+  const { cutScore, clarityScore, colorScore, caratScore } = await import("../.gemhog-build/grade/components.js");
+  const { gradeFor, gradeTone } = await import("../.gemhog-build/grade/grade.js");
+
+  // A fixed linear-congruential seed keeps the artwork reproducible.
+  let s = 20260911;
+  const rand = () => (s = (s * 48271) % 2147483647) / 2147483647;
+  const rows = [];
+  for (let i = 0; i < 24; i++) {
+    const start = 0.55 + rand() * 0.45;
+    const decay = 0.55 + rand() * 0.43;
+    const held = {};
+    let value = start;
+    for (const label of ["5m", "15m", "1h", "6h", "24h", "7d"]) {
+      held[label] = Math.max(0, Math.min(1, value));
+      value *= decay;
+    }
+    const cohort = 12 + Math.floor(rand() * 220);
+    const top10 = 6 + rand() * 40;
+    const devSells = rand() < 0.4 ? Math.ceil(rand() * 2) : 0;
+    const cut = cutScore({ held, halfLife: null, allReached: true });
+    const clarity = clarityScore(top10, 0);
+    const color = colorScore({ devSells, feeClaims24h: 0, devBoughtPct: rand() * 10 });
+    const carat = caratScore({ holders: cohort * 3, cohortQuoteEth: rand() * 8, top3OfCohortPct: 20 + rand() * 40 });
+    const score = cut + clarity + color + carat;
+    rows.push({ id: i + 1, cohort, held, score, grade: gradeFor(score) });
+  }
+
+  const toneColor = { vvs: C.accent, vs: "#ffffff", si: "#8d8d8d", i: "#5a5a5a" };
+  const left = 32;
+  let y = 122;
+  const lines = [];
+  lines.push(lineToSvg([seg(pad2("ID", 4), C.faint), seg(pad2("COHORT", 8), C.faint), seg("RETENTION 5m THROUGH 7d", C.faint), seg(" ".repeat(24), C.faint), seg(pad2("SCORE", 7), C.faint), seg("GRADE", C.faint)], left, y));
+  y += LH * 0.6;
+  lines.push(`<line x1="${left}" y1="${y}" x2="1000" y2="${y}" stroke="${C.line}"/>`);
+  y += LH * 0.9;
+  const barX = left + 12 * CW;
+  const cellW = 60;
+  for (const row of rows) {
+    lines.push(lineToSvg([seg(pad2(String(row.id).padStart(2, "0"), 4), C.faint), seg(pad2(String(row.cohort), 8), C.text)], left, y));
+    let x = barX;
+    for (const label of ["5m", "15m", "1h", "6h", "24h", "7d"]) {
+      const kept = row.held[label];
+      lines.push(`<rect x="${x}" y="${y - 11}" width="${cellW - 6}" height="12" fill="${C.accentDark}" opacity="0.3"/>`);
+      lines.push(`<rect x="${x}" y="${y - 11}" width="${Math.max(1, (cellW - 6) * kept)}" height="12" fill="${row.grade.startsWith("I") ? "#5a5a5a" : C.accent}"/>`);
+      x += cellW;
+    }
+    const tone = toneColor[gradeTone(row.grade)] ?? C.muted;
+    lines.push(lineToSvg([seg(String(row.score).padStart(5, " "), C.text), seg("  " + row.grade, tone, true)], x + 10, y));
+    y += 20;
+  }
+  y += LH;
+  lines.push(`<text x="${left}" y="${y}" font-family="${FONT}" font-size="12" fill="${C.faint}" xml:space="preserve">24 synthetic cohorts graded by the real formulas · documentation artwork, not a live feed · reproduce: pnpm render:readme</text>`);
+
+  const width = 1080;
+  const height = Math.ceil(y + 28);
+  const body = `
+${wordmark("GEMHOG", left, 62, 4, C.accent, C.accentDark)}
+<text x="${left + 200}" y="76" font-family="${FONT}" font-size="13" fill="${C.muted}" xml:space="preserve">retention desk / six checkpoints per cohort</text>
+<text x="${left + 200}" y="94" font-family="${FONT}" font-size="13" fill="${C.text}" xml:space="preserve">Same launch. Six checkpoints. The hands decide the grade.</text>
+${lines.join("\n")}`;
+  await writeFile(`${outDir}terminal-desk.svg`, windowFrame({ width, height, title: "gemhog / retention study", tag: "OFFLINE STUDY / SYNTHETIC DATA", body }) + "\n");
+}
+
+const pad2 = (str, n) => (str.length >= n ? str : str + " ".repeat(n - str.length));
+
 /* ------------------------------------------------------------------- main */
 
 await mkdir(outDir, { recursive: true });
@@ -298,4 +371,5 @@ const doctor = await renderDoctor();
 await renderCertificate();
 await renderJsonExport();
 const live = await renderLiveCertificate();
-console.log(`rendered assets/readme: doctor.svg (${doctor.checks.filter((c) => c.ok).length}/${doctor.checks.length} ok), certificate-snapshot.svg (live ${live.grade}), certificate-demo.svg, json-export.svg`);
+await renderTerminalDesk();
+console.log(`rendered assets/readme: doctor.svg (${doctor.checks.filter((c) => c.ok).length}/${doctor.checks.length} ok), certificate-snapshot.svg (live ${live.grade}), certificate-demo.svg, json-export.svg, terminal-desk.svg`);

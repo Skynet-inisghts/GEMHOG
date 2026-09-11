@@ -35,7 +35,12 @@ export interface LaunchInfo {
   exemptions: Address[];
 }
 
-export async function readLaunch(token: Address): Promise<LaunchInfo | null> {
+export interface LaunchHint {
+  launchBlock: number;
+  txHash: Hex;
+}
+
+export async function readLaunch(token: Address, hint?: LaunchHint): Promise<LaunchInfo | null> {
   const record = await publicClient.readContract({
     address: ADDR.ponsFactory, abi: factoryAbi, functionName: "getLaunchedToken", args: [token],
   });
@@ -63,23 +68,31 @@ export async function readLaunch(token: Address): Promise<LaunchInfo | null> {
   const threshold = ok<bigint>(6) ?? record.graduationThreshold;
 
   // The factory indexes TokenLaunched by token, so one narrow log read around
-  // the timestamp-derived block recovers the exact launch block and tx.
-  const approx = await blockAtTime(launchedAt);
-  let launchBlock = approx;
-  let launchTxHash: Hex | null = null;
-  try {
-    const logs = await publicClient.getLogs({
-      address: ADDR.ponsFactory,
-      event: factoryAbi.find((e) => e.type === "event" && e.name === "TokenLaunched")!,
-      args: { token },
-      fromBlock: BigInt(Math.max(1, approx - 3000)),
-      toBlock: BigInt(approx + 3000),
-    });
-    if (logs[0]) {
-      launchBlock = Number(logs[0].blockNumber);
-      launchTxHash = logs[0].transactionHash;
-    }
-  } catch { /* the linear estimate stands; cohort windows are minutes wide */ }
+  // the timestamp-derived block recovers the exact launch block and tx. A
+  // caller that already indexed the launch (hunt) passes both in and skips it.
+  let launchBlock: number;
+  let launchTxHash: Hex | null;
+  if (hint) {
+    launchBlock = hint.launchBlock;
+    launchTxHash = hint.txHash;
+  } else {
+    const approx = await blockAtTime(launchedAt);
+    launchBlock = approx;
+    launchTxHash = null;
+    try {
+      const logs = await publicClient.getLogs({
+        address: ADDR.ponsFactory,
+        event: factoryAbi.find((e) => e.type === "event" && e.name === "TokenLaunched")!,
+        args: { token },
+        fromBlock: BigInt(Math.max(1, approx - 3000)),
+        toBlock: BigInt(approx + 3000),
+      });
+      if (logs[0]) {
+        launchBlock = Number(logs[0].blockNumber);
+        launchTxHash = logs[0].transactionHash;
+      }
+    } catch { /* the linear estimate stands; cohort windows are minutes wide */ }
+  }
 
   let devBuyWei = 0n;
   let devTokens = 0n;

@@ -48,7 +48,7 @@ const program = new Command();
 program
   .name("gemhog")
   .description("Diamond-hands terminal for Pons V2 tokens on Robinhood Chain. Read only: no keys, no signing, no transactions.")
-  .version("0.3.0");
+  .version("0.4.0");
 
 program
   .command("doctor")
@@ -111,6 +111,155 @@ program
       }
       throw error;
     }
+  });
+
+const parseWindow = async (raw) => {
+  const { WINDOWS } = await engine("hunt");
+  if (!WINDOWS[raw]) {
+    process.stderr.write(`gemhog: unknown window ${raw}; use one of ${Object.keys(WINDOWS).join(", ")}\n`);
+    process.exit(1);
+  }
+  return { windowSec: WINDOWS[raw], windowLabel: raw };
+};
+
+program
+  .command("hunt")
+  .description("dig through every launch in a window, grade the funded ones, keep the stones; the flagship, and it lives only in the CLI")
+  .option("--window <window>", "1h, 3h, 6h, 12h or 24h", "6h")
+  .option("--min-grade <grade>", "hide rows below this grade (e.g. VS2)")
+  .option("--top <n>", "rows to keep", "20")
+  .option("--budget <seconds>", "time budget for grading, best-funded first", "75")
+  .option("--follow", "keep digging: re-grade as checkpoints pass, print new top entries, alert VS1+ when Telegram is configured")
+  .option("--format <format>", "text, json or markdown", "text")
+  .option("--output <file>", "save the table; never overwrites an existing file")
+  .action(async (opts) => {
+    checkFormat(opts.format);
+    const { loadEnv } = await engine("env");
+    loadEnv();
+    const { runHunt, renderHunt, gradeAtLeast } = await engine("hunt");
+    const { saveHunt } = await engine("state");
+    const window = await parseWindow(opts.window);
+    const progress = opts.format === "text" && !opts.output ? (msg) => process.stderr.write(msg + "\n") : undefined;
+    const huntOptions = {
+      ...window,
+      minGrade: opts.minGrade,
+      top: Number(opts.top) || 20,
+      budgetMs: (Number(opts.budget) || 75) * 1000,
+      onProgress: progress,
+    };
+    const { result } = await runHunt(huntOptions);
+    saveHunt(result);
+    const text = opts.format === "json" ? JSON.stringify(result, null, 2) : renderHunt(result, opts.format === "markdown");
+    await deliver(text, opts.output);
+
+    if (!opts.follow) return;
+    const { alertsConfigured, sendAlert } = await engine("alerts");
+    const { short } = await engine("fmt");
+    const alerted = new Set();
+    const known = new Map(result.rows.map((r) => [r.token.toLowerCase(), r.score]));
+    process.stderr.write(`following · re-digging every 2 minutes · alerts ${alertsConfigured() ? "on" : "off (no telegram token)"} · ctrl-c to stop\n`);
+    for (;;) {
+      await new Promise((r) => setTimeout(r, 120_000));
+      try {
+        const { result: next } = await runHunt({ ...huntOptions, budgetMs: 45_000, onProgress: undefined });
+        saveHunt(next);
+        for (const row of next.rows) {
+          const key = row.token.toLowerCase();
+          const prev = known.get(key);
+          if (prev === undefined || row.score !== prev) {
+            process.stdout.write(`${new Date().toISOString().slice(11, 19)}  ${prev === undefined ? "enters top" : "re-graded"}  ${row.grade} ${row.score}  $${row.symbol}  ${short(row.token)}\n`);
+          }
+          known.set(key, row.score);
+          if (gradeAtLeast(row.grade, "VS1") && !alerted.has(key)) {
+            alerted.add(key);
+            if (alertsConfigured()) await sendAlert(`GEMHOG ${row.grade} ${row.score}/100 $${row.symbol}\n${row.token}`);
+          }
+        }
+      } catch (error) {
+        process.stderr.write(`follow cycle failed, retrying: ${String(error.message).slice(0, 80)}\n`);
+      }
+    }
+  });
+
+program
+  .command("watch")
+  .argument("<token>", "0x contract address")
+  .description("re-grade one token every 30 seconds and print only what changed")
+  .action(async (token) => {
+    const { loadEnv } = await engine("env");
+    loadEnv();
+    const { checkToken, CheckError } = await engine("check");
+    const { renderCertificate } = await engine("certificate");
+    let prev = null;
+    process.stderr.write("watching · ctrl-c to stop\n");
+    for (;;) {
+      try {
+        const report = await checkToken(token, { holdersVia: "transfers" });
+        const ts = new Date().toISOString().slice(11, 19);
+        if (!prev) {
+          process.stdout.write(renderCertificate(report) + "\n");
+        } else {
+          const changes = [];
+          if (report.grade !== prev.grade) changes.push(`grade ${prev.grade} to ${report.grade}`);
+          if (report.score !== prev.score) changes.push(`score ${prev.score} to ${report.score}`);
+          if (report.carat.holders !== prev.carat.holders) changes.push(`holders ${prev.carat.holders} to ${report.carat.holders}`);
+          if (report.color.devSells !== prev.color.devSells) changes.push(`dev sells ${prev.color.devSells} to ${report.color.devSells}`);
+          if (changes.length) process.stdout.write(`${ts}  ${changes.join(" · ")}\n`);
+        }
+        prev = report;
+      } catch (error) {
+        if (error instanceof CheckError) {
+          process.stderr.write(`gemhog: ${error.message}\n`);
+          process.exit(1);
+        }
+        process.stderr.write(`watch read failed, retrying: ${String(error.message).slice(0, 80)}\n`);
+      }
+      await new Promise((r) => setTimeout(r, 30_000));
+    }
+  });
+
+program
+  .command("top")
+  .description("the current top from the last hunt (re-digs briefly when the cache is stale); made for the bot")
+  .option("--window <window>", "window to dig when the cache is stale", "6h")
+  .option("--format <format>", "text, json or markdown", "text")
+  .option("--output <file>", "save the table; never overwrites an existing file")
+  .action(async (opts) => {
+    checkFormat(opts.format);
+    const { loadEnv } = await engine("env");
+    loadEnv();
+    const { loadHunt, saveHunt } = await engine("state");
+    const { runHunt, renderHunt } = await engine("hunt");
+    let result = loadHunt();
+    const fresh = result && Date.now() - Date.parse(result.observedAt) < 20 * 60_000;
+    if (!fresh) {
+      const window = await parseWindow(opts.window);
+      ({ result } = await runHunt({ ...window, top: 10, budgetMs: 30_000 }));
+      saveHunt(result);
+    }
+    result = { ...result, rows: result.rows.slice(0, 10) };
+    const text = opts.format === "json" ? JSON.stringify(result, null, 2) : renderHunt(result, opts.format === "markdown");
+    await deliver(text, opts.output);
+  });
+
+program
+  .command("export")
+  .description("the last hunt as CSV or JSON")
+  .option("--format <format>", "csv or json", "csv")
+  .option("--output <file>", "save the export; never overwrites an existing file")
+  .action(async (opts) => {
+    if (!["csv", "json"].includes(opts.format)) {
+      process.stderr.write("gemhog: use --format csv or json\n");
+      process.exit(1);
+    }
+    const { loadHunt, huntStatePath } = await engine("state");
+    const { huntToCsv } = await engine("hunt");
+    const result = loadHunt();
+    if (!result) {
+      process.stderr.write(`gemhog: no hunt to export yet; run gemhog hunt first (state lives at ${huntStatePath()})\n`);
+      process.exit(1);
+    }
+    await deliver(opts.format === "json" ? JSON.stringify(result, null, 2) : huntToCsv(result), opts.output);
   });
 
 program

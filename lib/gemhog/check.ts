@@ -16,11 +16,18 @@ import type { CertificateReport, GradeSource } from "./grade/types.js";
 
 export class CheckError extends Error {}
 
-export async function checkToken(token: Address): Promise<CertificateReport> {
+export interface CheckOptions {
+  /** Launch block and tx already known from an index scan (hunt). */
+  hint?: import("./read/launches.js").LaunchHint;
+  /** "transfers" skips the Pons API holder pages: hunt grades dozens of tokens and the endpoint allows 8 req/min. */
+  holdersVia?: "auto" | "transfers";
+}
+
+export async function checkToken(token: Address, options: CheckOptions = {}): Promise<CertificateReport> {
   const started = Date.now();
   const callsBefore = rpcCallCount();
 
-  const launch = await readLaunch(token);
+  const launch = await readLaunch(token, options.hint);
   if (!launch) throw new CheckError(`${token} was not launched through the pons v2 factory`);
 
   const clock = await makeClock(launch.launchBlock, launch.launchedAt);
@@ -39,9 +46,10 @@ export async function checkToken(token: Address): Promise<CertificateReport> {
     readEscrowActivity(launch.creatorFeeRecipient, launch.launchBlock, toBlock),
   ]);
 
-  const holders =
-    (await readHoldersFromPonsApi(launch.token, launch.curve, launch.totalSupply)) ??
-    holdersFromTransfers(transfers.events, launch.curve, launch.totalSupply, transfers.complete);
+  const holders = options.holdersVia === "transfers"
+    ? holdersFromTransfers(transfers.events, launch.curve, launch.totalSupply, transfers.complete)
+    : (await readHoldersFromPonsApi(launch.token, launch.curve, launch.totalSupply)) ??
+      holdersFromTransfers(transfers.events, launch.curve, launch.totalSupply, transfers.complete);
 
   const source: GradeSource = {
     launch: { ...launch },

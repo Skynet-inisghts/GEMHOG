@@ -1,0 +1,36 @@
+name: pulse
+
+on:
+  schedule:
+    - cron: "*/20 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  pulse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.15.1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build:cli
+      - run: node scripts/pulse.mjs
+      - name: commit the snapshot when it changed
+        run: |
+          if git diff --quiet assets/pulse.json; then
+            echo "pulse unchanged"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/pulse.json
+          git commit -m "pulse: refresh grade counters [skip ci]"
+          git push

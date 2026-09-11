@@ -33,6 +33,9 @@ A styled documentation view of an actual `check` result against the live chain. 
 | Browser terminal | `/terminal`: ticker or CA in, certificate out, offline demo, share as image |
 | API | `POST /api/grade` (same JSON as the CLI), `GET /api/health` |
 | Holder Check | `/holders` and `gemhog holders`: every pons token in a public wallet, graded |
+| hunt | The whole window graded, best-funded first, with `--follow`; lives only in the CLI |
+| watch, top, export | Re-grade one token on a loop; the cached top 10; the last hunt as CSV/JSON |
+| Pulse | `GET /api/top` and `/api/pulse`: grade counters, refreshed every 20 minutes, never the list |
 | Offline walkthrough | Synthetic certificate, labelled DEMO on every line, no provider requests |
 | Exports | JSON and Markdown for every command; exports refuse to overwrite existing files |
 | Verification | Engine fixtures with hand-derived expected grades, CLI tests, Node 22/24 CI, `no-signer` job |
@@ -112,6 +115,26 @@ pnpm gemhog check 0x… --format json --output certificate.json
 The certificate near the top of this README shows a captured run of the first command. A ticker fans out to the search sources and every candidate is verified against the pons factory; an ambiguous ticker returns the whole cluster and asks for the contract address. Bonding-curve tokens that never graduated are searchable by ticker only with a free `BLOCKSCOUT_API_KEY` in `.env`; the contract address always works.
 
 How the grade is computed — the cohort, the checkpoints and all four component formulas — is written down in [docs/METHODOLOGY.md](docs/METHODOLOGY.md).
+
+### Same launch. Six checkpoints.
+
+![GEMHOG retention desk: 24 synthetic cohorts with retention bars across six checkpoints, graded by the real formulas](assets/readme/terminal-desk.svg)
+
+A static terminal-style study: 24 synthetic cohorts run through the real cut/clarity/color/carat formulas. It is documentation artwork built from the engine's math, not a live feed and not an additional CLI mode.
+
+## The hunt lives only in the CLI
+
+```bash
+pnpm gemhog hunt --window 6h
+pnpm gemhog hunt --window 6h --min-grade VS2 --follow
+pnpm gemhog top
+pnpm gemhog export --format csv --output stones.csv
+pnpm gemhog watch 0x…
+```
+
+`hunt` indexes every launch in the window (thousands), reads three curve values per launch through multicall3, and spends its time budget grading the funded candidates, best-funded first. `--follow` keeps digging: it re-grades as checkpoints pass, prints tokens entering the top, and sends a Telegram alert at VS1 or better when `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` are set in `.env` — with both empty, nothing is ever posted anywhere.
+
+The site never gets the list. `GET /api/top` and `GET /api/pulse` return counters and the grade distribution, refreshed every 20 minutes by the pulse workflow; the ranked table exists only in the CLI, on purpose.
 
 ## API and development
 

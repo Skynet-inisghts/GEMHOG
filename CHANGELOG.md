@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.4.0 — 2026-09-11
+
+- `gemhog hunt`: the flagship. Indexes every launch in the window (6,000+ over 6h), enriches each with three multicall reads, and grades funded candidates best-funded first inside a time budget — 76s for a full 6h window on the public RPC, no 429 crashes.
+- `hunt --follow`: re-digs every two minutes, prints tokens entering the top, and alerts VS1+ over Telegram when a token and chat id are configured; with both empty nothing is ever posted.
+- `gemhog watch <token>`: one token re-graded every 30 seconds, printing only what changed.
+- `gemhog top` and `gemhog export`: the cached last hunt as a ten-row table or CSV/JSON, state in `~/.gemhog/`, never in the repository.
+- `GET /api/top` and `GET /api/pulse`: counters and the grade distribution only — the ranked list stays in the CLI by design. `pulse.yml` refreshes `assets/pulse.json` every 20 minutes and commits only on change.
+- The landing pulse block now shows real numbers from the latest snapshot.
+- `terminal-desk.svg`: the retention-desk study rendered from the real formulas.
+
 ## 0.3.0 — 2026-09-11
 
 - Holder Check: `/holders` with connect-or-paste entry. Connecting asks an injected wallet for `eth_requestAccounts` and nothing else; a pasted public address works without any wallet.

@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { PROJECT_TOKEN, projectTokenLabel } from "@/lib/gemhog/project-token";
+import pulse from "@/assets/pulse.json";
+import pkg from "@/package.json";
 
 const REPO = "https://github.com/Skynet-inisghts/GEMHOG";
 
@@ -23,7 +25,7 @@ export default function Home() {
 
       <section className="hero">
         <div className="hero-copy">
-          <p className="hero-kicker"><b>v0.1</b> read-only terminal · robinhood chain 4663</p>
+          <p className="hero-kicker"><b>v{pkg.version.split(".").slice(0, 2).join(".")}</b> read-only terminal · robinhood chain 4663</p>
           <h1>GEMHOG</h1>
           <p className="hero-tagline">Grade the hands before the bag.</p>
           <p className="hero-deck">
@@ -113,11 +115,22 @@ export default function Home() {
 
       <section className="pulse">
         <span className="pulse-dot" aria-hidden="true" />
-        <span>
-          Launches graded <b>VS2 or better</b> in the last 6 hours: the live counter arrives with
-          v0.4. The list itself lives in the CLI.
-        </span>
-        <small>pulse refreshes every 20 minutes once live</small>
+        {pulse.generatedAt ? (
+          <span>
+            <b>{pulse.vs2plus}</b> of {pulse.graded} graded launches reached <b>VS2 or better</b> in
+            the last {pulse.window} ({pulse.launches} launched). The list lives in the CLI.
+          </span>
+        ) : (
+          <span>
+            Launches graded <b>VS2 or better</b> in the last 6 hours: the counter warms up with the
+            first pulse run. The list lives in the CLI.
+          </span>
+        )}
+        <small>
+          {pulse.generatedAt
+            ? `pulse ${pulse.generatedAt.slice(0, 16).replace("T", " ")} UTC · refreshes every 20 minutes`
+            : "pulse refreshes every 20 minutes"}
+        </small>
       </section>
 
       <section className="token-rail">
@@ -131,7 +144,7 @@ export default function Home() {
       </section>
 
       <footer className="site-footer">
-        <span>GEMHOG v0.1.0 · MIT</span>
+        <span>GEMHOG v{pkg.version} · MIT</span>
         <p>
           A grade is a measurement of past holder behaviour. It is not a prediction and not a
           proof that a token is safe.

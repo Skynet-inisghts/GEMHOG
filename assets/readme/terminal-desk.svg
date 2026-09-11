@@ -1,0 +1,353 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="685" viewBox="0 0 1080 685" role="img">
+<rect width="1080" height="685" rx="8" fill="#050105"/>
+<rect x="0.5" y="0.5" width="1079" height="684" rx="8" fill="none" stroke="#57284a"/>
+<line x1="0" y1="44" x2="1080" y2="44" stroke="#2a1622"/>
+<circle cx="24" cy="22" r="5" fill="#571f42"/>
+<circle cx="42" cy="22" r="5" fill="#571f42"/>
+<circle cx="60" cy="22" r="5" fill="#ff7ac4"/>
+<text x="80" y="27" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="13" fill="#8d7f8a" xml:space="preserve">gemhog / retention study</text>
+<text x="1056" y="27" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="12" fill="#ff7ac4" text-anchor="end" letter-spacing="1" xml:space="preserve">OFFLINE STUDY / SYNTHETIC DATA</text>
+
+<rect x="33.8" y="63.8" width="4" height="4" fill="#571f42"/><rect x="32" y="62" width="4" height="4" fill="#ff7ac4"/><rect x="37.8" y="63.8" width="4" height="4" fill="#571f42"/><rect x="36" y="62" width="4" height="4" fill="#ff7ac4"/><rect x="41.8" y="63.8" width="4" height="4" fill="#571f42"/><rect x="40" y="62" width="4" height="4" fill="#ff7ac4"/><rect x="45.8" y="63.8" width="4" height="4" fill="#571f42"/><rect x="44" y="62" width="4" height="4" fill="#ff7ac4"/><rect x="49.8" y="63.8" width="4" height="4" fill="#571f42"/><rect x="48" y="62" width="4" height="4" fill="#ff7ac4"/><rect x="33.8" y="67.8" width="4" height="4" fill="#571f42"/><rect x="32" y="66" width="4" height="4" fill="#ff7ac4"/><rect x="33.8" y="71.8" width="4" height="4" fill="#571f42"/><rect x="32" y="70" width="4" height="4" fill="#ff7ac4"/><rect x="41.8" y="71.8" width="4" height="4" fill="#571f42"/><rect x="40" y="70" width="4" height="4" fill="#ff7ac4"/><rect x="45.8" y="71.8" width="4" height="4" fill="#571f42"/><rect x="44" y="70" width="4" height="4" fill="#ff7ac4"/><rect x="49.8" y="71.8" width="4" height="4" fill="#571f42"/><rect x="48" y="70" width="4" height="4" fill="#ff7ac4"/><rect x="33.8" y="75.8" width="4" height="4" fill="#571f42"/><rect x="32" y="74" width="4" height="4" fill="#ff7ac4"/><rect x="49.8" y="75.8" width="4" height="4" fill="#571f42"/><rect x="48" y="74" width="4" height="4" fill="#ff7ac4"/><rect x="33.8" y="79.8" width="4" height="4" fill="#571f42"/><rect x="32" y="78" width="4" height="4" fill="#ff7ac4"/><rect x="37.8" y="79.8" width="4" height="4" fill="#571f42"/><rect x="36" y="78" width="4" height="4" fill="#ff7ac4"/><rect x="41.8" y="79.8" width="4" height="4" fill="#571f42"/><rect x="40" y="78" width="4" height="4" fill="#ff7ac4"/><rect x="45.8" y="79.8" width="4" height="4" fill="#571f42"/><rect x="44" y="78" width="4" height="4" fill="#ff7ac4"/><rect x="49.8" y="79.8" width="4" height="4" fill="#571f42"/><rect x="48" y="78" width="4" height="4" fill="#ff7ac4"/><rect x="58.599999999999994" y="63.8" width="4" height="4" fill="#571f42"/><rect x="56.8" y="62" width="4" height="4" fill="#ff7ac4"/><rect x="62.599999999999994" y="63.8" width="4" height="4" fill="#571f42"/><rect x="60.8" y="62" width="4" height="4" fill="#ff7ac4"/><rect x="66.6" y="63.8" width="4" height="4" fill="#571f42"/><rect x="64.8" y="62" width="4" height="4" fill="#ff7ac4"/><rect x="70.6" y="63.8" width="4" height="4" fill="#571f42"/><rect x="68.8" y="62" width="4" height="4" fill="#ff7ac4"/><rect x="74.6" y="63.8" width="4" height="4" fill="#571f42"/><rect x="72.8" y="62" width="4" height="4" fill="#ff7ac4"/><rect x="58.599999999999994" y="67.8" width="4" height="4" fill="#571f42"/><rect x="56.8" y="66" width="4" height="4" fill="#ff7ac4"/><rect x="58.599999999999994" y="71.8" width="4" height="4" fill="#571f42"/><rect x="56.8" y="70" width="4" height="4" fill="#ff7ac4"/><rect x="62.599999999999994" y="71.8" width="4" height="4" fill="#571f42"/><rect x="60.8" y="70" width="4" height="4" fill="#ff7ac4"/><rect x="66.6" y="71.8" width="4" height="4" fill="#571f42"/><rect x="64.8" y="70" width="4" height="4" fill="#ff7ac4"/><rect x="70.6" y="71.8" width="4" height="4" fill="#571f42"/><rect x="68.8" y="70" width="4" height="4" fill="#ff7ac4"/><rect x="58.599999999999994" y="75.8" width="4" height="4" fill="#571f42"/><rect x="56.8" y="74" width="4" height="4" fill="#ff7ac4"/><rect x="58.599999999999994" y="79.8" width="4" height="4" fill="#571f42"/><rect x="56.8" y="78" width="4" height="4" fill="#ff7ac4"/><rect x="62.599999999999994" y="79.8" width="4" height="4" fill="#571f42"/><rect x="60.8" y="78" width="4" height="4" fill="#ff7ac4"/><rect x="66.6" y="79.8" width="4" height="4" fill="#571f42"/><rect x="64.8" y="78" width="4" height="4" fill="#ff7ac4"/><rect x="70.6" y="79.8" width="4" height="4" fill="#571f42"/><rect x="68.8" y="78" width="4" height="4" fill="#ff7ac4"/><rect x="74.6" y="79.8" width="4" height="4" fill="#571f42"/><rect x="72.8" y="78" width="4" height="4" fill="#ff7ac4"/><rect x="83.39999999999999" y="63.8" width="4" height="4" fill="#571f42"/><rect x="81.6" y="62" width="4" height="4" fill="#ff7ac4"/><rect x="99.39999999999999" y="63.8" width="4" height="4" fill="#571f42"/><rect x="97.6" y="62" width="4" height="4" fill="#ff7ac4"/><rect x="83.39999999999999" y="67.8" width="4" height="4" fill="#571f42"/><rect x="81.6" y="66" width="4" height="4" fill="#ff7ac4"/><rect x="87.39999999999999" y="67.8" width="4" height="4" fill="#571f42"/><rect x="85.6" y="66" width="4" height="4" fill="#ff7ac4"/><rect x="95.39999999999999" y="67.8" width="4" height="4" fill="#571f42"/><rect x="93.6" y="66" width="4" height="4" fill="#ff7ac4"/><rect x="99.39999999999999" y="67.8" width="4" height="4" fill="#571f42"/><rect x="97.6" y="66" width="4" height="4" fill="#ff7ac4"/><rect x="83.39999999999999" y="71.8" width="4" height="4" fill="#571f42"/><rect x="81.6" y="70" width="4" height="4" fill="#ff7ac4"/><rect x="91.39999999999999" y="71.8" width="4" height="4" fill="#571f42"/><rect x="89.6" y="70" width="4" height="4" fill="#ff7ac4"/><rect x="99.39999999999999" y="71.8" width="4" height="4" fill="#571f42"/><rect x="97.6" y="70" width="4" height="4" fill="#ff7ac4"/><rect x="83.39999999999999" y="75.8" width="4" height="4" fill="#571f42"/><rect x="81.6" y="74" width="4" height="4" fill="#ff7ac4"/><rect x="99.39999999999999" y="75.8" width="4" height="4" fill="#571f42"/><rect x="97.6" y="74" width="4" height="4" fill="#ff7ac4"/><rect x="83.39999999999999" y="79.8" width="4" height="4" fill="#571f42"/><rect x="81.6" y="78" width="4" height="4" fill="#ff7ac4"/><rect x="99.39999999999999" y="79.8" width="4" height="4" fill="#571f42"/><rect x="97.6" y="78" width="4" height="4" fill="#ff7ac4"/><rect x="108.19999999999999" y="63.8" width="4" height="4" fill="#571f42"/><rect x="106.39999999999999" y="62" width="4" height="4" fill="#ff7ac4"/><rect x="124.19999999999999" y="63.8" width="4" height="4" fill="#571f42"/><rect x="122.39999999999999" y="62" width="4" height="4" fill="#ff7ac4"/><rect x="108.19999999999999" y="67.8" width="4" height="4" fill="#571f42"/><rect x="106.39999999999999" y="66" width="4" height="4" fill="#ff7ac4"/><rect x="124.19999999999999" y="67.8" width="4" height="4" fill="#571f42"/><rect x="122.39999999999999" y="66" width="4" height="4" fill="#ff7ac4"/><rect x="108.19999999999999" y="71.8" width="4" height="4" fill="#571f42"/><rect x="106.39999999999999" y="70" width="4" height="4" fill="#ff7ac4"/><rect x="112.19999999999999" y="71.8" width="4" height="4" fill="#571f42"/><rect x="110.39999999999999" y="70" width="4" height="4" fill="#ff7ac4"/><rect x="116.19999999999999" y="71.8" width="4" height="4" fill="#571f42"/><rect x="114.39999999999999" y="70" width="4" height="4" fill="#ff7ac4"/><rect x="120.19999999999999" y="71.8" width="4" height="4" fill="#571f42"/><rect x="118.39999999999999" y="70" width="4" height="4" fill="#ff7ac4"/><rect x="124.19999999999999" y="71.8" width="4" height="4" fill="#571f42"/><rect x="122.39999999999999" y="70" width="4" height="4" fill="#ff7ac4"/><rect x="108.19999999999999" y="75.8" width="4" height="4" fill="#571f42"/><rect x="106.39999999999999" y="74" width="4" height="4" fill="#ff7ac4"/><rect x="124.19999999999999" y="75.8" width="4" height="4" fill="#571f42"/><rect x="122.39999999999999" y="74" width="4" height="4" fill="#ff7ac4"/><rect x="108.19999999999999" y="79.8" width="4" height="4" fill="#571f42"/><rect x="106.39999999999999" y="78" width="4" height="4" fill="#ff7ac4"/><rect x="124.19999999999999" y="79.8" width="4" height="4" fill="#571f42"/><rect x="122.39999999999999" y="78" width="4" height="4" fill="#ff7ac4"/><rect x="133" y="63.8" width="4" height="4" fill="#571f42"/><rect x="131.2" y="62" width="4" height="4" fill="#ff7ac4"/><rect x="137" y="63.8" width="4" height="4" fill="#571f42"/><rect x="135.2" y="62" width="4" height="4" fill="#ff7ac4"/><rect x="141" y="63.8" width="4" height="4" fill="#571f42"/><rect x="139.2" y="62" width="4" height="4" fill="#ff7ac4"/><rect x="145" y="63.8" width="4" height="4" fill="#571f42"/><rect x="143.2" y="62" width="4" height="4" fill="#ff7ac4"/><rect x="149" y="63.8" width="4" height="4" fill="#571f42"/><rect x="147.2" y="62" width="4" height="4" fill="#ff7ac4"/><rect x="133" y="67.8" width="4" height="4" fill="#571f42"/><rect x="131.2" y="66" width="4" height="4" fill="#ff7ac4"/><rect x="149" y="67.8" width="4" height="4" fill="#571f42"/><rect x="147.2" y="66" width="4" height="4" fill="#ff7ac4"/><rect x="133" y="71.8" width="4" height="4" fill="#571f42"/><rect x="131.2" y="70" width="4" height="4" fill="#ff7ac4"/><rect x="149" y="71.8" width="4" height="4" fill="#571f42"/><rect x="147.2" y="70" width="4" height="4" fill="#ff7ac4"/><rect x="133" y="75.8" width="4" height="4" fill="#571f42"/><rect x="131.2" y="74" width="4" height="4" fill="#ff7ac4"/><rect x="149" y="75.8" width="4" height="4" fill="#571f42"/><rect x="147.2" y="74" width="4" height="4" fill="#ff7ac4"/><rect x="133" y="79.8" width="4" height="4" fill="#571f42"/><rect x="131.2" y="78" width="4" height="4" fill="#ff7ac4"/><rect x="137" y="79.8" width="4" height="4" fill="#571f42"/><rect x="135.2" y="78" width="4" height="4" fill="#ff7ac4"/><rect x="141" y="79.8" width="4" height="4" fill="#571f42"/><rect x="139.2" y="78" width="4" height="4" fill="#ff7ac4"/><rect x="145" y="79.8" width="4" height="4" fill="#571f42"/><rect x="143.2" y="78" width="4" height="4" fill="#ff7ac4"/><rect x="149" y="79.8" width="4" height="4" fill="#571f42"/><rect x="147.2" y="78" width="4" height="4" fill="#ff7ac4"/><rect x="157.8" y="63.8" width="4" height="4" fill="#571f42"/><rect x="156" y="62" width="4" height="4" fill="#ff7ac4"/><rect x="161.8" y="63.8" width="4" height="4" fill="#571f42"/><rect x="160" y="62" width="4" height="4" fill="#ff7ac4"/><rect x="165.8" y="63.8" width="4" height="4" fill="#571f42"/><rect x="164" y="62" width="4" height="4" fill="#ff7ac4"/><rect x="169.8" y="63.8" width="4" height="4" fill="#571f42"/><rect x="168" y="62" width="4" height="4" fill="#ff7ac4"/><rect x="173.8" y="63.8" width="4" height="4" fill="#571f42"/><rect x="172" y="62" width="4" height="4" fill="#ff7ac4"/><rect x="157.8" y="67.8" width="4" height="4" fill="#571f42"/><rect x="156" y="66" width="4" height="4" fill="#ff7ac4"/><rect x="157.8" y="71.8" width="4" height="4" fill="#571f42"/><rect x="156" y="70" width="4" height="4" fill="#ff7ac4"/><rect x="165.8" y="71.8" width="4" height="4" fill="#571f42"/><rect x="164" y="70" width="4" height="4" fill="#ff7ac4"/><rect x="169.8" y="71.8" width="4" height="4" fill="#571f42"/><rect x="168" y="70" width="4" height="4" fill="#ff7ac4"/><rect x="173.8" y="71.8" width="4" height="4" fill="#571f42"/><rect x="172" y="70" width="4" height="4" fill="#ff7ac4"/><rect x="157.8" y="75.8" width="4" height="4" fill="#571f42"/><rect x="156" y="74" width="4" height="4" fill="#ff7ac4"/><rect x="173.8" y="75.8" width="4" height="4" fill="#571f42"/><rect x="172" y="74" width="4" height="4" fill="#ff7ac4"/><rect x="157.8" y="79.8" width="4" height="4" fill="#571f42"/><rect x="156" y="78" width="4" height="4" fill="#ff7ac4"/><rect x="161.8" y="79.8" width="4" height="4" fill="#571f42"/><rect x="160" y="78" width="4" height="4" fill="#ff7ac4"/><rect x="165.8" y="79.8" width="4" height="4" fill="#571f42"/><rect x="164" y="78" width="4" height="4" fill="#ff7ac4"/><rect x="169.8" y="79.8" width="4" height="4" fill="#571f42"/><rect x="168" y="78" width="4" height="4" fill="#ff7ac4"/><rect x="173.8" y="79.8" width="4" height="4" fill="#571f42"/><rect x="172" y="78" width="4" height="4" fill="#ff7ac4"/>
+<text x="232" y="76" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="13" fill="#8d7f8a" xml:space="preserve">retention desk / six checkpoints per cohort</text>
+<text x="232" y="94" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="13" fill="#d9d2d8" xml:space="preserve">Same launch. Six checkpoints. The hands decide the grade.</text>
+<text x="32.0" y="122" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#564a54" xml:space="preserve">ID  </text><text x="65.6" y="122" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#564a54" xml:space="preserve">COHORT  </text><text x="132.8" y="122" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#564a54" xml:space="preserve">RETENTION 5m THROUGH 7d</text><text x="326.0" y="122" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#564a54" xml:space="preserve">                        </text><text x="527.6" y="122" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#564a54" xml:space="preserve">SCORE  </text><text x="586.4" y="122" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#564a54" xml:space="preserve">GRADE</text>
+<line x1="32" y1="135.2" x2="1000" y2="135.2" stroke="#2a1622"/>
+<text x="32.0" y="155" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#564a54" xml:space="preserve">01  </text><text x="65.6" y="155" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#d9d2d8" xml:space="preserve">147     </text>
+<rect x="132.8" y="144" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="132.8" y="144" width="39.99010143274912" height="12" fill="#ff7ac4"/>
+<rect x="192.8" y="144" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="192.8" y="144" width="37.199173986738444" height="12" fill="#ff7ac4"/>
+<rect x="252.8" y="144" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="252.8" y="144" width="34.603026642048455" height="12" fill="#ff7ac4"/>
+<rect x="312.8" y="144" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="312.8" y="144" width="32.18806560643468" height="12" fill="#ff7ac4"/>
+<rect x="372.8" y="144" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="372.8" y="144" width="29.94164580462285" height="12" fill="#ff7ac4"/>
+<rect x="432.8" y="144" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="432.8" y="144" width="27.852004666918248" height="12" fill="#ff7ac4"/>
+<text x="502.8" y="155" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#d9d2d8" xml:space="preserve">   42</text><text x="544.8" y="155" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#8d8d8d" font-weight="700" xml:space="preserve">  SI2</text>
+<text x="32.0" y="175" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#564a54" xml:space="preserve">02  </text><text x="65.6" y="175" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#d9d2d8" xml:space="preserve">113     </text>
+<rect x="132.8" y="164" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="132.8" y="164" width="44.47018326016617" height="12" fill="#ff7ac4"/>
+<rect x="192.8" y="164" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="192.8" y="164" width="31.947059646199204" height="12" fill="#ff7ac4"/>
+<rect x="252.8" y="164" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="252.8" y="164" width="22.950537758453926" height="12" fill="#ff7ac4"/>
+<rect x="312.8" y="164" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="312.8" y="164" width="16.487501173363384" height="12" fill="#ff7ac4"/>
+<rect x="372.8" y="164" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="372.8" y="164" width="11.84450219871325" height="12" fill="#ff7ac4"/>
+<rect x="432.8" y="164" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="432.8" y="164" width="8.509005146393811" height="12" fill="#ff7ac4"/>
+<text x="502.8" y="175" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#d9d2d8" xml:space="preserve">   59</text><text x="544.8" y="175" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#8d8d8d" font-weight="700" xml:space="preserve">  SI1</text>
+<text x="32.0" y="195" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#564a54" xml:space="preserve">03  </text><text x="65.6" y="195" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#d9d2d8" xml:space="preserve">187     </text>
+<rect x="132.8" y="184" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="132.8" y="184" width="40.938735903771004" height="12" fill="#ff7ac4"/>
+<rect x="192.8" y="184" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="192.8" y="184" width="27.96460811148586" height="12" fill="#ff7ac4"/>
+<rect x="252.8" y="184" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="252.8" y="184" width="19.102184998265816" height="12" fill="#ff7ac4"/>
+<rect x="312.8" y="184" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="312.8" y="184" width="13.048402833083133" height="12" fill="#ff7ac4"/>
+<rect x="372.8" y="184" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="372.8" y="184" width="8.913159228112855" height="12" fill="#ff7ac4"/>
+<rect x="432.8" y="184" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="432.8" y="184" width="6.0884392091474" height="12" fill="#ff7ac4"/>
+<text x="502.8" y="195" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#d9d2d8" xml:space="preserve">   48</text><text x="544.8" y="195" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#8d8d8d" font-weight="700" xml:space="preserve">  SI2</text>
+<text x="32.0" y="215" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#564a54" xml:space="preserve">04  </text><text x="65.6" y="215" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#d9d2d8" xml:space="preserve">37      </text>
+<rect x="132.8" y="204" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="132.8" y="204" width="47.889170163585426" height="12" fill="#ff7ac4"/>
+<rect x="192.8" y="204" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="192.8" y="204" width="27.892338807318332" height="12" fill="#ff7ac4"/>
+<rect x="252.8" y="204" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="252.8" y="204" width="16.24548016774382" height="12" fill="#ff7ac4"/>
+<rect x="312.8" y="204" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="312.8" y="204" width="9.461939628071356" height="12" fill="#ff7ac4"/>
+<rect x="372.8" y="204" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="372.8" y="204" width="5.510966779734207" height="12" fill="#ff7ac4"/>
+<rect x="432.8" y="204" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="432.8" y="204" width="3.2097810851837516" height="12" fill="#ff7ac4"/>
+<text x="502.8" y="215" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#d9d2d8" xml:space="preserve">   57</text><text x="544.8" y="215" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#8d8d8d" font-weight="700" xml:space="preserve">  SI1</text>
+<text x="32.0" y="235" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#564a54" xml:space="preserve">05  </text><text x="65.6" y="235" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#d9d2d8" xml:space="preserve">36      </text>
+<rect x="132.8" y="224" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="132.8" y="224" width="37.67000672494528" height="12" fill="#ff7ac4"/>
+<rect x="192.8" y="224" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="192.8" y="224" width="22.448047691477164" height="12" fill="#ff7ac4"/>
+<rect x="252.8" y="224" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="252.8" y="224" width="13.37708402438745" height="12" fill="#ff7ac4"/>
+<rect x="312.8" y="224" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="312.8" y="224" width="7.9715786181023836" height="12" fill="#ff7ac4"/>
+<rect x="372.8" y="224" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="372.8" y="224" width="4.750367535162204" height="12" fill="#ff7ac4"/>
+<rect x="432.8" y="224" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="432.8" y="224" width="2.830805891806511" height="12" fill="#ff7ac4"/>
+<text x="502.8" y="235" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#d9d2d8" xml:space="preserve">   42</text><text x="544.8" y="235" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#8d8d8d" font-weight="700" xml:space="preserve">  SI2</text>
+<text x="32.0" y="255" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#564a54" xml:space="preserve">06  </text><text x="65.6" y="255" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#d9d2d8" xml:space="preserve">151     </text>
+<rect x="132.8" y="244" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="132.8" y="244" width="48.471719761319335" height="12" fill="#ff7ac4"/>
+<rect x="192.8" y="244" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="192.8" y="244" width="32.65034580770209" height="12" fill="#ff7ac4"/>
+<rect x="252.8" y="244" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="252.8" y="244" width="21.993135102527116" height="12" fill="#ff7ac4"/>
+<rect x="312.8" y="244" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="312.8" y="244" width="14.814482960970905" height="12" fill="#ff7ac4"/>
+<rect x="372.8" y="244" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="372.8" y="244" width="9.978973183122001" height="12" fill="#ff7ac4"/>
+<rect x="432.8" y="244" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="432.8" y="244" width="6.7217942098832335" height="12" fill="#ff7ac4"/>
+<text x="502.8" y="255" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#d9d2d8" xml:space="preserve">   64</text><text x="544.8" y="255" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#ffffff" font-weight="700" xml:space="preserve">  VS2</text>
+<text x="32.0" y="275" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#564a54" xml:space="preserve">07  </text><text x="65.6" y="275" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#d9d2d8" xml:space="preserve">23      </text>
+<rect x="132.8" y="264" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="132.8" y="264" width="42.134290207146805" height="12" fill="#ff7ac4"/>
+<rect x="192.8" y="264" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="192.8" y="264" width="27.365984547121286" height="12" fill="#ff7ac4"/>
+<rect x="252.8" y="264" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="252.8" y="264" width="17.77405307058557" height="12" fill="#ff7ac4"/>
+<rect x="312.8" y="264" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="312.8" y="264" width="11.544147516856818" height="12" fill="#ff7ac4"/>
+<rect x="372.8" y="264" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="372.8" y="264" width="7.497858893619301" height="12" fill="#ff7ac4"/>
+<rect x="432.8" y="264" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="432.8" y="264" width="4.869817187153614" height="12" fill="#ff7ac4"/>
+<text x="502.8" y="275" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#d9d2d8" xml:space="preserve">   45</text><text x="544.8" y="275" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#8d8d8d" font-weight="700" xml:space="preserve">  SI2</text>
+<text x="32.0" y="295" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#564a54" xml:space="preserve">08  </text><text x="65.6" y="295" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#d9d2d8" xml:space="preserve">145     </text>
+<rect x="132.8" y="284" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="132.8" y="284" width="51.98671753885537" height="12" fill="#ff7ac4"/>
+<rect x="192.8" y="284" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="192.8" y="284" width="44.08644107614768" height="12" fill="#ff7ac4"/>
+<rect x="252.8" y="284" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="252.8" y="284" width="37.38674759197799" height="12" fill="#ff7ac4"/>
+<rect x="312.8" y="284" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="312.8" y="284" width="31.705187839771323" height="12" fill="#ff7ac4"/>
+<rect x="372.8" y="284" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="372.8" y="284" width="26.88703887606611" height="12" fill="#ff7ac4"/>
+<rect x="432.8" y="284" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="432.8" y="284" width="22.80109057156447" height="12" fill="#ff7ac4"/>
+<text x="502.8" y="295" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#d9d2d8" xml:space="preserve">   73</text><text x="544.8" y="295" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#ffffff" font-weight="700" xml:space="preserve">  VS1</text>
+<text x="32.0" y="315" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#564a54" xml:space="preserve">09  </text><text x="65.6" y="315" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#d9d2d8" xml:space="preserve">179     </text>
+<rect x="132.8" y="304" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="132.8" y="304" width="45.63266586602324" height="12" fill="#ff7ac4"/>
+<rect x="192.8" y="304" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="192.8" y="304" width="37.2216605691884" height="12" fill="#ff7ac4"/>
+<rect x="252.8" y="304" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="252.8" y="304" width="30.360970353902598" height="12" fill="#ff7ac4"/>
+<rect x="312.8" y="304" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="312.8" y="304" width="24.764841405103695" height="12" fill="#ff7ac4"/>
+<rect x="372.8" y="304" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="372.8" y="304" width="20.200190002856914" height="12" fill="#ff7ac4"/>
+<rect x="432.8" y="304" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="432.8" y="304" width="16.47689437928027" height="12" fill="#ff7ac4"/>
+<text x="502.8" y="315" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#d9d2d8" xml:space="preserve">   65</text><text x="544.8" y="315" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#ffffff" font-weight="700" xml:space="preserve">  VS2</text>
+<text x="32.0" y="335" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#564a54" xml:space="preserve">10  </text><text x="65.6" y="335" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#d9d2d8" xml:space="preserve">113     </text>
+<rect x="132.8" y="324" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="132.8" y="324" width="45.80671018460147" height="12" fill="#ff7ac4"/>
+<rect x="192.8" y="324" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="192.8" y="324" width="32.08948173738437" height="12" fill="#ff7ac4"/>
+<rect x="252.8" y="324" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="252.8" y="324" width="22.479999852075903" height="12" fill="#ff7ac4"/>
+<rect x="312.8" y="324" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="312.8" y="324" width="15.748163135978524" height="12" fill="#ff7ac4"/>
+<rect x="372.8" y="324" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="372.8" y="324" width="11.03223504400918" height="12" fill="#ff7ac4"/>
+<rect x="432.8" y="324" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="432.8" y="324" width="7.728533735353745" height="12" fill="#ff7ac4"/>
+<text x="502.8" y="335" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#d9d2d8" xml:space="preserve">   53</text><text x="544.8" y="335" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#8d8d8d" font-weight="700" xml:space="preserve">  SI1</text>
+<text x="32.0" y="355" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#564a54" xml:space="preserve">11  </text><text x="65.6" y="355" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#d9d2d8" xml:space="preserve">149     </text>
+<rect x="132.8" y="344" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="132.8" y="344" width="36.13047005740482" height="12" fill="#ff7ac4"/>
+<rect x="192.8" y="344" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="192.8" y="344" width="33.50270041233349" height="12" fill="#ff7ac4"/>
+<rect x="252.8" y="344" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="252.8" y="344" width="31.06604849411672" height="12" fill="#ff7ac4"/>
+<rect x="312.8" y="344" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="312.8" y="344" width="28.80661430752985" height="12" fill="#ff7ac4"/>
+<rect x="372.8" y="344" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="372.8" y="344" width="26.71150880421546" height="12" fill="#ff7ac4"/>
+<rect x="432.8" y="344" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="432.8" y="344" width="24.768780356502184" height="12" fill="#ff7ac4"/>
+<text x="502.8" y="355" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#d9d2d8" xml:space="preserve">   73</text><text x="544.8" y="355" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#ffffff" font-weight="700" xml:space="preserve">  VS1</text>
+<text x="32.0" y="375" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#564a54" xml:space="preserve">12  </text><text x="65.6" y="375" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#d9d2d8" xml:space="preserve">123     </text>
+<rect x="132.8" y="364" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="132.8" y="364" width="53.27219624136212" height="12" fill="#ff7ac4"/>
+<rect x="192.8" y="364" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="192.8" y="364" width="34.94140828239983" height="12" fill="#ff7ac4"/>
+<rect x="252.8" y="364" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="252.8" y="364" width="22.91818432312754" height="12" fill="#ff7ac4"/>
+<rect x="312.8" y="364" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="312.8" y="364" width="15.032112284192529" height="12" fill="#ff7ac4"/>
+<rect x="372.8" y="364" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="372.8" y="364" width="9.859611762374357" height="12" fill="#ff7ac4"/>
+<rect x="432.8" y="364" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="432.8" y="364" width="6.466951700924756" height="12" fill="#ff7ac4"/>
+<text x="502.8" y="375" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#d9d2d8" xml:space="preserve">   66</text><text x="544.8" y="375" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#ffffff" font-weight="700" xml:space="preserve">  VS2</text>
+<text x="32.0" y="395" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#564a54" xml:space="preserve">13  </text><text x="65.6" y="395" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#d9d2d8" xml:space="preserve">130     </text>
+<rect x="132.8" y="384" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="132.8" y="384" width="50.79116059895193" height="12" fill="#ff7ac4"/>
+<rect x="192.8" y="384" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="192.8" y="384" width="44.6642562628749" height="12" fill="#ff7ac4"/>
+<rect x="252.8" y="384" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="252.8" y="384" width="39.27643637182261" height="12" fill="#ff7ac4"/>
+<rect x="312.8" y="384" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="312.8" y="384" width="34.538545654729226" height="12" fill="#ff7ac4"/>
+<rect x="372.8" y="384" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="372.8" y="384" width="30.37218358230748" height="12" fill="#ff7ac4"/>
+<rect x="432.8" y="384" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="432.8" y="384" width="26.70840702961324" height="12" fill="#ff7ac4"/>
+<text x="502.8" y="395" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#d9d2d8" xml:space="preserve">   52</text><text x="544.8" y="395" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#8d8d8d" font-weight="700" xml:space="preserve">  SI1</text>
+<text x="32.0" y="415" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#564a54" xml:space="preserve">14  </text><text x="65.6" y="415" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#d9d2d8" xml:space="preserve">189     </text>
+<rect x="132.8" y="404" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="132.8" y="404" width="42.311849537590454" height="12" fill="#ff7ac4"/>
+<rect x="192.8" y="404" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="192.8" y="404" width="40.4840516089051" height="12" fill="#ff7ac4"/>
+<rect x="252.8" y="404" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="252.8" y="404" width="38.73521135530644" height="12" fill="#ff7ac4"/>
+<rect x="312.8" y="404" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="312.8" y="404" width="37.06191794326784" height="12" fill="#ff7ac4"/>
+<rect x="372.8" y="404" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="372.8" y="404" width="35.46090788130804" height="12" fill="#ff7ac4"/>
+<rect x="432.8" y="404" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="432.8" y="404" width="33.92905865507239" height="12" fill="#ff7ac4"/>
+<text x="502.8" y="415" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#d9d2d8" xml:space="preserve">   66</text><text x="544.8" y="415" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#ffffff" font-weight="700" xml:space="preserve">  VS2</text>
+<text x="32.0" y="435" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#564a54" xml:space="preserve">15  </text><text x="65.6" y="435" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#d9d2d8" xml:space="preserve">223     </text>
+<rect x="132.8" y="424" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="132.8" y="424" width="50.555174288319044" height="12" fill="#ff7ac4"/>
+<rect x="192.8" y="424" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="192.8" y="424" width="49.2918581590026" height="12" fill="#ff7ac4"/>
+<rect x="252.8" y="424" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="252.8" y="424" width="48.06011085849662" height="12" fill="#ff7ac4"/>
+<rect x="312.8" y="424" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="312.8" y="424" width="46.859143517784595" height="12" fill="#ff7ac4"/>
+<rect x="372.8" y="424" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="372.8" y="424" width="45.688186980786774" height="12" fill="#ff7ac4"/>
+<rect x="432.8" y="424" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="432.8" y="424" width="44.54649131175632" height="12" fill="#ff7ac4"/>
+<text x="502.8" y="435" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#d9d2d8" xml:space="preserve">   53</text><text x="544.8" y="435" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#8d8d8d" font-weight="700" xml:space="preserve">  SI1</text>
+<text x="32.0" y="455" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#564a54" xml:space="preserve">16  </text><text x="65.6" y="455" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#d9d2d8" xml:space="preserve">50      </text>
+<rect x="132.8" y="444" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="132.8" y="444" width="49.37032634661083" height="12" fill="#ff7ac4"/>
+<rect x="192.8" y="444" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="192.8" y="444" width="34.250253942299594" height="12" fill="#ff7ac4"/>
+<rect x="252.8" y="444" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="252.8" y="444" width="23.76082926566553" height="12" fill="#ff7ac4"/>
+<rect x="312.8" y="444" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="312.8" y="444" width="16.48387799819628" height="12" fill="#ff7ac4"/>
+<rect x="372.8" y="444" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="372.8" y="444" width="11.435553482640989" height="12" fill="#ff7ac4"/>
+<rect x="432.8" y="444" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="432.8" y="444" width="7.933320270184718" height="12" fill="#ff7ac4"/>
+<text x="502.8" y="455" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#d9d2d8" xml:space="preserve">   59</text><text x="544.8" y="455" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#8d8d8d" font-weight="700" xml:space="preserve">  SI1</text>
+<text x="32.0" y="475" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#564a54" xml:space="preserve">17  </text><text x="65.6" y="475" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#d9d2d8" xml:space="preserve">78      </text>
+<rect x="132.8" y="464" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="132.8" y="464" width="48.92312460412417" height="12" fill="#ff7ac4"/>
+<rect x="192.8" y="464" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="192.8" y="464" width="47.63972657440459" height="12" fill="#ff7ac4"/>
+<rect x="252.8" y="464" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="252.8" y="464" width="46.38999586491478" height="12" fill="#ff7ac4"/>
+<rect x="312.8" y="464" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="312.8" y="464" width="45.17304928242458" height="12" fill="#ff7ac4"/>
+<rect x="372.8" y="464" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="372.8" y="464" width="43.988026802470344" height="12" fill="#ff7ac4"/>
+<rect x="432.8" y="464" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="432.8" y="464" width="42.83409096156979" height="12" fill="#ff7ac4"/>
+<text x="502.8" y="475" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#d9d2d8" xml:space="preserve">   83</text><text x="544.8" y="475" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#ff7ac4" font-weight="700" xml:space="preserve">  VVS2</text>
+<text x="32.0" y="495" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#564a54" xml:space="preserve">18  </text><text x="65.6" y="495" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#d9d2d8" xml:space="preserve">152     </text>
+<rect x="132.8" y="484" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="132.8" y="484" width="34.616517643079405" height="12" fill="#5a5a5a"/>
+<rect x="192.8" y="484" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="192.8" y="484" width="26.036399354063878" height="12" fill="#5a5a5a"/>
+<rect x="252.8" y="484" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="252.8" y="484" width="19.582966094795033" height="12" fill="#5a5a5a"/>
+<rect x="312.8" y="484" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="312.8" y="484" width="14.729093522297454" height="12" fill="#5a5a5a"/>
+<rect x="372.8" y="484" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="372.8" y="484" width="11.078311372159655" height="12" fill="#5a5a5a"/>
+<rect x="432.8" y="484" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="432.8" y="484" width="8.332419281113953" height="12" fill="#5a5a5a"/>
+<text x="502.8" y="495" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#d9d2d8" xml:space="preserve">   29</text><text x="544.8" y="495" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#5a5a5a" font-weight="700" xml:space="preserve">  I1</text>
+<text x="32.0" y="515" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#564a54" xml:space="preserve">19  </text><text x="65.6" y="515" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#d9d2d8" xml:space="preserve">148     </text>
+<rect x="132.8" y="504" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="132.8" y="504" width="36.0493190151869" height="12" fill="#ff7ac4"/>
+<rect x="192.8" y="504" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="192.8" y="504" width="30.274927668183192" height="12" fill="#ff7ac4"/>
+<rect x="252.8" y="504" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="252.8" y="504" width="25.42548015754722" height="12" fill="#ff7ac4"/>
+<rect x="312.8" y="504" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="312.8" y="504" width="21.352818686374796" height="12" fill="#ff7ac4"/>
+<rect x="372.8" y="504" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="372.8" y="504" width="17.932517420633886" height="12" fill="#ff7ac4"/>
+<rect x="432.8" y="504" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="432.8" y="504" width="15.060081095829021" height="12" fill="#ff7ac4"/>
+<text x="502.8" y="515" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#d9d2d8" xml:space="preserve">   41</text><text x="544.8" y="515" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#8d8d8d" font-weight="700" xml:space="preserve">  SI2</text>
+<text x="32.0" y="535" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#564a54" xml:space="preserve">20  </text><text x="65.6" y="535" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#d9d2d8" xml:space="preserve">24      </text>
+<rect x="132.8" y="524" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="132.8" y="524" width="36.78774735787313" height="12" fill="#5a5a5a"/>
+<rect x="192.8" y="524" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="192.8" y="524" width="28.665173387634624" height="12" fill="#5a5a5a"/>
+<rect x="252.8" y="524" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="252.8" y="524" width="22.336028280005618" height="12" fill="#5a5a5a"/>
+<rect x="312.8" y="524" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="312.8" y="524" width="17.404330773747276" height="12" fill="#5a5a5a"/>
+<rect x="372.8" y="524" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="372.8" y="524" width="13.561530540913619" height="12" fill="#5a5a5a"/>
+<rect x="432.8" y="524" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="432.8" y="524" width="10.56720381857777" height="12" fill="#5a5a5a"/>
+<text x="502.8" y="535" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#d9d2d8" xml:space="preserve">   37</text><text x="544.8" y="535" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#5a5a5a" font-weight="700" xml:space="preserve">  I1</text>
+<text x="32.0" y="555" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#564a54" xml:space="preserve">21  </text><text x="65.6" y="555" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#d9d2d8" xml:space="preserve">23      </text>
+<rect x="132.8" y="544" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="132.8" y="544" width="37.62558237701915" height="12" fill="#ff7ac4"/>
+<rect x="192.8" y="544" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="192.8" y="544" width="34.60063430528365" height="12" fill="#ff7ac4"/>
+<rect x="252.8" y="544" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="252.8" y="544" width="31.81888009949307" height="12" fill="#ff7ac4"/>
+<rect x="312.8" y="544" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="312.8" y="544" width="29.260767934283578" height="12" fill="#ff7ac4"/>
+<rect x="372.8" y="544" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="372.8" y="544" width="26.908317873753155" height="12" fill="#ff7ac4"/>
+<rect x="432.8" y="544" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="432.8" y="544" width="24.74499549776329" height="12" fill="#ff7ac4"/>
+<text x="502.8" y="555" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#d9d2d8" xml:space="preserve">   43</text><text x="544.8" y="555" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#8d8d8d" font-weight="700" xml:space="preserve">  SI2</text>
+<text x="32.0" y="575" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#564a54" xml:space="preserve">22  </text><text x="65.6" y="575" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#d9d2d8" xml:space="preserve">113     </text>
+<rect x="132.8" y="564" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="132.8" y="564" width="31.88915286366323" height="12" fill="#ff7ac4"/>
+<rect x="192.8" y="564" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="192.8" y="564" width="26.679395991895333" height="12" fill="#ff7ac4"/>
+<rect x="252.8" y="564" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="252.8" y="564" width="22.32076134275192" height="12" fill="#ff7ac4"/>
+<rect x="312.8" y="564" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="312.8" y="564" width="18.674200385624793" height="12" fill="#ff7ac4"/>
+<rect x="372.8" y="564" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="372.8" y="564" width="15.623381061583219" height="12" fill="#ff7ac4"/>
+<rect x="432.8" y="564" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="432.8" y="564" width="13.070976574897161" height="12" fill="#ff7ac4"/>
+<text x="502.8" y="575" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#d9d2d8" xml:space="preserve">   63</text><text x="544.8" y="575" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#ffffff" font-weight="700" xml:space="preserve">  VS2</text>
+<text x="32.0" y="595" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#564a54" xml:space="preserve">23  </text><text x="65.6" y="595" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#d9d2d8" xml:space="preserve">26      </text>
+<rect x="132.8" y="584" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="132.8" y="584" width="35.540974680353415" height="12" fill="#ff7ac4"/>
+<rect x="192.8" y="584" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="192.8" y="584" width="32.810582441082644" height="12" fill="#ff7ac4"/>
+<rect x="252.8" y="584" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="252.8" y="584" width="30.289949271373665" height="12" fill="#ff7ac4"/>
+<rect x="312.8" y="584" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="312.8" y="584" width="27.962960685318325" height="12" fill="#ff7ac4"/>
+<rect x="372.8" y="584" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="372.8" y="584" width="25.814740172828216" height="12" fill="#ff7ac4"/>
+<rect x="432.8" y="584" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="432.8" y="584" width="23.831554093644954" height="12" fill="#ff7ac4"/>
+<text x="502.8" y="595" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#d9d2d8" xml:space="preserve">   63</text><text x="544.8" y="595" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#ffffff" font-weight="700" xml:space="preserve">  VS2</text>
+<text x="32.0" y="615" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#564a54" xml:space="preserve">24  </text><text x="65.6" y="615" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#d9d2d8" xml:space="preserve">19      </text>
+<rect x="132.8" y="604" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="132.8" y="604" width="36.68515869806761" height="12" fill="#ff7ac4"/>
+<rect x="192.8" y="604" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="192.8" y="604" width="31.923743944809416" height="12" fill="#ff7ac4"/>
+<rect x="252.8" y="604" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="252.8" y="604" width="27.780319443116884" height="12" fill="#ff7ac4"/>
+<rect x="312.8" y="604" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="312.8" y="604" width="24.17467542954336" height="12" fill="#ff7ac4"/>
+<rect x="372.8" y="604" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="372.8" y="604" width="21.03701267080166" height="12" fill="#ff7ac4"/>
+<rect x="432.8" y="604" width="54" height="12" fill="#571f42" opacity="0.3"/>
+<rect x="432.8" y="604" width="18.306591267431504" height="12" fill="#ff7ac4"/>
+<text x="502.8" y="615" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#d9d2d8" xml:space="preserve">   48</text><text x="544.8" y="615" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" fill="#8d8d8d" font-weight="700" xml:space="preserve">  SI2</text>
+<text x="32" y="657" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="12" fill="#564a54" xml:space="preserve">24 synthetic cohorts graded by the real formulas · documentation artwork, not a live feed · reproduce: pnpm render:readme</text>
+</svg>
