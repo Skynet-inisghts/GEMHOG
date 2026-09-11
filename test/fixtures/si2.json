@@ -1,8 +1,8 @@
 {
  "launch": {
   "token": "0x736932ffffffffffffffffffffffffffffffffff",
-  "symbol": "SI2",
-  "name": "si2",
+  "symbol": "PEBBLE",
+  "name": "Pebble",
   "curve": "0xc000000000000000000000000000000000000000",
   "deployer": "0xd111111111111111111111111111111111111111",
   "creatorFeeRecipient": "0xd111111111111111111111111111111111111111",
@@ -11,7 +11,7 @@
   "phaseLabel": "curve",
   "graduated": false,
   "curveProgress": 0.5,
-  "launchedAt": 1700000000,
+  "launchedAt": 1789030800,
   "launchBlock": 1000000,
   "totalSupply": "1000000000000000000000000000",
   "devBuyWei": "0",
@@ -410,6 +410,6 @@
   "creditedWei": "100000000000000000",
   "claims": []
  },
- "now": 1700021660,
+ "now": 1789052460,
  "secPerBlock": 0.1
 }

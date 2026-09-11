@@ -1,6 +1,6 @@
 {
   "name": "gemhog",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "Diamond-hands terminal for Pons V2 tokens on Robinhood Chain.",
   "private": true,
   "type": "module",
@@ -23,6 +23,7 @@
     "check": "pnpm typecheck && pnpm lint && pnpm test && pnpm build"
   },
   "dependencies": {
+    "@napi-rs/canvas": "^1.0.9",
     "commander": "^14.0.0",
     "marked": "^18.0.12",
     "next": "^16.2.6",

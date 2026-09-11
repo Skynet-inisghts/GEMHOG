@@ -36,6 +36,22 @@ async def check(token: str) -> dict[str, Any]:
     return await _get(f"/check/{token}")
 
 
+async def card(token: str) -> bytes:
+    """The share-card PNG for a token; ServeError when there is none."""
+    try:
+        async with httpx.AsyncClient(base_url=BASE_URL, timeout=TIMEOUT) as client:
+            response = await client.get(f"/card/{token}")
+    except httpx.HTTPError as error:
+        raise ServeError(f"gemhog serve is not answering ({error.__class__.__name__}); is it running?") from error
+    if response.status_code >= 400:
+        try:
+            detail = response.json().get("error", "")
+        except ValueError:
+            detail = ""
+        raise ServeError(detail or f"serve answered {response.status_code}")
+    return response.content
+
+
 async def top() -> dict[str, Any]:
     return await _get("/top")
 

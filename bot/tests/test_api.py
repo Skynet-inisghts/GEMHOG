@@ -19,9 +19,28 @@ CANNED = {
 }
 
 
+PNG_BYTES = b"\x89PNG\r\n\x1a\n" + b"card" * 8
+
+
 class Handler(BaseHTTPRequestHandler):
     def do_GET(self):  # noqa: N802
         path = self.path.split("?")[0]
+        if path.startswith("/card/0xgood"):
+            self.send_response(200)
+            self.send_header("content-type", "image/png")
+            self.send_header("content-length", str(len(PNG_BYTES)))
+            self.end_headers()
+            self.wfile.write(PNG_BYTES)
+            return
+        if path.startswith("/card/"):
+            body, status = ({"tooEarly": True, "error": "card unlocks at 5m"}, 425)
+            payload = json.dumps(body).encode()
+            self.send_response(status)
+            self.send_header("content-type", "application/json")
+            self.send_header("content-length", str(len(payload)))
+            self.end_headers()
+            self.wfile.write(payload)
+            return
         if path.startswith("/check/"):
             body, status = ({"error": "not a pons token"}, 404)
         elif path in CANNED:
@@ -75,3 +94,15 @@ async def test_alerts_unwraps_the_list():
 async def test_serve_errors_become_serve_error():
     with pytest.raises(api.ServeError, match="not a pons token"):
         await api.check("0x" + "00" * 20)
+
+
+@pytest.mark.asyncio
+async def test_card_returns_png_bytes():
+    png = await api.card("0xgood")
+    assert png.startswith(b"\x89PNG")
+
+
+@pytest.mark.asyncio
+async def test_card_errors_become_serve_error():
+    with pytest.raises(api.ServeError):
+        await api.card("0x" + "00" * 20)

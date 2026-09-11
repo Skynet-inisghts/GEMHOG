@@ -138,6 +138,22 @@ pnpm gemhog watch 0x…
 
 The site never gets the list. `GET /api/top` and `GET /api/pulse` return counters and the grade distribution, refreshed every 20 minutes by the pulse workflow; the ranked table exists only in the CLI, on purpose.
 
+## Share cards
+
+<p align="center">
+  <img src="assets/readme/cards/card-green.png" width="32%" alt="Green share card: a thrilled pig holding a diamond, score 87" />
+  <img src="assets/readme/cards/card-yellow.png" width="32%" alt="Yellow share card: an unimpressed pig with a dull pebble, score 47" />
+  <img src="assets/readme/cards/card-red.png" width="32%" alt="Red share card: a disgusted pig with a lump of coal, score 23" />
+</p>
+
+Every certificate renders a 1080x1080 share card: red for scores 1-35, yellow for 36-70, green for 71-100 — the pig's mood and the stone in its hoof match the zone. The three cards above are the recorded fixtures; the terminal shows the live card under every certificate, **Share as image** downloads it, and a shared `/terminal?token=…` link unfurls into the card on X and Telegram. The bot answers `/check` with the same card.
+
+```bash
+pnpm gemhog check 0x… --card card.png
+```
+
+Cards for tokens younger than 5 minutes do not exist (`/api/card` answers 425): there is no grade to show yet. The demo card carries a DEMO plate, like everything else synthetic.
+
 ## The bot
 
 The Telegram bot is the third door into the same engine: `/check`, `/top`, `/watch` with 15-minute re-grades, and `/alerts` fed by `hunt --follow`. It contains zero grading logic — every answer comes from `gemhog serve`, a local JSON API bound to 127.0.0.1. `docker-compose.yml` runs the pair; [docs/BOT.md](docs/BOT.md) has the full contract. English, no emoji, except one diamond before VVS2 and better.

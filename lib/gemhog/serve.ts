@@ -42,6 +42,21 @@ async function handle(req: IncomingMessage, res: ServerResponse): Promise<void> 
     }
   }
 
+  if (route === "card" && param) {
+    if (!isAddress(param)) return json(res, 400, { error: "pass a token contract address" });
+    try {
+      const [{ renderCard }, { fetchTokenLogo }] = await Promise.all([import("./card.js"), import("./read/logo.js")]);
+      const [cert, logo] = await Promise.all([checkToken(getAddress(param)), fetchTokenLogo(getAddress(param))]);
+      if (cert.tooEarly) return json(res, 425, { tooEarly: true });
+      const buf = await renderCard(cert, { logo: logo ?? undefined });
+      res.writeHead(200, { "content-type": "image/png", "content-length": buf.length });
+      return void res.end(buf);
+    } catch (error) {
+      if (error instanceof CheckError) return json(res, 404, { error: error.message });
+      return json(res, 502, { error: "card render failed" });
+    }
+  }
+
   if (route === "top") {
     const hunt = loadHunt();
     if (!hunt) return json(res, 200, { rows: [], note: "no hunt yet; run gemhog hunt (ideally with --follow) next to serve" });
@@ -67,7 +82,7 @@ async function handle(req: IncomingMessage, res: ServerResponse): Promise<void> 
     return json(res, 200, { alerts: loadAlerts(url.searchParams.get("since") ?? undefined) });
   }
 
-  return json(res, 404, { error: "routes: /check/:token /top /holders/:wallet /alerts?since= /health" });
+  return json(res, 404, { error: "routes: /check/:token /card/:token /top /holders/:wallet /alerts?since= /health" });
 }
 
 export function startServe(port = DEFAULT_PORT): Promise<{ port: number; close: () => void }> {

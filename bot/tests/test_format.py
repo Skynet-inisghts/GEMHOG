@@ -73,3 +73,9 @@ def test_alert_carries_grade_and_address():
     text = fmt.format_alert({"grade": "VS1", "score": 74, "symbol": "NOVA", "token": "0x" + "cd" * 20})
     assert "VS1 74/100" in text
     assert "0x" + "cd" * 20 in text
+
+
+def test_card_caption_is_one_line_with_diamond_rule():
+    assert fmt.card_caption(REPORT) == "\U0001f48e $COPY · VVS1 87/100"
+    modest = {**REPORT, "grade": "SI1", "score": 55}
+    assert fmt.card_caption(modest) == "$COPY · SI1 55/100"

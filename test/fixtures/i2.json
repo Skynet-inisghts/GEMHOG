@@ -1,8 +1,8 @@
 {
  "launch": {
   "token": "0x6932ffffffffffffffffffffffffffffffffffff",
-  "symbol": "I2",
-  "name": "i2",
+  "symbol": "RUGPULL",
+  "name": "Rugpull",
   "curve": "0xc000000000000000000000000000000000000000",
   "deployer": "0xd111111111111111111111111111111111111111",
   "creatorFeeRecipient": "0xd111111111111111111111111111111111111111",
@@ -11,7 +11,7 @@
   "phaseLabel": "curve",
   "graduated": false,
   "curveProgress": 0.5,
-  "launchedAt": 1700000000,
+  "launchedAt": 1789030800,
   "launchBlock": 1000000,
   "totalSupply": "1000000000000000000000000000",
   "devBuyWei": "0",
@@ -466,6 +466,6 @@
    }
   ]
  },
- "now": 1700021660,
+ "now": 1789052460,
  "secPerBlock": 0.1
 }

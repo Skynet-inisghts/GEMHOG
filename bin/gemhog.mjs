@@ -48,7 +48,7 @@ const program = new Command();
 program
   .name("gemhog")
   .description("Diamond-hands terminal for Pons V2 tokens on Robinhood Chain. Read only: no keys, no signing, no transactions.")
-  .version("0.6.0");
+  .version("0.7.0");
 
 program
   .command("doctor")
@@ -96,6 +96,7 @@ program
   .description("grade one token: early-cohort retention, concentration, dev behaviour, weight; the diamond-clarity certificate")
   .option("--format <format>", "text, json or markdown", "text")
   .option("--output <file>", "save the certificate; never overwrites an existing file")
+  .option("--card <file>", "also render the 1080x1080 share card as PNG; never overwrites an existing file")
   .action(async (input, opts) => {
     checkFormat(opts.format);
     const { loadEnv } = await engine("env");
@@ -127,6 +128,26 @@ program
       const report = await checkToken(resolved.token);
       const text = opts.format === "json" ? JSON.stringify(report, null, 2) : renderCertificate(report, opts.format === "markdown");
       await deliver(text, opts.output);
+      if (opts.card) {
+        if (report.tooEarly) {
+          process.stderr.write("gemhog: no card for a token under 5 minutes; the card unlocks at 5m\n");
+          process.exit(1);
+        }
+        const { renderCard } = await engine("card");
+        const { fetchTokenLogo } = await engine("read/logo");
+        const logo = await fetchTokenLogo(resolved.token);
+        const buf = await renderCard(report, { logo: logo ?? undefined });
+        try {
+          await writeFile(opts.card, buf, { flag: "wx" });
+          process.stdout.write(`card saved to ${opts.card}\n`);
+        } catch (error) {
+          if (error.code === "EEXIST") {
+            process.stderr.write(`gemhog: ${opts.card} already exists; exports refuse to overwrite\n`);
+            process.exit(1);
+          }
+          throw error;
+        }
+      }
     } catch (error) {
       if (error instanceof CheckError) {
         process.stderr.write(`gemhog: ${error.message}\n`);

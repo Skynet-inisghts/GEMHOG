@@ -18,7 +18,7 @@ from aiogram import Bot, Dispatcher, F
 from aiogram.enums import ParseMode
 from aiogram.client.default import DefaultBotProperties
 from aiogram.filters import Command, CommandObject
-from aiogram.types import Message
+from aiogram.types import BufferedInputFile, Message
 
 import api
 import format as fmt
@@ -56,8 +56,31 @@ async def cmd_check(message: Message, command: CommandObject) -> None:
     except api.ServeError as error:
         await note.edit_text(f"error: {error}")
         return
-    await note.edit_text(fmt.format_check(report, SITE_BASE), disable_web_page_preview=True)
+    await answer_with_card(message, note, report)
 
+
+
+
+async def answer_with_card(message: Message, note: Message, report: dict) -> None:
+    """The share card as a photo with a one-line caption, the certificate as text after it.
+
+    A card that cannot be rendered (too-early token, serve hiccup) degrades to
+    text only — the grade always reaches the user.
+    """
+    text = fmt.format_check(report, SITE_BASE)
+    if not report.get("tooEarly"):
+        try:
+            png = await api.card(report["token"])
+            await note.delete()
+            await message.answer_photo(
+                BufferedInputFile(png, filename=f"gemhog-{report['symbol']}-{report.get('score', 0)}.png"),
+                caption=fmt.card_caption(report),
+            )
+            await message.answer(text, disable_web_page_preview=True)
+            return
+        except (api.ServeError, Exception):  # noqa: BLE001 - the text answer must always land
+            log.warning("card failed for %s; answering with text only", report.get("token"))
+    await note.edit_text(text, disable_web_page_preview=True)
 
 @dp.message(Command("top"))
 async def cmd_top(message: Message) -> None:
@@ -115,7 +138,7 @@ async def bare_address(message: Message) -> None:
     except api.ServeError as error:
         await note.edit_text(f"error: {error}")
         return
-    await note.edit_text(fmt.format_check(report, SITE_BASE), disable_web_page_preview=True)
+    await answer_with_card(message, note, report)
 
 
 async def watch_loop(bot: Bot) -> None:

@@ -72,6 +72,11 @@ def format_top(result: dict[str, Any]) -> str:
     return f"{escape(head)}\n<pre>{escape(chr(10).join(lines))}</pre>"
 
 
+def card_caption(report: dict[str, Any]) -> str:
+    """One line under the share card: $TICKER · GRADE score/100."""
+    return f"{grade_prefix(report['grade'])}${report['symbol']} · {report['grade']} {report['score']}/100"
+
+
 def format_alert(alert: dict[str, Any]) -> str:
     return (
         f"{grade_prefix(alert['grade'])}<b>{escape(alert['grade'])} {alert['score']}/100</b> "

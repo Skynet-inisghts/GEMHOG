@@ -14,6 +14,8 @@ gemhog check 0x… --format json --output certificate.json
 
 Tokens younger than 5 minutes print `TOO EARLY`. A week-old token replays its whole transfer history and takes up to a minute or two.
 
+`--card out.png` additionally writes the 1080x1080 share card (red / yellow / green by score band); exclusive like every export, and refused for a token under 5 minutes.
+
 ## hunt
 
 The flagship, and it lives only in the CLI. Indexes every launch in the window, grades the funded candidates best-funded first inside a time budget, prints the ranked table.

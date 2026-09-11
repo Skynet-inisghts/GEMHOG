@@ -7,7 +7,7 @@ One engine, three doors. The grading engine lives in `lib/gemhog/` and is the on
                       ┌──────────────────────────────────────────────┐
    chain reads        │  read/    launches · logs · holders · wallet │
    (rpc gate, chunked)│  grade/   cohort · checkpoints · components  │   pure math,
-                      │  resolve · certificate · hunt · serve        │   fixture-tested
+                      │  resolve · certificate · card · hunt · serve │   fixture-tested
                       └──────┬──────────────┬──────────────┬─────────┘
                              │              │              │
                    bin/gemhog.mjs      app/api/*      gemhog serve (127.0.0.1)
@@ -19,6 +19,7 @@ One engine, three doors. The grading engine lives in `lib/gemhog/` and is the on
 - **`lib/gemhog/rpc.ts`** — every JSON-RPC request goes through one gate: a list of public endpoints with capabilities (publicnode for state, the official Robinhood endpoint for logs), bounded concurrency, minimum spacing, a process-wide cooldown after a 429, and a penalty box per endpoint.
 - **`lib/gemhog/read/`** — everything that touches the network. Log reads are chunked adaptively (AIMD): 1M-block strides through quiet ranges, 500-block bites through launch-hour hot zones, and a chunk the RPC refuses even at minimum size is reported as `partial`, never silently treated as empty.
 - **`lib/gemhog/grade/`** — pure functions, no network anywhere. `GradeSource` in, certificate out; the fixtures in `test/fixtures/` exercise exactly this boundary.
+- **`lib/gemhog/card.ts`** — the share-card renderer (@napi-rs/canvas), a one-to-one port of the reference in `assets/cards/render_cards.py`; served by `GET /api/card` on the site and `GET /card/:token` on serve.
 - **`bin/gemhog.mjs`** — a thin commander shell over the compiled engine (`pnpm build:cli` → `.gemhog-build/`).
 - **`app/`** — Next.js App Router. The API routes import the engine directly; the pages are the browser skin. The site builds with webpack (`next build --webpack`): the engine uses NodeNext `.js` specifiers so the compiled CLI runs on plain Node, and webpack's `extensionAlias` maps them back to the TypeScript sources, which Turbopack currently will not.
 - **`bot/`** — Python, aiogram 3. Zero grading logic; it formats answers from `gemhog serve` and keeps its subscriptions in SQLite.

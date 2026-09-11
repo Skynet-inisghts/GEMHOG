@@ -361,6 +361,17 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 .term-cluster .term-addr a:hover { color: var(--accent); }
 .term-tools { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
 .term-tools button { cursor: pointer; min-height: 40px; }
+.term-card { max-width: 540px; }
+.term-card img {
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line-hot);
+  background:
+    linear-gradient(110deg, var(--panel) 40%, var(--panel-2) 50%, var(--panel) 60%);
+  background-size: 200% 100%;
+  animation: card-shimmer 1.4s linear infinite;
+}
+@keyframes card-shimmer { to { background-position: -200% 0; } }
 .term-provenance { color: var(--faint); font-size: 11.5px; line-height: 1.6; }
 
 @media (max-width: 900px) {

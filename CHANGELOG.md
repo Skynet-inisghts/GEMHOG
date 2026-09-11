@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.7.0 — 2026-09-12
+
+- Share cards: a 1080x1080 PNG per certificate, three moods by score band (1-35 red with a lump of coal, 36-70 yellow with a dull pebble, 71-100 green with the diamond), rendered by `lib/gemhog/card.ts` — a one-to-one port of the reference renderer in `assets/cards/render_cards.py`, on @napi-rs/canvas with the shipped pig sprites.
+- `GET /api/card?token=0x…` with a 60-second cache; token logos come from the contract's own `getTokenInfo` through the pons gateway, with a grey initial circle as the fallback. Tokens under 5 minutes answer 425: no grade, no card.
+- The terminal shows the live card under every certificate; **Share as image** now downloads the card (`gemhog-TICKER-score.png`) and **Copy link** copies `/terminal?token=…`.
+- A shared `/terminal?token=…` link unfurls into the token's card on X and Telegram (`og:image` + `twitter:card = summary_large_image`).
+- `gemhog check --card out.png` writes the same card locally; exclusive, like every export. `gemhog serve` grew `GET /card/:token` and the bot answers `/check` with the card as a photo, certificate text following.
+- The demo card carries a DEMO plate across the pig.
+
 ## 0.6.0 — 2026-09-11
 
 - `demo` now runs the real engine over a recorded fixture — the same synthetic VVS1 launch the test suite grades — so the walkthrough and a live certificate can never drift apart. Every line still says DEMO.
