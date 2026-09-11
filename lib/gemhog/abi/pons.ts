@@ -1,4 +1,4 @@
-import { parseAbi, toEventSelector } from "viem";
+import { parseAbi, toEventSelector, toFunctionSelector } from "viem";
 
 /**
  * pons v2 on Robinhood Chain.
@@ -52,6 +52,18 @@ export const escrowAbi = parseAbi([
   "event Credited(address indexed recipient, address indexed depositor, uint256 amount)",
   "event Claimed(address indexed recipient, uint256 amount)",
 ]);
+
+export const routerAbi = parseAbi([
+  "struct Socials { string twitter; string telegram; string discord; string website; string farcaster; }",
+  "struct TokenParams { string name; string symbol; string logo; string description; Socials socials; address creatorFeeRecipient; uint16 creatorTaxBps; bool buybackEnabled; bytes32 expectedEconomics; bytes32 salt; }",
+  "function launchAndBuy(TokenParams params, uint256 launchConfigId, address pairToken, uint256 quoteIn, uint256 minTokensOut, address recipient, address[] snipeTaxExemptions) payable returns (address token, address curve, uint256 tokensOut)",
+]);
+
+export const SELECTOR = {
+  launchAndBuy: toFunctionSelector(
+    "launchAndBuy((string,string,string,string,(string,string,string,string,string),address,uint16,bool,bytes32,bytes32),uint256,address,uint256,uint256,address,address[])",
+  ),
+} as const;
 
 export const TOPIC = {
   tokenLaunched: toEventSelector("TokenLaunched(address,address,address,address,uint256,uint256)"),

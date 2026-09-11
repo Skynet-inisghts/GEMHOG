@@ -35,7 +35,26 @@ export const ADDR = {
   ponsHook: "0xE5e702641Ea86F4ae6cC3cDaeD2B886f976Be044" as Address,
   ponsLocker: "0x267444D099b10fB5Ed7c3Cc7B7c767AdcA574952" as Address,
   weth: "0x0Bd7D308f8E1639FAb988df18A8011f41EAcAD73" as Address,
+  // Uniswap v4 is a singleton: after graduation the PoolManager custodies the
+  // pool's tokens, so it is infrastructure, not a holder.
+  v4PoolManager: "0x8366a39cc670b4001a1121b8f6a443a643e40951" as Address,
 } as const;
+
+export const BURN_ADDRESSES = new Set([
+  "0x0000000000000000000000000000000000000000",
+  "0x000000000000000000000000000000000000dead",
+]);
+
+/** Addresses that hold float or route trades; never counted as holders and never in a cohort. */
+export const INFRA_ADDRESSES = new Set([
+  ADDR.ponsFactory,
+  ADDR.ponsRouter,
+  ADDR.ponsDeployer,
+  ADDR.ponsEscrow,
+  ADDR.ponsHook,
+  ADDR.ponsLocker,
+  ADDR.v4PoolManager,
+].map((a) => a.toLowerCase()));
 
 export const ZERO: Address = "0x0000000000000000000000000000000000000000";
 

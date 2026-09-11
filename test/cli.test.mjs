@@ -64,5 +64,6 @@ test("help lists the current commands", async () => {
   const { stdout } = await run("node", [cli, "--help"]);
   assert.ok(stdout.includes("doctor"));
   assert.ok(stdout.includes("demo"));
+  assert.ok(stdout.includes("check"));
   assert.ok(stdout.includes("Read only"));
 });

@@ -56,7 +56,7 @@ export default function Home() {
             <div className="cert-grade"><b>VVS1</b><span>87 / 100</span></div>
             <div>cut 34/40 · clarity 16/20 · color 17/20 · carat 20/20</div>
             <div>early cohort 142 wallets · still holding 84% at 1h</div>
-            <div className="cert-note">sample shape, not live data · the live engine lands in 0.2</div>
+            <div className="cert-note">sample numbers · run a real check in the terminal</div>
           </div>
           <div className="grade-scale" aria-label="The clarity scale from FL to I3">
             <i className="gs-vvs">FL</i><i className="gs-vvs">IF</i><i className="gs-vvs">VVS1</i><i className="gs-vvs">VVS2</i>

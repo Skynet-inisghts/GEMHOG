@@ -1,8 +1,7 @@
 /**
  * Synthetic walkthrough. Nothing here touches the network and every line of
  * output is marked DEMO; the numbers are invented solely to show the shape of
- * a certificate. The real engine (read/ + grade/) lands in 0.2.0 and the demo
- * then replays recorded fixtures instead of these constants.
+ * a certificate. The live engine lives in check.ts; this file never calls it.
  */
 
 export interface DemoReport {
@@ -57,7 +56,7 @@ export function renderDemo(report: DemoReport, markdown = false): string {
     "",
     `phase    ${report.phase}                    source  ${report.source}`,
     "",
-    "synthetic walkthrough · the live engine lands in 0.2.0",
+    "synthetic walkthrough · run gemhog check <token> for a live certificate",
   ];
   // Every line carries the DEMO mark so no excerpt can pass as live chain data.
   const marked = lines.map((l) => (l ? `DEMO │ ${l}` : "DEMO │")).join("\n");

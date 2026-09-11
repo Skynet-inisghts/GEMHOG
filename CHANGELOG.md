@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.2.0 — 2026-09-11
+
+- The grade engine: early cohort with the opening-tax human filter and declared-bundle exclusion, Transfer-replayed balances at six checkpoints, half-life, and the four components cut/clarity/color/carat exactly as specified in `docs/METHODOLOGY.md`.
+- `gemhog check <token|ticker>` (alias `grade`): the live certificate against the chain, ticker resolution through DexScreener and optional Blockscout search with every candidate verified against the pons factory, and a cluster table when one ticker has several launches.
+- Adaptive log chunking: 1M-block strides on quiet ranges, 500-block bites through launch-hour hot zones, refused chunks reported as `partial` instead of silently dropped.
+- Holder snapshots via the Pons Portal holders endpoint with a Transfer-replay fallback; infrastructure (curve, pool manager, locker, escrow, burn) never counts as a holder.
+- `/terminal`: certificate view with the grade in its clarity color, cluster picker, offline demo marked DEMO, share-as-image PNG and full provenance. `POST /api/grade` with a 60-second cache.
+- Engine fixtures with hand-derived expected grades (VVS1 87, SI2 47, I2 23) and boundary tests: too-early tokens, quiet-launch window widening, the 0.5 half-life edge, burns not counted as dev exits.
+- README: the captured live certificate replaces the synthetic one up top; live-grading and API sections.
+
 ## 0.1.0 — 2026-09-11
 
 - Chain layer for Robinhood Chain 4663: chain definition, verified pons v2 addresses, multicall3, and an RPC gate with bounded concurrency and 429 backoff (adapted from bodkin, MIT).

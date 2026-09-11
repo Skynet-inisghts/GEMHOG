@@ -1,0 +1,471 @@
+{
+ "launch": {
+  "token": "0x6932ffffffffffffffffffffffffffffffffffff",
+  "symbol": "I2",
+  "name": "i2",
+  "curve": "0xc000000000000000000000000000000000000000",
+  "deployer": "0xd111111111111111111111111111111111111111",
+  "creatorFeeRecipient": "0xd111111111111111111111111111111111111111",
+  "pairIsEth": true,
+  "phase": 0,
+  "phaseLabel": "curve",
+  "graduated": false,
+  "curveProgress": 0.5,
+  "launchedAt": 1700000000,
+  "launchBlock": 1000000,
+  "totalSupply": "1000000000000000000000000000",
+  "devBuyWei": "0",
+  "devTokens": "30000000000000000000000000",
+  "exemptions": [
+   "0x627830aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "0x627831aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  ]
+ },
+ "trades": [
+  {
+   "kind": "buy",
+   "wallet": "0x627830aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "quoteWei": "1000000000000000000",
+   "tokens": "60000000000000001140850688",
+   "taxWei": "0",
+   "block": 1000005
+  },
+  {
+   "kind": "buy",
+   "wallet": "0x627831aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "quoteWei": "1000000000000000000",
+   "tokens": "60000000000000001140850688",
+   "taxWei": "0",
+   "block": 1000005
+  },
+  {
+   "kind": "buy",
+   "wallet": "0x7730aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "quoteWei": "80000000000000000",
+   "tokens": "10000000000000000000000",
+   "taxWei": "4000000000000000",
+   "block": 1000020
+  },
+  {
+   "kind": "buy",
+   "wallet": "0x7731aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "quoteWei": "80000000000000000",
+   "tokens": "10000000000000000000000",
+   "taxWei": "4000000000000000",
+   "block": 1000030
+  },
+  {
+   "kind": "buy",
+   "wallet": "0x7732aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "quoteWei": "80000000000000000",
+   "tokens": "10000000000000000000000",
+   "taxWei": "4000000000000000",
+   "block": 1000040
+  },
+  {
+   "kind": "buy",
+   "wallet": "0x7733aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "quoteWei": "80000000000000000",
+   "tokens": "10000000000000000000000",
+   "taxWei": "4000000000000000",
+   "block": 1000050
+  },
+  {
+   "kind": "buy",
+   "wallet": "0x7734aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "quoteWei": "80000000000000000",
+   "tokens": "10000000000000000000000",
+   "taxWei": "4000000000000000",
+   "block": 1000060
+  },
+  {
+   "kind": "buy",
+   "wallet": "0x7735aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "quoteWei": "80000000000000000",
+   "tokens": "10000000000000000000000",
+   "taxWei": "79200000000000000",
+   "block": 1000070
+  },
+  {
+   "kind": "buy",
+   "wallet": "0x7736aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "quoteWei": "80000000000000000",
+   "tokens": "10000000000000000000000",
+   "taxWei": "79200000000000000",
+   "block": 1000080
+  },
+  {
+   "kind": "buy",
+   "wallet": "0x7737aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "quoteWei": "80000000000000000",
+   "tokens": "10000000000000000000000",
+   "taxWei": "79200000000000000",
+   "block": 1000090
+  },
+  {
+   "kind": "buy",
+   "wallet": "0x7738aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "quoteWei": "80000000000000000",
+   "tokens": "10000000000000000000000",
+   "taxWei": "79200000000000000",
+   "block": 1000100
+  },
+  {
+   "kind": "buy",
+   "wallet": "0x7739aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "quoteWei": "80000000000000000",
+   "tokens": "10000000000000000000000",
+   "taxWei": "79200000000000000",
+   "block": 1000110
+  },
+  {
+   "kind": "buy",
+   "wallet": "0x773130aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "quoteWei": "80000000000000000",
+   "tokens": "10000000000000000000000",
+   "taxWei": "79200000000000000",
+   "block": 1000120
+  },
+  {
+   "kind": "buy",
+   "wallet": "0x773131aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "quoteWei": "80000000000000000",
+   "tokens": "10000000000000000000000",
+   "taxWei": "79200000000000000",
+   "block": 1000130
+  },
+  {
+   "kind": "buy",
+   "wallet": "0x773132aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "quoteWei": "80000000000000000",
+   "tokens": "10000000000000000000000",
+   "taxWei": "79200000000000000",
+   "block": 1000140
+  },
+  {
+   "kind": "buy",
+   "wallet": "0x773133aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "quoteWei": "80000000000000000",
+   "tokens": "10000000000000000000000",
+   "taxWei": "79200000000000000",
+   "block": 1000150
+  },
+  {
+   "kind": "buy",
+   "wallet": "0x773134aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "quoteWei": "80000000000000000",
+   "tokens": "10000000000000000000000",
+   "taxWei": "79200000000000000",
+   "block": 1000160
+  },
+  {
+   "kind": "buy",
+   "wallet": "0x773135aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "quoteWei": "80000000000000000",
+   "tokens": "10000000000000000000000",
+   "taxWei": "79200000000000000",
+   "block": 1000170
+  },
+  {
+   "kind": "buy",
+   "wallet": "0x773136aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "quoteWei": "80000000000000000",
+   "tokens": "10000000000000000000000",
+   "taxWei": "79200000000000000",
+   "block": 1000180
+  },
+  {
+   "kind": "buy",
+   "wallet": "0x773137aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "quoteWei": "80000000000000000",
+   "tokens": "10000000000000000000000",
+   "taxWei": "79200000000000000",
+   "block": 1000190
+  },
+  {
+   "kind": "buy",
+   "wallet": "0x773138aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "quoteWei": "80000000000000000",
+   "tokens": "10000000000000000000000",
+   "taxWei": "79200000000000000",
+   "block": 1000200
+  },
+  {
+   "kind": "buy",
+   "wallet": "0x773139aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "quoteWei": "80000000000000000",
+   "tokens": "10000000000000000000000",
+   "taxWei": "79200000000000000",
+   "block": 1000210
+  },
+  {
+   "kind": "sell",
+   "wallet": "0xd111111111111111111111111111111111111111",
+   "quoteWei": "1000000000000000000",
+   "tokens": "1000000000000000000000000",
+   "taxWei": "0",
+   "block": 1006000
+  }
+ ],
+ "transfers": [
+  {
+   "from": "0xc000000000000000000000000000000000000000",
+   "to": "0x627830aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "value": "60000000000000001140850688",
+   "block": 1000005
+  },
+  {
+   "from": "0xc000000000000000000000000000000000000000",
+   "to": "0x627831aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "value": "60000000000000001140850688",
+   "block": 1000005
+  },
+  {
+   "from": "0xc000000000000000000000000000000000000000",
+   "to": "0x7730aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "value": "10000000000000000000000",
+   "block": 1000020
+  },
+  {
+   "from": "0xc000000000000000000000000000000000000000",
+   "to": "0x7731aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "value": "10000000000000000000000",
+   "block": 1000030
+  },
+  {
+   "from": "0xc000000000000000000000000000000000000000",
+   "to": "0x7732aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "value": "10000000000000000000000",
+   "block": 1000040
+  },
+  {
+   "from": "0xc000000000000000000000000000000000000000",
+   "to": "0x7733aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "value": "10000000000000000000000",
+   "block": 1000050
+  },
+  {
+   "from": "0xc000000000000000000000000000000000000000",
+   "to": "0x7734aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "value": "10000000000000000000000",
+   "block": 1000060
+  },
+  {
+   "from": "0xc000000000000000000000000000000000000000",
+   "to": "0x7735aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "value": "10000000000000000000000",
+   "block": 1000070
+  },
+  {
+   "from": "0xc000000000000000000000000000000000000000",
+   "to": "0x7736aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "value": "10000000000000000000000",
+   "block": 1000080
+  },
+  {
+   "from": "0xc000000000000000000000000000000000000000",
+   "to": "0x7737aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "value": "10000000000000000000000",
+   "block": 1000090
+  },
+  {
+   "from": "0xc000000000000000000000000000000000000000",
+   "to": "0x7738aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "value": "10000000000000000000000",
+   "block": 1000100
+  },
+  {
+   "from": "0xc000000000000000000000000000000000000000",
+   "to": "0x7739aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "value": "10000000000000000000000",
+   "block": 1000110
+  },
+  {
+   "from": "0xc000000000000000000000000000000000000000",
+   "to": "0x773130aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "value": "10000000000000000000000",
+   "block": 1000120
+  },
+  {
+   "from": "0xc000000000000000000000000000000000000000",
+   "to": "0x773131aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "value": "10000000000000000000000",
+   "block": 1000130
+  },
+  {
+   "from": "0xc000000000000000000000000000000000000000",
+   "to": "0x773132aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "value": "10000000000000000000000",
+   "block": 1000140
+  },
+  {
+   "from": "0xc000000000000000000000000000000000000000",
+   "to": "0x773133aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "value": "10000000000000000000000",
+   "block": 1000150
+  },
+  {
+   "from": "0xc000000000000000000000000000000000000000",
+   "to": "0x773134aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "value": "10000000000000000000000",
+   "block": 1000160
+  },
+  {
+   "from": "0xc000000000000000000000000000000000000000",
+   "to": "0x773135aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "value": "10000000000000000000000",
+   "block": 1000170
+  },
+  {
+   "from": "0xc000000000000000000000000000000000000000",
+   "to": "0x773136aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "value": "10000000000000000000000",
+   "block": 1000180
+  },
+  {
+   "from": "0xc000000000000000000000000000000000000000",
+   "to": "0x773137aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "value": "10000000000000000000000",
+   "block": 1000190
+  },
+  {
+   "from": "0xc000000000000000000000000000000000000000",
+   "to": "0x773138aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "value": "10000000000000000000000",
+   "block": 1000200
+  },
+  {
+   "from": "0xc000000000000000000000000000000000000000",
+   "to": "0x773139aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "value": "10000000000000000000000",
+   "block": 1000210
+  },
+  {
+   "from": "0x7730aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "to": "0x8366a39cc670b4001a1121b8f6a443a643e40951",
+   "value": "10000000000000000000000",
+   "block": 1001000
+  },
+  {
+   "from": "0x7731aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "to": "0x8366a39cc670b4001a1121b8f6a443a643e40951",
+   "value": "10000000000000000000000",
+   "block": 1001000
+  },
+  {
+   "from": "0x7732aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "to": "0x8366a39cc670b4001a1121b8f6a443a643e40951",
+   "value": "10000000000000000000000",
+   "block": 1001000
+  },
+  {
+   "from": "0x7733aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "to": "0x8366a39cc670b4001a1121b8f6a443a643e40951",
+   "value": "10000000000000000000000",
+   "block": 1001000
+  },
+  {
+   "from": "0x7734aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "to": "0x8366a39cc670b4001a1121b8f6a443a643e40951",
+   "value": "10000000000000000000000",
+   "block": 1001000
+  },
+  {
+   "from": "0x7735aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "to": "0x8366a39cc670b4001a1121b8f6a443a643e40951",
+   "value": "10000000000000000000000",
+   "block": 1001000
+  },
+  {
+   "from": "0x7736aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "to": "0x8366a39cc670b4001a1121b8f6a443a643e40951",
+   "value": "10000000000000000000000",
+   "block": 1001000
+  },
+  {
+   "from": "0x7737aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "to": "0x8366a39cc670b4001a1121b8f6a443a643e40951",
+   "value": "10000000000000000000000",
+   "block": 1001000
+  },
+  {
+   "from": "0x7738aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "to": "0x8366a39cc670b4001a1121b8f6a443a643e40951",
+   "value": "10000000000000000000000",
+   "block": 1001000
+  },
+  {
+   "from": "0x7739aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "to": "0x8366a39cc670b4001a1121b8f6a443a643e40951",
+   "value": "10000000000000000000000",
+   "block": 1004000
+  },
+  {
+   "from": "0x773130aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "to": "0x8366a39cc670b4001a1121b8f6a443a643e40951",
+   "value": "10000000000000000000000",
+   "block": 1004000
+  },
+  {
+   "from": "0x773131aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "to": "0x8366a39cc670b4001a1121b8f6a443a643e40951",
+   "value": "10000000000000000000000",
+   "block": 1004000
+  },
+  {
+   "from": "0x773132aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "to": "0x8366a39cc670b4001a1121b8f6a443a643e40951",
+   "value": "10000000000000000000000",
+   "block": 1004000
+  },
+  {
+   "from": "0x773133aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "to": "0x8366a39cc670b4001a1121b8f6a443a643e40951",
+   "value": "10000000000000000000000",
+   "block": 1004000
+  },
+  {
+   "from": "0x773134aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "to": "0x8366a39cc670b4001a1121b8f6a443a643e40951",
+   "value": "10000000000000000000000",
+   "block": 1010000
+  },
+  {
+   "from": "0x773135aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "to": "0x8366a39cc670b4001a1121b8f6a443a643e40951",
+   "value": "10000000000000000000000",
+   "block": 1010000
+  },
+  {
+   "from": "0x773136aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "to": "0x8366a39cc670b4001a1121b8f6a443a643e40951",
+   "value": "10000000000000000000000",
+   "block": 1010000
+  },
+  {
+   "from": "0x773137aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "to": "0x8366a39cc670b4001a1121b8f6a443a643e40951",
+   "value": "10000000000000000000000",
+   "block": 1040000
+  }
+ ],
+ "holders": {
+  "top10Pct": 42.0,
+  "holderCount": 40,
+  "countIsFloor": false,
+  "source": "fixture",
+  "complete": true,
+  "top": []
+ },
+ "escrow": {
+  "creditedWei": "2000000000000000000",
+  "claims": [
+   {
+    "block": 1018000,
+    "amountWei": "1000000000000000000"
+   }
+  ]
+ },
+ "now": 1700021660,
+ "secPerBlock": 0.1
+}

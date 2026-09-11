@@ -147,7 +147,7 @@ ${lines.join("\n")}
 async function renderCertificate() {
   const { stdout: jsonOut } = await run("node", [cli, "demo", "--format", "json"]);
   const report = JSON.parse(jsonOut);
-  await writeFile(`${outDir}certificate-snapshot.json`, JSON.stringify(report, null, 2) + "\n");
+  await writeFile(`${outDir}demo-snapshot.json`, JSON.stringify(report, null, 2) + "\n");
 
   const left = 32;
   let y = 118;
@@ -183,7 +183,7 @@ async function renderCertificate() {
     y += 20;
   }
   y += LH;
-  lines.push(`<text x="${left}" y="${y}" font-family="${FONT}" font-size="12" fill="${C.faint}" xml:space="preserve">synthetic walkthrough · reproduce with: pnpm demo · the live engine lands in 0.2.0</text>`);
+  lines.push(`<text x="${left}" y="${y}" font-family="${FONT}" font-size="12" fill="${C.faint}" xml:space="preserve">synthetic walkthrough · reproduce with: pnpm demo · a live certificate: pnpm gemhog check</text>`);
 
   const width = 980;
   const height = Math.ceil(y + 30);
@@ -193,6 +193,44 @@ ${wordmark("GEMHOG", left, 62, 4, C.accent, C.accentDark)}
 <text x="${left + 200}" y="94" font-family="${FONT}" font-size="13" fill="${C.text}" xml:space="preserve">Grade the hands before the bag.</text>
 ${lines.join("\n")}`;
   await writeFile(`${outDir}certificate-demo.svg`, windowFrame({ width, height, title: "gemhog / demo", tag: "SYNTHETIC DATA / MARKED DEMO", body }) + "\n");
+}
+
+/* ------------------------------------------------- live certificate (real) */
+
+/** A real `check` against the supported example token, captured at render time. */
+async function renderLiveCertificate() {
+  const { EXAMPLE_TOKEN } = await import("../.gemhog-build/doctor.js");
+  const { stdout } = await run("node", [cli, "check", EXAMPLE_TOKEN, "--format", "json"], { timeout: 300_000 });
+  const report = JSON.parse(stdout);
+  await writeFile(`${outDir}certificate-snapshot.json`, JSON.stringify(report, null, 2) + "\n");
+  const { renderCertificate } = await import("../.gemhog-build/certificate.js");
+  const { gradeTone } = await import("../.gemhog-build/grade/grade.js");
+  const textLines = renderCertificate(report).split("\n");
+
+  const toneColor = { vvs: C.accent, vs: "#ffffff", si: "#8d8d8d", i: "#5a5a5a" }[gradeTone(report.grade)] ?? C.muted;
+  const left = 32;
+  let y = 128;
+  const lines = [];
+  lines.push(lineToSvg([seg("$ ", C.faint), seg(`pnpm gemhog check ${report.token.slice(0, 10)}…`, C.accent, true)], left, y));
+  y += LH * 1.5;
+  for (const raw of textLines) {
+    const color = raw.startsWith("GRADE") ? toneColor : raw.startsWith("$") ? C.text : C.muted;
+    const bold = raw.startsWith("GRADE");
+    lines.push(lineToSvg([seg(raw.length > 118 ? raw.slice(0, 117) + "…" : raw, color, bold)], left, y));
+    y += LH * (raw === "" ? 0.55 : 1);
+  }
+  y += LH * 0.8;
+  lines.push(`<text x="${left}" y="${y}" font-family="${FONT}" font-size="12" fill="${C.faint}" xml:space="preserve">CAPTURED ${report.observedAt.slice(0, 19).replace("T", " ")} UTC / a historical grade, not a current one / full data in certificate-snapshot.json</text>`);
+
+  const width = 1080;
+  const height = Math.ceil(y + 28);
+  const body = `
+${wordmark("GEMHOG", left, 62, 4, C.accent, C.accentDark)}
+<text x="${left + 200}" y="76" font-family="${FONT}" font-size="13" fill="${C.muted}" xml:space="preserve">a real certificate from the live chain</text>
+<text x="${left + 200}" y="94" font-family="${FONT}" font-size="13" fill="${C.text}" xml:space="preserve">Grade the hands before the bag.</text>
+${lines.join("\n")}`;
+  await writeFile(`${outDir}certificate-snapshot.svg`, windowFrame({ width, height, title: "gemhog / check", tag: "CAPTURED LIVE CHECK / HISTORICAL", body }) + "\n");
+  return report;
 }
 
 /* ------------------------------------------------------------ json export */
@@ -259,4 +297,5 @@ await mkdir(outDir, { recursive: true });
 const doctor = await renderDoctor();
 await renderCertificate();
 await renderJsonExport();
-console.log(`rendered assets/readme: doctor.svg (${doctor.checks.filter((c) => c.ok).length}/${doctor.checks.length} ok), certificate-demo.svg, json-export.svg`);
+const live = await renderLiveCertificate();
+console.log(`rendered assets/readme: doctor.svg (${doctor.checks.filter((c) => c.ok).length}/${doctor.checks.length} ok), certificate-snapshot.svg (live ${live.grade}), certificate-demo.svg, json-export.svg`);

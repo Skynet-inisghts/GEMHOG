@@ -20,20 +20,21 @@ GEMHOG takes a token, finds those first-minute buyers, and checks who is still i
 
 ### Read the hands, not the post
 
-![GEMHOG certificate walkthrough: a synthetic VVS1 certificate with the four components and retention by checkpoint, every line marked DEMO](assets/readme/certificate-demo.svg)
+![GEMHOG live certificate: a captured check of the supported example token, with the four components, retention by checkpoint and provenance](assets/readme/certificate-snapshot.svg)
 
-A styled documentation view of the offline `demo` command. The data is synthetic and every line says so; the live certificate, computed from chain reads, lands in 0.2.0. [Captured data →](assets/readme/certificate-snapshot.json)
+A styled documentation view of an actual `check` result against the live chain. The capture time is printed inside the image; it is a historical grade, not a current one. [Full captured data →](assets/readme/certificate-snapshot.json)
 
 ## Available in the current source
 
 | Surface | What works |
 | --- | --- |
-| Local CLI | `doctor` with measured checks of every source; `demo`, a marked synthetic walkthrough |
-| Landing page | The project front door with the grade scale and safety boundaries |
-| `/terminal`, `/holders` | Labelled placeholders; the live terminal arrives in 0.2, Holder Check in 0.3 |
-| `GET /api/health` | The doctor's checks as JSON |
-| Exports | JSON and Markdown for both commands; exports refuse to overwrite existing files |
-| Verification | CLI tests, Node 22/24 CI, and a `no-signer` job that fails the build if a signing primitive appears |
+| Grade engine | Early cohort, six retention checkpoints, cut/clarity/color/carat, the full clarity scale |
+| Local CLI | `check <token\|ticker>` live grading with cluster disambiguation; `doctor`; `demo` |
+| Browser terminal | `/terminal`: ticker or CA in, certificate out, offline demo, share as image |
+| API | `POST /api/grade` (same JSON as the CLI), `GET /api/health` |
+| Offline walkthrough | Synthetic certificate, labelled DEMO on every line, no provider requests |
+| Exports | JSON and Markdown for every command; exports refuse to overwrite existing files |
+| Verification | Engine fixtures with hand-derived expected grades, CLI tests, Node 22/24 CI, `no-signer` job |
 
 Official `$GEMHOG` contract: TBA. The address will be published here, on the site and in `lib/gemhog/project-token.ts` at launch; until then any address claiming to be $GEMHOG is not ours.
 
@@ -83,7 +84,29 @@ Open the site locally:
 pnpm dev
 ```
 
-Visit `http://localhost:3000` for the landing page.
+Visit `http://localhost:3000` for the landing page and `/terminal` for the browser terminal.
+
+## Live grading
+
+The example below is a supported public token, not the GEMHOG contract:
+
+```bash
+pnpm gemhog check 0xac79255f6f404eba14f316e8669d76573a2d7b1e
+pnpm gemhog check PEANUT
+pnpm gemhog check 0x… --format json --output certificate.json
+```
+
+The certificate near the top of this README shows a captured run of the first command. A ticker fans out to the search sources and every candidate is verified against the pons factory; an ambiguous ticker returns the whole cluster and asks for the contract address. Bonding-curve tokens that never graduated are searchable by ticker only with a free `BLOCKSCOUT_API_KEY` in `.env`; the contract address always works.
+
+How the grade is computed — the cohort, the checkpoints and all four component formulas — is written down in [docs/METHODOLOGY.md](docs/METHODOLOGY.md).
+
+## API and development
+
+`POST /api/grade` accepts `{ "token": "0x…" }` or `{ "ticker": "PEANUT" }` and returns the same certificate JSON as the CLI, `{ "cluster": [...] }` for an ambiguous ticker, or `{ "error": "…" }`. `GET /api/health` runs the doctor's checks. Server routes hold a 60-second in-memory cache per input so a page full of browsers cannot hammer the public RPC.
+
+```bash
+pnpm check
+```
 
 ## Boundaries and sources
 
