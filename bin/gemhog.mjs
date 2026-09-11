@@ -48,21 +48,44 @@ const program = new Command();
 program
   .name("gemhog")
   .description("Diamond-hands terminal for Pons V2 tokens on Robinhood Chain. Read only: no keys, no signing, no transactions.")
-  .version("0.5.0");
+  .version("0.6.0");
 
 program
   .command("doctor")
   .description("check every source: RPC endpoints, pons factory addresses, opening-tax parameters, Pons API, Blockscout, DexScreener")
+  .option("--probe", "additionally grade the known example token end to end")
   .option("--format <format>", "text, json or markdown", "text")
   .option("--output <file>", "save the report; never overwrites an existing file")
   .action(async (opts) => {
     checkFormat(opts.format);
     const { loadEnv } = await engine("env");
     loadEnv();
-    const { runDoctor, renderDoctor } = await engine("doctor");
+    const { runDoctor, renderDoctor, EXAMPLE_TOKEN } = await engine("doctor");
     const report = await runDoctor();
-    const text = opts.format === "json" ? JSON.stringify(report, null, 2) : renderDoctor(report, opts.format === "markdown");
-    await deliver(text, opts.output);
+    let probe = null;
+    if (opts.probe) {
+      if (opts.format === "text" && !opts.output) process.stderr.write("probe: grading the example token end to end…\n");
+      const { checkToken } = await engine("check");
+      try {
+        const cert = await checkToken(EXAMPLE_TOKEN);
+        probe = { ok: true, grade: cert.grade, score: cert.score, symbol: cert.symbol, rpcCalls: cert.rpcCalls, ms: cert.ms };
+      } catch (error) {
+        probe = { ok: false, error: String(error.message).slice(0, 120) };
+        process.exitCode = 2;
+      }
+    }
+    if (opts.format === "json") {
+      await deliver(JSON.stringify(probe ? { ...report, probe } : report, null, 2), opts.output);
+    } else {
+      let text = renderDoctor(report, opts.format === "markdown");
+      if (probe) {
+        const line = probe.ok
+          ? `probe   full check of $${probe.symbol}: ${probe.grade} ${probe.score}/100 · ${probe.rpcCalls} rpc calls · ${(probe.ms / 1000).toFixed(1)}s`
+          : `probe   FAILED: ${probe.error}`;
+        text = opts.format === "markdown" ? text.replace(/\n```$/, `\n${line}\n\`\`\``) : `${text}\n${line}`;
+      }
+      await deliver(text, opts.output);
+    }
     if (!report.ok) process.exitCode = 2;
   });
 

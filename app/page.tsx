@@ -18,6 +18,7 @@ export default function Home() {
         <nav aria-label="Site navigation">
           <Link href="/terminal">Terminal</Link>
           <Link href="/holders">Holder check</Link>
+          <Link href="/docs">Docs</Link>
           <a href={REPO} target="_blank" rel="noreferrer">GitHub</a>
           <Link className="nav-cta" href="/terminal">Open terminal</Link>
         </nav>

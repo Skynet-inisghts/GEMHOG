@@ -3,7 +3,7 @@
   "symbol": "COPY",
   "name": "COPY",
   "launchedAt": "2026-09-10 09:07 UTC",
-  "ageSec": 127463,
+  "ageSec": 128561,
   "tooEarly": false,
   "grade": "I1",
   "score": 34,
@@ -45,8 +45,8 @@
   "phase": "pool",
   "holdersSource": "pons-api",
   "source": "live",
-  "observedAt": "2026-09-11T20:31:28.000Z",
-  "block": 60540943,
-  "rpcCalls": 34,
-  "ms": 60893
+  "observedAt": "2026-09-11T20:49:46.000Z",
+  "block": 60551672,
+  "rpcCalls": 36,
+  "ms": 32320
 }

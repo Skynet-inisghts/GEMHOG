@@ -6,11 +6,12 @@
   <img src="https://img.shields.io/badge/Node-20%2B-FF7AC4?style=flat-square&amp;labelColor=0a0a0a" alt="Node 20 or newer" />
   <img src="https://img.shields.io/badge/Robinhood_Chain-4663-FF7AC4?style=flat-square&amp;labelColor=0a0a0a" alt="Robinhood Chain 4663" />
   <img src="https://img.shields.io/badge/signing-none-FF7AC4?style=flat-square&amp;labelColor=0a0a0a" alt="No signing" />
+  <img src="https://img.shields.io/badge/tests-42-FF7AC4?style=flat-square&amp;labelColor=0a0a0a" alt="42 tests" />
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-FF7AC4?style=flat-square&amp;labelColor=0a0a0a" alt="MIT license" /></a>
 </p>
 
 <p align="center"><strong>Grade the hands before the bag.</strong><br/>A browser and local CLI for grading holder retention of Pons V2 tokens on Robinhood Chain.</p>
-<p align="center"><a href="#start-in-one-minute">Start locally</a> · <a href="#available-in-the-current-source">What works today</a> · <a href="CHANGELOG.md">Changelog</a></p>
+<p align="center"><a href="#start-in-one-minute">Start locally</a> · <a href="#holder-check">Holder Check</a> · <a href="#live-grading">Live grading</a> · <a href="docs/COMMANDS.md">Commands</a> · <a href="docs/METHODOLOGY.md">Methodology</a> · <a href="docs/ARCHITECTURE.md">Architecture</a></p>
 
 ## Why GEMHOG
 
@@ -36,6 +37,8 @@ A styled documentation view of an actual `check` result against the live chain. 
 | hunt | The whole window graded, best-funded first, with `--follow`; lives only in the CLI |
 | watch, top, export | Re-grade one token on a loop; the cached top 10; the last hunt as CSV/JSON |
 | Pulse | `GET /api/top` and `/api/pulse`: grade counters, refreshed every 20 minutes, never the list |
+| Telegram bot | `/check` `/top` `/watch` `/alerts` over `gemhog serve`; zero grading logic in the bot |
+| Docs | `/docs` on the site renders the repository docs; the sources live in `docs/` |
 | Offline walkthrough | Synthetic certificate, labelled DEMO on every line, no provider requests |
 | Exports | JSON and Markdown for every command; exports refuse to overwrite existing files |
 | Verification | Engine fixtures with hand-derived expected grades, CLI tests, Node 22/24 CI, `no-signer` job |
@@ -92,8 +95,6 @@ pnpm gemhog demo --format markdown --output demo.md
 
 Exports refuse to overwrite existing files.
 
-The terminal images are documentation illustrations of existing outputs, rendered by `scripts/render-readme.mjs` from real command runs, never drawn by hand. [Reproduce or refresh the images →](assets/readme/README.md)
-
 Open the site locally:
 
 ```bash
@@ -136,13 +137,57 @@ pnpm gemhog watch 0x…
 
 The site never gets the list. `GET /api/top` and `GET /api/pulse` return counters and the grade distribution, refreshed every 20 minutes by the pulse workflow; the ranked table exists only in the CLI, on purpose.
 
+## The bot
+
+The Telegram bot is the third door into the same engine: `/check`, `/top`, `/watch` with 15-minute re-grades, and `/alerts` fed by `hunt --follow`. It contains zero grading logic — every answer comes from `gemhog serve`, a local JSON API bound to 127.0.0.1. `docker-compose.yml` runs the pair; [docs/BOT.md](docs/BOT.md) has the full contract. English, no emoji, except one diamond before VVS2 and better.
+
+## How it works
+
+```mermaid
+flowchart LR
+  A[Token or ticker] --> B[TokenLaunched + factory record]
+  B --> C[Early cohort from CurveBuy<br/>opening-tax human filter]
+  C --> D[Transfer-replayed balances<br/>at 5m / 15m / 1h / 6h / 24h / 7d]
+  D --> E[cut / clarity / color / carat]
+  E --> F[Score 0-100 · clarity grade]
+  F --> G[Browser / CLI / JSON / Markdown / Bot]
+```
+
+The cohort is the set of unique buy recipients in the first 60 seconds (a quiet launch widens to the first 20 buyers). The opening tax splits bots from humans: ~99% of a buy burned means a bot raced the block, near zero means a wallet waited. Balances at every checkpoint are replayed from Transfer history — the public RPC is not archival — and a wallet counts as holding while it keeps at least 80% of its peak.
+
+Retention, concentration, dev behaviour and weight fold into the four components. Formulas, sources and limits: [docs/METHODOLOGY.md](docs/METHODOLOGY.md).
+
+## Project map
+
+```text
+bin/gemhog.mjs           CLI: check, hunt, watch, top, holders, serve, demo, doctor, export
+lib/gemhog/
+  chain.ts               chain definition, verified pons addresses, multicall3
+  rpc.ts                 the gate: bounded concurrency, 429 backoff, endpoint penalty box
+  read/                  launches, logs, holders, wallet, blocks - everything that touches the network
+  grade/                 cohort, checkpoints, components, grade - pure functions, fixture-tested
+  resolve.ts             ticker to launch cluster, factory-verified
+  certificate.ts         one renderer for every surface
+  hunt.ts / serve.ts     the flagship scan; the bot's local API
+app/                     Next.js: landing, terminal, holders, docs, api/grade|holder|top|pulse|health
+bot/                     Python, aiogram 3; zero grading logic
+assets/                  the art pack and readme/ - SVG views rendered from real command output
+docs/                    methodology, commands, architecture, testing, bot, launch kit
+test/                    fixtures with hand-derived grades; engine, CLI and serve tests
+.github/workflows/       ci.yml (typecheck, tests, bot tests, no-signer) - pulse.yml (20-minute counters)
+```
+
 ## API and development
 
-`POST /api/grade` accepts `{ "token": "0x…" }` or `{ "ticker": "PEANUT" }` and returns the same certificate JSON as the CLI, `{ "cluster": [...] }` for an ambiguous ticker, or `{ "error": "…" }`. `GET /api/health` runs the doctor's checks. Server routes hold a 60-second in-memory cache per input so a page full of browsers cannot hammer the public RPC.
+`POST /api/grade` accepts `{ "token": "0x…" }` or `{ "ticker": "PEANUT" }` and returns the same certificate JSON as the CLI, `{ "cluster": [...] }` for an ambiguous ticker, or `{ "error": "…" }`. `POST /api/holder` accepts only a public `{ "wallet": "0x…" }` and lists its pons tokens. `GET /api/top?window=6h` and `GET /api/pulse` return counters and the grade distribution — never the list. `GET /api/health` runs the doctor's checks. Server routes hold a 60-second in-memory cache per input so a page full of browsers cannot hammer the public RPC.
 
 ```bash
 pnpm check
 ```
+
+See [testing](docs/TESTING.md), [contributing](CONTRIBUTING.md), [changelog](CHANGELOG.md), and [security](SECURITY.md).
+
+The terminal images are documentation illustrations of existing outputs, rendered by `scripts/render-readme.mjs` from real command runs, never drawn by hand. [Reproduce or refresh the images →](assets/readme/README.md)
 
 ## Boundaries and sources
 

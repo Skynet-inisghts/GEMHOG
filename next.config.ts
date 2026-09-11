@@ -7,6 +7,8 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   webpack: (config) => {
     config.resolve.extensionAlias = { ".js": [".ts", ".tsx", ".js"] };
+    // /docs renders the markdown files from docs/ as bundled strings.
+    config.module.rules.push({ test: /\.md$/, type: "asset/source" });
     return config;
   },
 };

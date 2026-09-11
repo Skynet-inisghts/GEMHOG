@@ -156,15 +156,16 @@ async function renderCertificate() {
   const lines = [];
   const push = (segments) => { lines.push(lineToSvg(segments, left, y)); y += LH; };
 
-  push([mark(), seg(`$${report.symbol}`, C.accent, true), seg(` · ${report.token} · launched ${report.launchedAt} · ${report.age} ago`, C.muted)]);
+  const ageH = `${Math.floor(report.ageSec / 3600)}h ${Math.round((report.ageSec % 3600) / 60)}m`;
+  push([mark(), seg(`$${report.symbol}`, C.accent, true), seg(` · ${report.token} · launched ${report.launchedAt} · ${ageH} ago`, C.muted)]);
   y += LH * 0.4;
   push([mark(), seg("GRADE  ", C.text), seg(report.grade, C.accent, true), seg(`   ${report.score} / 100`, C.text, true)]);
   y += LH * 0.4;
   push([mark(), seg("cut      ", C.muted), seg(`${report.cut.score}/40`, C.text, true), seg(`   early cohort ${report.cut.cohort} wallets (${report.cut.human} human)`, C.muted)]);
   push([mark(), seg("         ", C.muted), seg(`still holding: ${held} · half-life: ${report.cut.halfLife}`, C.muted)]);
-  push([mark(), seg("clarity  ", C.muted), seg(`${report.clarity.score}/20`, C.text, true), seg(`   top 10 hold ${report.clarity.top10Pct}% · ${report.clarity.bundle ? "bundle detected" : "no bundle"}`, C.muted)]);
-  push([mark(), seg("color    ", C.muted), seg(`${report.color.score}/20`, C.text, true), seg(`   dev bought ${report.color.devBoughtPct}% · dev has not sold · ${report.color.claims} fee claims`, C.muted)]);
-  push([mark(), seg("carat    ", C.muted), seg(`${report.carat.score}/20`, C.text, true), seg(`   ${report.carat.holders} holders · ${report.carat.cohortEth} ETH in the early cohort · top 3 ${report.carat.top3Pct}%`, C.muted)]);
+  push([mark(), seg("clarity  ", C.muted), seg(`${report.clarity.score}/20`, C.text, true), seg(`   top 10 hold ${report.clarity.top10Pct.toFixed(1)}% · ${report.clarity.bundleDeclared > 0 ? "bundle declared" : "no bundle"}`, C.muted)]);
+  push([mark(), seg("color    ", C.muted), seg(`${report.color.score}/20`, C.text, true), seg(`   dev bought ${report.color.devBoughtPct.toFixed(1)}% · ${report.color.devSells === 0 ? "dev has not sold" : "dev sold"} · ${report.color.feeClaims24h} fee claims`, C.muted)]);
+  push([mark(), seg("carat    ", C.muted), seg(`${report.carat.score}/20`, C.text, true), seg(`   ${report.carat.holders} holders · ${report.carat.cohortEth.toFixed(1)} ETH in the early cohort · top 3 ${Math.round(report.carat.top3Pct)}%`, C.muted)]);
   y += LH * 0.4;
   push([mark(), seg("phase    ", C.muted), seg(report.phase, C.ice), seg("          source  ", C.muted), seg("DEMO · synthetic data, no network", C.accent)]);
 

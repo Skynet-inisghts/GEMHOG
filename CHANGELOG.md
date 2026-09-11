@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.6.0 — 2026-09-11
+
+- `demo` now runs the real engine over a recorded fixture — the same synthetic VVS1 launch the test suite grades — so the walkthrough and a live certificate can never drift apart. Every line still says DEMO.
+- `doctor --probe`: after the source checks, a full end-to-end grade of the example token.
+- `/docs` on the site renders the repository docs — methodology, commands, architecture, testing, the bot — in the terminal skin.
+- The launch kit (`docs/LAUNCH.md`): the one-file CA swap in `lib/gemhog/project-token.ts`, what activates where, what never changes at launch.
+- `SECURITY.md` (the no-signing boundary and how to report), `CONTRIBUTING.md` (the four ground rules), `docs/ARCHITECTURE.md`, `docs/COMMANDS.md`, `docs/TESTING.md`.
+- README completed: the how-it-works flowchart, the project map, the bot section, a tests badge with the real count.
+
 ## 0.5.0 — 2026-09-11
 
 - `gemhog serve`: the engine as a local JSON API for the bot — `/check/:token`, `/top`, `/holders/:wallet`, `/alerts?since=`, `/health` — bound to 127.0.0.1 only, by design.

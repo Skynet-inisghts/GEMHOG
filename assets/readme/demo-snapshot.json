@@ -1,42 +1,52 @@
 {
-  "demo": true,
-  "token": "0x0000000000000000000000000000000000d3m000",
+  "token": "0x76767331ffffffffffffffffffffffffffffffff",
   "symbol": "HOGSTONE",
   "name": "Hogstone",
-  "launchedAt": "2026-09-11 08:14 UTC",
-  "age": "3h 12m",
+  "launchedAt": "2026-09-10 09:00 UTC",
+  "ageSec": 21660,
+  "tooEarly": false,
   "grade": "VVS1",
   "score": 87,
   "cut": {
     "score": 34,
-    "cohort": 142,
-    "human": 117,
+    "cohort": 25,
+    "human": 25,
+    "scoredIsHuman": true,
     "held": {
       "5m": 0.96,
-      "15m": 0.91,
+      "15m": 0.88,
       "1h": 0.84,
-      "6h": 0.79
+      "6h": 0.8
     },
     "halfLife": "not reached"
   },
   "clarity": {
-    "score": 16,
-    "top10Pct": 14.2,
-    "bundle": false
+    "score": 20,
+    "top10Pct": 14,
+    "bundleDeclared": 0,
+    "bundleHoldsPct": 0
   },
   "color": {
-    "score": 17,
-    "devBoughtPct": 2.1,
-    "devSold": false,
-    "feesCreditedEth": 0.41,
-    "claims": 0
+    "score": 20,
+    "devBoughtPct": 2,
+    "devSells": 0,
+    "feesCreditedEth": 0.4,
+    "feeClaims24h": 0
   },
   "carat": {
-    "score": 20,
-    "holders": 611,
-    "cohortEth": 3.8,
-    "top3Pct": 22
+    "score": 13,
+    "holders": 180,
+    "holdersIsFloor": false,
+    "cohortEth": 4,
+    "top3Pct": 12,
+    "pairIsEth": true
   },
-  "phase": "curve 74%",
-  "source": "DEMO · synthetic data, no network"
+  "phase": "curve 50% → pool",
+  "holdersSource": "fixture",
+  "source": "DEMO · recorded fixture, no network",
+  "observedAt": "2026-09-10T15:01:00.000Z",
+  "block": 0,
+  "rpcCalls": 0,
+  "ms": 0,
+  "demo": true
 }
