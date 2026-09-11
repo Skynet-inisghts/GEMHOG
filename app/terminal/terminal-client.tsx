@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { renderCertificate } from "@/lib/gemhog/certificate";
@@ -21,7 +21,7 @@ type Result =
   | { kind: "loading" }
   | { kind: "error"; message: string }
   | { kind: "report"; report: CertificateReport; text: string }
-  | { kind: "demo"; text: string }
+  | { kind: "demo"; report: CertificateReport; text: string }
   | { kind: "cluster"; rows: ClusterRow[]; note: string };
 
 const fmtAge = (sec: number): string => {
@@ -33,7 +33,6 @@ const fmtAge = (sec: number): string => {
 export default function TerminalClient() {
   const [input, setInput] = useState("");
   const [result, setResult] = useState<Result>({ kind: "idle" });
-  const preRef = useRef<HTMLPreElement>(null);
 
   const run = useCallback(async (query: string) => {
     const trimmed = query.trim();
@@ -59,7 +58,8 @@ export default function TerminalClient() {
   }, []);
 
   const showDemo = useCallback(() => {
-    setResult({ kind: "demo", text: renderDemo(demoReport()) });
+    const report = demoReport();
+    setResult({ kind: "demo", report, text: renderDemo(report) });
   }, []);
 
   // /terminal?token=0x… deep-links straight into a check (used by /holders rows).
@@ -190,43 +190,181 @@ export default function TerminalClient() {
           )}
 
           {(result.kind === "report" || result.kind === "demo") && (
-            <div className="term-result">
-              {result.kind === "report" ? (
-                <div className={`term-grade tone-${gradeTone(result.report.grade)}`}>
-                  <b>{result.report.grade}</b>
-                  {!result.report.tooEarly && <span>{result.report.score} / 100</span>}
-                </div>
-              ) : (
-                <div className="term-grade tone-faint"><b>DEMO</b><span>synthetic data</span></div>
-              )}
-              <pre ref={preRef}>{result.text}</pre>
-              {result.kind === "report" && result.report.tooEarly && (
-                <p className="term-hint">card unlocks at 5m</p>
-              )}
-              {cardSrc && (
-                <div className="term-card">
-                  {/* eslint-disable-next-line @next/next/no-img-element -- generated at request time, next/image adds nothing */}
-                  <img src={cardSrc} alt="Share card for this certificate" loading="lazy" width={540} height={540} />
-                </div>
-              )}
-              <div className="term-tools">
-                {cardSrc && <button className="cta-secondary" onClick={() => void shareImage()}>Share as image</button>}
-                {result.kind === "report" && (
-                  <button className="cta-secondary" onClick={() => void copyLink()}>{copied ? "Link copied" : "Copy link"}</button>
-                )}
-                {result.kind === "report" ? (
-                  <span className="term-provenance">
-                    block {result.report.block} · observed {result.report.observedAt.slice(0, 19).replace("T", " ")} UTC ·{" "}
-                    {result.report.rpcCalls} rpc calls · holders via {result.report.holdersSource} · sources: robinhood rpc, pons api
-                  </span>
-                ) : (
-                  <span className="term-provenance">no network requests were made · reproduce locally: pnpm demo</span>
-                )}
-              </div>
-            </div>
+            <ReadableCertificate
+              report={result.report}
+              rawText={result.text}
+              demo={result.kind === "demo"}
+              cardSrc={cardSrc}
+              onShare={() => void shareImage()}
+              onCopyLink={result.kind === "report" ? () => void copyLink() : undefined}
+              copied={copied}
+            />
           )}
         </section>
       </div>
     </main>
+  );
+}
+
+/* ------------------------------------------------------------------------ */
+/* The readable certificate: the same numbers as the raw block, explained.  */
+
+const GRADE_STORY: Record<ReturnType<typeof gradeTone>, string> = {
+  vvs: "diamond hands: the first-minute buyers are holding tight",
+  vs: "solid hands: most of the early cohort is still in",
+  si: "slipping: the early cohort is thinning out",
+  i: "dumped: the early buyers are gone",
+};
+
+const CHECKPOINT_ORDER = ["5m", "15m", "1h", "6h", "24h", "7d"] as const;
+
+function ReadableCertificate({ report, rawText, demo, cardSrc, onShare, onCopyLink, copied }: {
+  report: CertificateReport;
+  rawText: string;
+  demo: boolean;
+  cardSrc: string | null;
+  onShare: () => void;
+  onCopyLink?: () => void;
+  copied: boolean;
+}) {
+  const tone = gradeTone(report.grade);
+  const held = CHECKPOINT_ORDER.filter((l) => report.cut.held[l] !== undefined)
+    .map((l) => ({ label: l, pct: Math.round((report.cut.held[l] as number) * 100) }));
+
+  if (report.tooEarly) {
+    return (
+      <div className="term-result">
+        {demo && <div className="term-grade tone-faint"><b>DEMO</b><span>synthetic data</span></div>}
+        <div className="cert-hero tone-faint">
+          <b className="cert-grade-big">TOO EARLY</b>
+          <p>
+            ${report.symbol} is {Math.round(report.ageSec)} seconds old. The first checkpoint lands at 5 minutes;
+            grade it again then. The card unlocks at the same moment.
+          </p>
+        </div>
+        <details className="cert-raw"><summary>raw certificate</summary><pre>{rawText}</pre></details>
+      </div>
+    );
+  }
+
+  const components = [
+    {
+      key: "cut", name: "Cut", meaning: "retention", max: 40, score: report.cut.score,
+      question: "Do the first-minute buyers still hold?",
+      facts: [
+        `${report.cut.cohort} wallets bought in the first minute (${report.cut.human} look human by the opening tax)`,
+        `half-life: ${report.cut.halfLife === "not reached" ? "not reached yet" : report.cut.halfLife === "never" ? "never crossed" : `most of the cohort left by ${report.cut.halfLife}`}`,
+      ],
+      chips: held,
+    },
+    {
+      key: "clarity", name: "Clarity", meaning: "concentration", max: 20, score: report.clarity.score,
+      question: "Is the supply spread out, or in a few hands?",
+      facts: [
+        `top 10 wallets hold ${report.clarity.top10Pct.toFixed(1)}% of the supply`,
+        report.clarity.bundleDeclared > 0
+          ? `a declared bundle of ${report.clarity.bundleDeclared} wallets holds ${report.clarity.bundleHoldsPct.toFixed(1)}%`
+          : "no declared bundle",
+      ],
+    },
+    {
+      key: "color", name: "Color", meaning: "dev behaviour", max: 20, score: report.color.score,
+      question: "Is the dev still in the game?",
+      facts: [
+        report.color.devBoughtPct > 0 ? `dev bought ${report.color.devBoughtPct.toFixed(1)}% of the supply` : "dev did not buy their own token",
+        report.color.devSells === 0 ? "dev has not sold" : `dev sold ${report.color.devSells === 1 ? "once" : `${report.color.devSells} times`}`,
+        `${report.color.feeClaims24h} creator-fee claims in the first 24h`,
+      ],
+    },
+    {
+      key: "carat", name: "Carat", meaning: "weight", max: 20, score: report.carat.score,
+      question: "Is anyone actually here?",
+      facts: [
+        `${report.carat.holders}${report.carat.holdersIsFloor ? "+" : ""} holders right now`,
+        `the early cohort spent ${report.carat.cohortEth.toFixed(1)} ${report.carat.pairIsEth ? "ETH" : "quote"}`,
+        `its top 3 buyers took ${Math.round(report.carat.top3Pct)}% of that`,
+      ],
+    },
+  ];
+
+  return (
+    <div className="term-result">
+      <div className="cert-layout">
+        <div className="cert-main">
+          {demo && <div className="term-grade tone-faint"><b>DEMO</b><span>synthetic data, the shape of a real certificate</span></div>}
+
+          <div className={`cert-hero tone-${tone}`}>
+            <div className="cert-hero-top">
+              <b className="cert-grade-big">{report.grade}</b>
+              <div className="cert-hero-score">
+                <span className="cert-score">{report.score}<i>/100</i></span>
+                <span className="cert-story">{GRADE_STORY[tone]}</span>
+              </div>
+            </div>
+            <div className="cert-scale" aria-label={`Score ${report.score} of 100`}>
+              <div className="cert-scale-zones"><i className="z-red" /><i className="z-yellow" /><i className="z-green" /></div>
+              <span className="cert-scale-marker" style={{ left: `${Math.max(0, Math.min(100, report.score))}%` }} />
+              <div className="cert-scale-labels"><span>1</span><span>35</span><span>70</span><span>100</span></div>
+            </div>
+            <p className="cert-hero-note">
+              a grade on the diamond clarity scale, FL (flawless hands) down to I3 (everyone left).
+              it measures the past, it does not predict.
+            </p>
+          </div>
+
+          <div className="cert-grid">
+            {components.map((c) => (
+              <article key={c.key} className="cert-comp">
+                <header>
+                  <span className="cert-comp-name">{c.name}<i> · {c.meaning}</i></span>
+                  <b>{c.score}<i>/{c.max}</i></b>
+                </header>
+                <div className="cert-bar"><i style={{ width: `${(c.score / c.max) * 100}%` }} /></div>
+                <p className="cert-question">{c.question}</p>
+                {c.chips && (
+                  <div className="cert-chips" aria-label="Share of the cohort still holding at each checkpoint">
+                    {c.chips.map((chip) => (
+                      <span key={chip.label} className={chip.pct >= 50 ? "chip-good" : "chip-bad"}>
+                        {chip.label}<b>{chip.pct}%</b>
+                      </span>
+                    ))}
+                    {c.chips.length > 0 && <span className="cert-chip-note">% still holding</span>}
+                  </div>
+                )}
+                <ul>
+                  {c.facts.map((fact) => <li key={fact}>{fact}</li>)}
+                </ul>
+              </article>
+            ))}
+          </div>
+
+          <details className="cert-raw">
+            <summary>raw certificate, as the CLI prints it</summary>
+            <pre>{rawText}</pre>
+          </details>
+        </div>
+
+        {cardSrc && (
+          <aside className="cert-side">
+            <div className="term-card">
+              {/* eslint-disable-next-line @next/next/no-img-element -- generated at request time, next/image adds nothing */}
+              <img src={cardSrc} alt="Share card for this certificate" loading="lazy" width={1080} height={1080} />
+            </div>
+            <div className="term-tools">
+              <button className="cta-secondary" onClick={onShare}>Download card</button>
+              {onCopyLink && (
+                <button className="cta-secondary" onClick={onCopyLink}>{copied ? "Link copied" : "Copy link"}</button>
+              )}
+            </div>
+          </aside>
+        )}
+      </div>
+
+      <span className="term-provenance">
+        {demo
+          ? "no network requests were made · reproduce locally: pnpm demo"
+          : `block ${report.block} · observed ${report.observedAt.slice(0, 19).replace("T", " ")} UTC · ${report.rpcCalls} rpc calls · holders via ${report.holdersSource} · sources: robinhood rpc, pons api`}
+      </span>
+    </div>
   );
 }

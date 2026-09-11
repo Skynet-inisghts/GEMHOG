@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.7.1 — 2026-09-12
+
+- The terminal explains itself. The grade hero now says what the grade means in plain words ("diamond hands: the first-minute buyers are holding tight"), shows the score on the three-zone scale, and notes the FL-to-I3 range.
+- The four components are readable cards: each states its question ("Do the first-minute buyers still hold?"), its score bar, checkpoint chips for retention, and the facts in full sentences.
+- The share card is fully visible in its own column next to the certificate, with Download card and Copy link under it.
+- The raw monospace certificate stays one click away, exactly as the CLI prints it.
+
 ## 0.7.0 — 2026-09-12
 
 - Share cards: a 1080x1080 PNG per certificate, three moods by score band (1-35 red with a lump of coal, 36-70 yellow with a dull pebble, 71-100 green with the diamond), rendered by `lib/gemhog/card.ts` — a one-to-one port of the reference renderer in `assets/cards/render_cards.py`, on @napi-rs/canvas with the shipped pig sprites.
