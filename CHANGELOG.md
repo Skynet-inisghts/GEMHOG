@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.7.2 — 2026-09-12
+
+- Load armour for the public API. Concurrent identical requests now share one chain read (a viral token means one check per instance, not a hundred), certificates cache with an age-aware TTL (a week-old grade is frozen; re-reading it every minute only burned the RPC), and per-IP token buckets answer 429 politely instead of melting.
+- Share cards are CDN-cached (`s-maxage=300, stale-while-revalidate=3600`): when a link unfurls in front of a crowd, Vercel's edge serves the PNG and the renderer runs once.
+- Holder listings cache for two minutes and coalesce, protecting the shared Blockscout budget (~5 req/s) from a single busy visitor.
+- `lib/gemhog/web.ts` with tests for the coalescer, the TTL curve, the cache eviction and the bucket refill.
+
 ## 0.7.1 — 2026-09-12
 
 - The terminal explains itself. The grade hero now says what the grade means in plain words ("diamond hands: the first-minute buyers are holding tight"), shows the score on the three-zone scale, and notes the FL-to-I3 range.
