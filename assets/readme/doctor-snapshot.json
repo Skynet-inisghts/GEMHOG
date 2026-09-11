@@ -1,0 +1,63 @@
+{
+  "ok": false,
+  "chainId": 4663,
+  "checks": [
+    {
+      "name": "rpc publicnode",
+      "ok": true,
+      "latencyMs": 152,
+      "detail": "eth_chainId 4663"
+    },
+    {
+      "name": "rpc robinhood (logs)",
+      "ok": true,
+      "latencyMs": 1835,
+      "detail": "eth_chainId 4663"
+    },
+    {
+      "name": "factory.feeEscrow",
+      "ok": true,
+      "latencyMs": 140,
+      "detail": "factory says 0xd3AFEB2a57f70eF218Aa82451c51B2fb0416Ac9e"
+    },
+    {
+      "name": "factory.memeHook",
+      "ok": true,
+      "latencyMs": 140,
+      "detail": "factory says 0xE5e702641Ea86F4ae6cC3cDaeD2B886f976Be044"
+    },
+    {
+      "name": "factory.launchDeployer",
+      "ok": true,
+      "latencyMs": 140,
+      "detail": "factory says 0x3711ceA4feaDE896C913C68F01Eda97Cb06D1A42"
+    },
+    {
+      "name": "opening tax",
+      "ok": true,
+      "latencyMs": 140,
+      "detail": "starts at 99%, decays over 3s, launches enabled"
+    },
+    {
+      "name": "pons api",
+      "ok": true,
+      "latencyMs": 1868,
+      "detail": "health ok"
+    },
+    {
+      "name": "blockscout",
+      "ok": false,
+      "latencyMs": 77,
+      "detail": "Cloudflare bot challenge on this network; set BLOCKSCOUT_API_KEY (free at dev.blockscout.com) or try another IP"
+    },
+    {
+      "name": "dexscreener",
+      "ok": true,
+      "latencyMs": 459,
+      "detail": "5 pairs for the example token"
+    }
+  ],
+  "rpcCalls": 1,
+  "ms": 1879,
+  "observedAt": "2026-09-11T18:35:49.556Z"
+}

@@ -8,3 +8,4 @@
 - Landing page in the GEMHOG palette with the grade scale, the three surfaces and the safety boundaries; `/terminal` and `/holders` as labelled placeholders until 0.2 and 0.3.
 - `GET /api/health` running the same doctor checks as the CLI.
 - CI on Node 22 and 24 plus a `no-signer` job that fails the build if a signing primitive appears in `lib/`, `app/` or `bin/`.
+- `scripts/render-readme.mjs`: README terminal views rendered from real command output — a live doctor capture and the marked DEMO certificate and JSON export — each with a JSON capture beside it.

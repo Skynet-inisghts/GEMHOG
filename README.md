@@ -18,6 +18,12 @@ A wallet shows you a price. It does not show you whether anyone intends to stay.
 
 GEMHOG takes a token, finds those first-minute buyers, and checks who is still in position at 5m, 15m, 1h, 6h, 24h and 7d. Retention, concentration, dev behaviour and weight fold into a score out of 100 and a grade on the diamond clarity scale, FL down to I3. The pig is the meme; the certificate is the product.
 
+### Read the hands, not the post
+
+![GEMHOG certificate walkthrough: a synthetic VVS1 certificate with the four components and retention by checkpoint, every line marked DEMO](assets/readme/certificate-demo.svg)
+
+A styled documentation view of the offline `demo` command. The data is synthetic and every line says so; the live certificate, computed from chain reads, lands in 0.2.0. [Captured data →](assets/readme/certificate-snapshot.json)
+
 ## Available in the current source
 
 | Surface | What works |
@@ -44,13 +50,32 @@ pnpm demo
 
 `demo` compiles the CLI and prints a reproducible, synthetic certificate. Every line of it is marked `DEMO`; it does not fetch live data.
 
-Check the sources this tool reads, with measured latency:
+### Check the sources
+
+![GEMHOG doctor: captured checks of both public RPC endpoints, the pons factory addresses, opening-tax parameters, Pons API, Blockscout and DexScreener, with measured latency](assets/readme/doctor.svg)
+
+The doctor talks to both public RPC endpoints, re-reads the pons factory addresses from the live factory, and probes the Pons API, Blockscout and DexScreener. These are measured results from the capture time printed inside the image, not a continuous uptime monitor. [Captured checks →](assets/readme/doctor-snapshot.json)
 
 ```bash
 pnpm doctor
 ```
 
-The doctor talks to both public RPC endpoints, re-reads the pons factory addresses from the live factory, and probes the Pons API, Blockscout and DexScreener. A red line means grades cannot be trusted yet.
+A red line means grades cannot be trusted yet.
+
+## Receipts that travel
+
+![GEMHOG JSON export: an excerpt of the synthetic demo certificate as machine-readable JSON, with the three output formats](assets/readme/json-export.svg)
+
+The same certificate can be read in a terminal, consumed as JSON, or shared as Markdown. The picture shows an excerpt of the real demo schema.
+
+```bash
+pnpm gemhog demo --format json --output demo.json
+pnpm gemhog demo --format markdown --output demo.md
+```
+
+Exports refuse to overwrite existing files.
+
+The terminal images are documentation illustrations of existing outputs, rendered by `scripts/render-readme.mjs` from real command runs, never drawn by hand. [Reproduce or refresh the images →](assets/readme/README.md)
 
 Open the site locally:
 

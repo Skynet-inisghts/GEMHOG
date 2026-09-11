@@ -12,6 +12,7 @@
     "build:cli": "tsc -p tsconfig.cli.json",
     "gemhog": "node bin/gemhog.mjs",
     "demo": "pnpm build:cli && node bin/gemhog.mjs demo",
+    "render:readme": "pnpm build:cli && node scripts/render-readme.mjs",
     "doctor": "pnpm build:cli && node bin/gemhog.mjs doctor",
     "dev": "next dev --webpack",
     "build": "next build --webpack",
