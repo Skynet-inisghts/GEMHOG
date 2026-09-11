@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { renderCertificate } from "@/lib/gemhog/certificate";
@@ -61,6 +61,17 @@ export default function TerminalPage() {
   const showDemo = useCallback(() => {
     setResult({ kind: "demo", text: renderDemo(demoReport()) });
   }, []);
+
+  // /terminal?token=0x… deep-links straight into a check (used by /holders rows).
+  useEffect(() => {
+    const token = new URLSearchParams(window.location.search).get("token");
+    if (!token) return;
+    const id = setTimeout(() => {
+      setInput(token);
+      void run(token);
+    }, 0);
+    return () => clearTimeout(id);
+  }, [run]);
 
   const shareImage = useCallback(() => {
     if (result.kind !== "report" && result.kind !== "demo") return;

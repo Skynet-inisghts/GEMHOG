@@ -343,6 +343,22 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
   line-height: 1.75;
   overflow-x: auto;
 }
+.term-grade-btn {
+  padding: 5px 10px;
+  border: 1px solid var(--line-hot);
+  background: transparent;
+  color: var(--accent);
+  font-size: 12px;
+  cursor: pointer;
+}
+.term-grade-btn:hover { border-color: var(--accent); }
+.term-grade-cell { font-weight: 700; }
+.term-grade-cell.tone-vvs { color: var(--grade-vvs); }
+.term-grade-cell.tone-vs { color: var(--grade-vs); }
+.term-grade-cell.tone-si { color: var(--grade-si); }
+.term-grade-cell.tone-i { color: var(--grade-i); }
+.term-grade-cell.tone-faint { color: var(--faint); font-weight: 400; }
+.term-cluster .term-addr a:hover { color: var(--accent); }
 .term-tools { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
 .term-tools button { cursor: pointer; min-height: 40px; }
 .term-provenance { color: var(--faint); font-size: 11.5px; line-height: 1.6; }

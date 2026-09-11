@@ -3,6 +3,8 @@ import { resolveInput, enrichCluster } from "@/lib/gemhog/resolve";
 import { checkToken, CheckError } from "@/lib/gemhog/check";
 
 export const dynamic = "force-dynamic";
+// A week-old token replays its whole transfer history; give the read room.
+export const maxDuration = 300;
 
 /**
  * { token } or { ticker } in; a certificate, a cluster to disambiguate, or an

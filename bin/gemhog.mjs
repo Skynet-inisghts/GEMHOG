@@ -48,7 +48,7 @@ const program = new Command();
 program
   .name("gemhog")
   .description("Diamond-hands terminal for Pons V2 tokens on Robinhood Chain. Read only: no keys, no signing, no transactions.")
-  .version("0.2.0");
+  .version("0.3.0");
 
 program
   .command("doctor")
@@ -111,6 +111,56 @@ program
       }
       throw error;
     }
+  });
+
+program
+  .command("holders")
+  .argument("<wallet>", "public EVM address")
+  .description("every pons token a wallet holds, each with its grade; the same view as /holders on the site")
+  .option("--format <format>", "text, json or markdown", "text")
+  .option("--output <file>", "save the table; never overwrites an existing file")
+  .action(async (wallet, opts) => {
+    checkFormat(opts.format);
+    const { loadEnv } = await engine("env");
+    loadEnv();
+    const { readWalletTokens, WalletListError } = await engine("read/wallet");
+    const { checkToken } = await engine("check");
+    const { renderHoldings } = await engine("receipt");
+    let tokens;
+    try {
+      tokens = await readWalletTokens(wallet);
+    } catch (error) {
+      if (error instanceof WalletListError) {
+        process.stderr.write(`gemhog: ${error.message}\n`);
+        process.exit(1);
+      }
+      throw error;
+    }
+    if (!tokens.length) {
+      process.stdout.write(`no pons tokens on ${wallet}\n`);
+      return;
+    }
+    if (opts.format === "text" && !opts.output) {
+      process.stderr.write(`${tokens.length} pons tokens on ${wallet}; grading each in turn…\n`);
+    }
+    const rows = [];
+    for (const t of tokens) {
+      let grade = null;
+      let score = null;
+      try {
+        const report = await checkToken(t.token);
+        grade = report.grade;
+        score = report.tooEarly ? null : report.score;
+      } catch {
+        grade = "unreadable";
+      }
+      rows.push({ token: t.token, symbol: t.symbol, balance: t.balance, pctOfSupply: t.pctOfSupply, grade, score });
+      if (opts.format === "text" && !opts.output) process.stderr.write(`  ${grade ?? "?"}  $${t.symbol}\n`);
+    }
+    const text = opts.format === "json"
+      ? JSON.stringify({ wallet, holdings: rows.map((r) => ({ ...r, balance: r.balance.toString() })) }, null, 2)
+      : renderHoldings(wallet, rows, opts.format === "markdown");
+    await deliver(text, opts.output);
   });
 
 program

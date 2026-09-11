@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.3.0 — 2026-09-11
+
+- Holder Check: `/holders` with connect-or-paste entry. Connecting asks an injected wallet for `eth_requestAccounts` and nothing else; a pasted public address works without any wallet.
+- `gemhog holders <wallet>`: the same view in the CLI — every pons token on the address, graded in turn, with balances and share of supply.
+- `POST /api/holder`: wallet listing (Blockscout-sourced, factory-verified) split from grading, so the page fills grades in progressively through `POST /api/grade`.
+- The $GEMHOG holder receipt slot with a visibly labelled synthetic example; the live receipt activates when the official contract is published.
+- `/terminal?token=0x…` deep links straight into a check; holder rows link to it.
+- Honest degradation: a Blockscout bot challenge is reported with the exact fix (a free `BLOCKSCOUT_API_KEY`), never shown as an empty wallet.
+
 ## 0.2.0 — 2026-09-11
 
 - The grade engine: early cohort with the opening-tax human filter and declared-bundle exclusion, Transfer-replayed balances at six checkpoints, half-life, and the four components cut/clarity/color/carat exactly as specified in `docs/METHODOLOGY.md`.

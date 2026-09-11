@@ -32,11 +32,24 @@ A styled documentation view of an actual `check` result against the live chain. 
 | Local CLI | `check <token\|ticker>` live grading with cluster disambiguation; `doctor`; `demo` |
 | Browser terminal | `/terminal`: ticker or CA in, certificate out, offline demo, share as image |
 | API | `POST /api/grade` (same JSON as the CLI), `GET /api/health` |
+| Holder Check | `/holders` and `gemhog holders`: every pons token in a public wallet, graded |
 | Offline walkthrough | Synthetic certificate, labelled DEMO on every line, no provider requests |
 | Exports | JSON and Markdown for every command; exports refuse to overwrite existing files |
 | Verification | Engine fixtures with hand-derived expected grades, CLI tests, Node 22/24 CI, `no-signer` job |
 
 Official `$GEMHOG` contract: TBA. The address will be published here, on the site and in `lib/gemhog/project-token.ts` at launch; until then any address claiming to be $GEMHOG is not ours.
+
+### Holder Check
+
+Open `/holders` to request an account from an injected EVM wallet. The browser asks the wallet for exactly one thing, `eth_requestAccounts` — the public address. There is no signature, approval, network switch or transaction request, and the `no-signer` CI job greps the source on every commit to keep it that way. A pasted public address works identically, with no wallet at all.
+
+The page lists every pons token the address holds with its balance and share of supply; the largest holdings grade automatically and the rest grade on demand, since each certificate replays that token's transfer history. **View example receipt** shows a visibly labelled synthetic walkthrough of the $GEMHOG holder receipt that activates at launch.
+
+```bash
+pnpm gemhog holders <PUBLIC_WALLET>
+```
+
+Wallet listings come from the Blockscout API. On networks where Blockscout fronts its API with a bot challenge, set a free `BLOCKSCOUT_API_KEY` from dev.blockscout.com in `.env`; grading itself never needs it.
 
 ## Start in one minute
 
