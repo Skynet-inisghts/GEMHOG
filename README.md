@@ -6,7 +6,7 @@
   <img src="https://img.shields.io/badge/Node-20%2B-FF7AC4?style=flat-square&amp;labelColor=0a0a0a" alt="Node 20 or newer" />
   <img src="https://img.shields.io/badge/Robinhood_Chain-4663-FF7AC4?style=flat-square&amp;labelColor=0a0a0a" alt="Robinhood Chain 4663" />
   <img src="https://img.shields.io/badge/signing-none-FF7AC4?style=flat-square&amp;labelColor=0a0a0a" alt="No signing" />
-  <img src="https://img.shields.io/badge/tests-42-FF7AC4?style=flat-square&amp;labelColor=0a0a0a" alt="42 tests" />
+  <img src="https://img.shields.io/badge/tests-56-FF7AC4?style=flat-square&amp;labelColor=0a0a0a" alt="56 tests" />
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-FF7AC4?style=flat-square&amp;labelColor=0a0a0a" alt="MIT license" /></a>
 </p>
 
@@ -39,6 +39,7 @@ A styled documentation view of an actual `check` result against the live chain. 
 | watch, top, export | Re-grade one token on a loop; the cached top 10; the last hunt as CSV/JSON |
 | Pulse | `GET /api/top` and `/api/pulse`: grade counters, refreshed every 20 minutes, never the list |
 | Telegram bot | `/check` `/top` `/watch` `/alerts` over `gemhog serve`; zero grading logic in the bot |
+| Share cards | 1080x1080 PNG per certificate, three moods; unfurls on X/Telegram, `--card` in the CLI |
 | Docs | `/docs` on the site renders the repository docs; the sources live in `docs/` |
 | Offline walkthrough | Synthetic certificate, labelled DEMO on every line, no provider requests |
 | Exports | JSON and Markdown for every command; exports refuse to overwrite existing files |
@@ -141,12 +142,12 @@ The site never gets the list. `GET /api/top` and `GET /api/pulse` return counter
 ## Share cards
 
 <p align="center">
-  <img src="assets/readme/cards/card-green.png" width="32%" alt="Green share card: a thrilled pig holding a diamond, score 87" />
-  <img src="assets/readme/cards/card-yellow.png" width="32%" alt="Yellow share card: an unimpressed pig with a dull pebble, score 47" />
-  <img src="assets/readme/cards/card-red.png" width="32%" alt="Red share card: a disgusted pig with a lump of coal, score 23" />
+  <img src="assets/readme/cards/card-green.png?v=2" width="32%" alt="Green share card: the beaming mascot presenting the diamond it dug up, score 87" />
+  <img src="assets/readme/cards/card-yellow.png?v=2" width="32%" alt="Yellow share card: the unimpressed mascot with a dull pebble, score 47" />
+  <img src="assets/readme/cards/card-red.png?v=2" width="32%" alt="Red share card: the fuming mascot over a lump of coal, score 23" />
 </p>
 
-Every certificate renders a 1080x1080 share card: red for scores 1-35, yellow for 36-70, green for 71-100 — the pig's mood and the stone in its hoof match the zone. The three cards above are the recorded fixtures; the terminal shows the live card under every certificate, **Share as image** downloads it, and a shared `/terminal?token=…` link unfurls into the card on X and Telegram. The bot answers `/check` with the same card.
+Every certificate renders a 1080x1080 share card: red for scores 1-35, yellow for 36-70, green for 71-100. The pig on the card is the site mascot in the zone's mood: green presents the diamond it dug up, yellow shrugs with a dull pebble, red fumes over a lump of coal with a fly overhead. The three cards above are the recorded fixtures; the terminal shows the live card next to every certificate, **Download card** saves it, and a shared `/terminal?token=…` link unfurls into the card on X and Telegram. The bot answers `/check` with the same card.
 
 ```bash
 pnpm gemhog check 0x… --card card.png
