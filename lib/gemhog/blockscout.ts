@@ -59,6 +59,11 @@ export async function blockscoutFetch(path: string): Promise<unknown> {
       if (attempt === 0) { await sleep(1_200); continue; }
       throw new BlockscoutError("Blockscout rate limit reached; try again in a moment", "rate-limit");
     }
+    if (res.status >= 500) {
+      // The hosted instance hiccups now and then; one patient retry usually lands.
+      if (attempt === 0) { await sleep(800); continue; }
+      throw new BlockscoutError(`Blockscout answered HTTP ${res.status}; usually transient, try again in a few seconds`, "http");
+    }
     if (!res.ok) throw new BlockscoutError(`Blockscout returned HTTP ${res.status}`, "http");
     try {
       return JSON.parse(text);
