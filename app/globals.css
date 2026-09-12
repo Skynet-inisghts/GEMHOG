@@ -173,7 +173,7 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
   --px: 3;
   width: calc(104px * var(--px));
   height: calc(96px * var(--px));
-  background: url("/gemhog-dig-sheet.png") 0 0 / calc(3328px * var(--px)) calc(96px * var(--px)) no-repeat;
+  background: url("/gemhog-dig-v2.png") 0 0 / calc(3328px * var(--px)) calc(96px * var(--px)) no-repeat;
   image-rendering: pixelated;
   animation: gemhog-dig 2880ms steps(32) infinite;
 }

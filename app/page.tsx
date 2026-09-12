@@ -26,7 +26,7 @@ export default function Home() {
 
       <section className="hero">
         <div className="hero-copy">
-          <p className="hero-kicker"><b>v{pkg.version.split(".").slice(0, 2).join(".")}</b> read-only terminal · robinhood chain 4663</p>
+          <p className="hero-kicker"><b>v{pkg.version.split(".").slice(0, 2).join(".")}</b> the diamond-hands terminal for pons v2 · live on robinhood chain 4663</p>
           <h1>GEMHOG</h1>
           <p className="hero-tagline">Grade the hands before the bag.</p>
           <p className="hero-deck">
