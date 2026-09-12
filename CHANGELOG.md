@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.8.2 — 2026-09-12
+
+- Grading a busy multi-day token dropped from about four minutes to under thirty seconds. Three changes: the log-read gate spaces eth_getLogs at 150 ms instead of 400 (the 429 backoff still guards the ceiling), chunks grow back after every clean read instead of every second one (hot zones are narrow; a timid climb wastes requests), and the holder page grades two tokens in parallel lanes.
+- One patient retry when Blockscout answers a transient 5xx, with an error text that says to simply try again.
+
 ## 0.8.1 — 2026-09-12
 
 - Dig loop v2: 32 frames at 104x96 with a proper dirt mound — the pig dives in, earth flies, the diamond surfaces. Same steps() sprite-sheet technique, same reduced-motion fallback (the stone-in-mouth frame).

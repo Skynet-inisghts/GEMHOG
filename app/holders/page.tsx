@@ -66,14 +66,19 @@ export default function HoldersPage() {
   }, []);
 
   const gradeRows = useCallback(async (wallet: string, rows: HolderRow[], limit: number) => {
+    // Two lanes: separate serverless instances dig in parallel, and the rows
+    // fill in as each certificate lands.
     const targets = rows.filter((r) => r.grade === null).slice(0, limit);
-    for (const target of targets) {
-      const patch = await gradeOne(target.token);
-      setState((prev) => {
-        if (prev.kind !== "rows" || prev.wallet !== wallet) return prev;
-        return { ...prev, rows: prev.rows.map((r) => (r.token === target.token ? { ...r, ...patch } : r)) };
-      });
-    }
+    const lane = async (mine: HolderRow[]) => {
+      for (const target of mine) {
+        const patch = await gradeOne(target.token);
+        setState((prev) => {
+          if (prev.kind !== "rows" || prev.wallet !== wallet) return prev;
+          return { ...prev, rows: prev.rows.map((r) => (r.token === target.token ? { ...r, ...patch } : r)) };
+        });
+      }
+    };
+    await Promise.all([lane(targets.filter((_, i) => i % 2 === 0)), lane(targets.filter((_, i) => i % 2 === 1))]);
     setState((prev) => (prev.kind === "rows" && prev.wallet === wallet ? { ...prev, grading: false } : prev));
   }, [gradeOne]);
 

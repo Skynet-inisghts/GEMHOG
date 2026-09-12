@@ -44,8 +44,8 @@ function parseEndpoints(): Endpoint[] {
 export const endpoints: Endpoint[] = parseEndpoints();
 
 const inFlight = Number(process.env.RPC_IN_FLIGHT ?? 3);
-const spacingMs = Number(process.env.RPC_SPACING_MS ?? 50);
-const logsSpacingMs = Number(process.env.RPC_LOGS_SPACING_MS ?? 400);
+const spacingMs = Number(process.env.RPC_SPACING_MS ?? 40);
+const logsSpacingMs = Number(process.env.RPC_LOGS_SPACING_MS ?? 150);
 
 let active = 0;
 let lastStart = 0;

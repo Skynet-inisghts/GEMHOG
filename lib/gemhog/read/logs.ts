@@ -32,7 +32,6 @@ async function readChunked(address: Address, fromBlock: number, toBlock: number)
   const logs: RawLog[] = [];
   let complete = true;
   let chunk = START_CHUNK;
-  let streak = 0;
   let start = fromBlock;
   while (start <= toBlock) {
     const end = Math.min(toBlock, start + chunk - 1);
@@ -40,9 +39,10 @@ async function readChunked(address: Address, fromBlock: number, toBlock: number)
       const batch = await publicClient.getLogs({ address, fromBlock: BigInt(start), toBlock: BigInt(end) });
       logs.push(...batch);
       start = end + 1;
-      if (++streak >= 2 && chunk < START_CHUNK) { chunk = Math.min(START_CHUNK, chunk * 2); streak = 0; }
+      // Grow back after every clean read: hot zones are narrow, and a timid
+      // climb out of them costs more requests than an occasional re-refusal.
+      if (chunk < START_CHUNK) chunk = Math.min(START_CHUNK, chunk * 2);
     } catch {
-      streak = 0;
       if (chunk > MIN_CHUNK) { chunk = Math.max(MIN_CHUNK, Math.floor(chunk / 4)); continue; }
       complete = false; // a hole in the window, not an empty window
       start = end + 1;
