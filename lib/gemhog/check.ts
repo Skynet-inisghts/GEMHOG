@@ -28,7 +28,15 @@ export async function checkToken(token: Address, options: CheckOptions = {}): Pr
   const callsBefore = rpcCallCount();
 
   const launch = await readLaunch(token, options.hint);
-  if (!launch) throw new CheckError(`${token} was not launched through the pons v2 factory`);
+  if (!launch) {
+    const { creatorLabel } = await import("./read/creator.js");
+    const label = await creatorLabel(token);
+    throw new CheckError(
+      label
+        ? `${token} was not launched through the pons v2 factory; it was created by ${label}. GEMHOG grades pons v2 launches only`
+        : `${token} was not launched through the pons v2 factory`,
+    );
+  }
 
   const clock = await makeClock(launch.launchBlock, launch.launchedAt);
   const now = clock.headTs;
