@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.8.0 — 2026-09-12
+
+- The site lives at gemhog.xyz: the domain is wired through the share-card signature, OG unfurls and the README.
+- Share cards v2: the pig on the cards is now the site mascot itself, head-on with the dirt mound running off the bottom edge — green presents the diamond, yellow shrugs with its pebble, red fumes over a lump of coal with a fly overhead. New sprites and reference renderer in assets/cards; the corner signature stacks GEMHOG / Terminal / gemhog.xyz / date.
+
 ## 0.7.3 — 2026-09-12
 
 - The hero pig now digs. A 28-frame pixel loop (sniff, burrow, surface with the diamond, lose it to the dirt again) replaces the static sprite — CSS `steps()` over a sprite sheet, integer scaling only, pixels stay crisp. `prefers-reduced-motion` gets the single stone-in-mouth frame.

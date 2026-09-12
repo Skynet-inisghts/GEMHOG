@@ -3,7 +3,7 @@
   "symbol": "COPY",
   "name": "COPY",
   "launchedAt": "2026-09-10 09:07 UTC",
-  "ageSec": 128561,
+  "ageSec": 141557,
   "tooEarly": false,
   "grade": "I1",
   "score": 34,
@@ -23,7 +23,7 @@
   },
   "clarity": {
     "score": 17,
-    "top10Pct": 22.57,
+    "top10Pct": 22.4,
     "bundleDeclared": 0,
     "bundleHoldsPct": 0
   },
@@ -45,8 +45,8 @@
   "phase": "pool",
   "holdersSource": "pons-api",
   "source": "live",
-  "observedAt": "2026-09-11T20:49:46.000Z",
-  "block": 60551672,
-  "rpcCalls": 36,
-  "ms": 32320
+  "observedAt": "2026-09-12T00:26:22.000Z",
+  "block": 60679241,
+  "rpcCalls": 37,
+  "ms": 27629
 }

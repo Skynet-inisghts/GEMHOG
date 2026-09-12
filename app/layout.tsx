@@ -15,7 +15,7 @@ const jetbrainsMono = localFont({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://gemhog.vercel.app"),
+  metadataBase: new URL("https://gemhog.xyz"),
   title: "GEMHOG · Diamond-Hands Terminal",
   description:
     "Grade the hands before the bag. A browser and local CLI for grading holder retention of Pons V2 tokens on Robinhood Chain.",

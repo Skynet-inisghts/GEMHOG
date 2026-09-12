@@ -1,20 +1,20 @@
-"""Gemhog share cards.
+"""Gemhog share cards, v2.
 
-Three cards by score band:
-    1–35   red     pig has eaten something bad. lump of coal.
-    36–70  yellow  pig is unimpressed. dull pebble.
-    71–100 green   pig is thrilled. big diamond, sparkles.
+Same pig as the site (front view, big snout), three moods by score band:
+    1–35   red     eyes squeezed, wavy mouth, tongue, lump of coal in the mouth, stink, sweat
+    36–70  yellow  half-lidded eyes, one brow up, flat mouth, grey pebble in the mouth
+    71–100 green   bright eyes, brows up, blush, diamond in the mouth, sparkles
 
-Layout (1080x1080, black):
-    top-left    token logo (circle) + $TICKER, big
-    top-right   score, big, with /100 and the grade below
-    under       score bar 0–100 with the three zones and a marker
-    then        2–3 lines of description, mono
-    bottom      the pig, large, with a coloured glow
-    footer      GEMHOG Terminal signature + site
+Layout (1080x1080):
+    top-left      token logo (circle) + $TICKER
+    top-right     score, /100, grade
+    bar           0–100 with three zones and a marker
+    three lines   description, mono
+    bottom        the pig, centred, on a dirt mound that runs off the bottom edge
+    corners       GEMHOG Terminal (left) · gemhog.xyz + date (right)
 
 Usage:
-    python render_cards.py                       # three template cards + three pig sprites
+    python render_cards.py
     from render_cards import card; card(score=48, ticker="DRN", grade="SI2", lines=[...], logo=Image)
 """
 from pathlib import Path
@@ -51,156 +51,179 @@ def font(name, size, var=None):
     return f
 
 
-# ------------------------------------------------------------------ the pig, three moods
+# ------------------------------------------------------------------ the pig
+# The site mascot's exact form: head-on, back rising behind the head, hooves either side,
+# dirt mound in front. Proportions untouched. What changes: the face, what the hooves do,
+# what is in the hole, and the air around it.
+FW, FH = 104, 92
+OX, OY = 20, 8
+
+
 def draw_pig(mood: str) -> Image.Image:
     p = PALETTES[mood]
     L1, L2, L3, L4, K = p["L1"], p["L2"], p["L3"], p["L4"], p["K"]
-    S = 72
-    im = Image.new("RGBA", (S, S), (0, 0, 0, 0))
+    im = Image.new("RGBA", (FW, FH), (0, 0, 0, 0))
     d = ImageDraw.Draw(im)
 
-    # ground
-    d.ellipse([2, 58, 70, 72], fill=L4)
-    d.ellipse([6, 60, 66, 70], fill=L3)
+    def X(x): return x + OX
+    def Y(y): return y + OY
+
+    # --- air: sparkles (green), a fly + falling dirt (red)
     if mood == "green":
-        for (x, y) in [(6, 58), (57, 61)]:
-            d.polygon([(x + 1, y), (x + 4, y), (x + 5, y + 2), (x + 2, y + 5), (x, y + 2)], fill=DIA)
-            d.point((x + 2, y + 1), fill=WHITE)
+        for (x, y) in [(2, 20), (62, 16), (-2, 40), (66, 38)]:
+            d.line([(X(x), Y(y - 3)), (X(x), Y(y + 3))], fill=WHITE)
+            d.line([(X(x - 3), Y(y)), (X(x + 3), Y(y))], fill=WHITE)
+        d.point([(X(6), Y(30)), (X(58), Y(28)), (X(2), Y(52)), (X(62), Y(50))], fill=DIA)
     if mood == "red":
-        for (x, y) in [(8, 60), (60, 62), (30, 66)]:           # lumps of coal on the ground
-            d.ellipse([x, y, x + 4, y + 3], fill=K)
+        for (x, y, r) in [(4, 26, 2), (60, 22, 2), (0, 36, 1), (64, 34, 1)]:
+            d.ellipse([X(x) - r, Y(y) - r, X(x) + r, Y(y) + r], fill=L4)
+            d.point((X(x) - r + 1, Y(y) - r + 1), fill=L3)
+        d.rectangle([X(60), Y(6), X(61), Y(7)], fill=K)                                 # the fly
+        d.point([(X(59), Y(5)), (X(62), Y(5))], fill=(140, 140, 140))
+        d.arc([X(54), Y(2), X(68), Y(12)], 200, 340, fill=L4, width=1)
 
-    # haunches
-    d.ellipse([8, 42, 30, 62], fill=L4)
-    d.ellipse([9, 41, 29, 60], fill=L2)
-    d.ellipse([44, 44, 66, 62], fill=L4)
-    d.ellipse([44, 43, 64, 60], fill=L2)
+    # --- tail curl over the back
+    d.line([(X(46), Y(10)), (X(50), Y(6))], fill=L2, width=3)
+    d.ellipse([X(48), Y(0), X(58), Y(10)], fill=L2)
+    d.ellipse([X(51), Y(3), X(55), Y(7)], fill=L3)
+    d.point((X(52), Y(4)), fill=L4)
 
-    # body + belly
-    d.ellipse([12, 26, 62, 64], fill=L4)
-    d.ellipse([11, 24, 59, 61], fill=L2)
-    d.ellipse([20, 36, 48, 60], fill=L1)
+    # --- body: the back, rising behind the head
+    d.ellipse([X(12), Y(4), X(52), Y(44)], fill=L4)
+    d.ellipse([X(13), Y(4), X(51), Y(42)], fill=L2)
+    d.ellipse([X(18), Y(8), X(46), Y(22)], fill=L1)
+    for (x, y, r) in [(20, 16, 2), (44, 14, 2), (32, 10, 1)]:
+        d.ellipse([X(x) - r, Y(y) - r, X(x) + r, Y(y) + r], fill=L3)
 
-    # tail
-    for (x, y) in [(60, 40), (61, 39), (62, 39), (63, 40), (63, 41), (62, 42), (61, 42)]:
-        d.point((x, y), fill=L2)
-
-    # left hoof on the ground
-    d.rectangle([18, 54, 26, 64], fill=L4)
-    d.rectangle([18, 53, 25, 62], fill=L2)
-    d.rectangle([18, 61, 25, 62], fill=L4)
-    d.line([(21, 63), (22, 63)], fill=K)
-
-    # ears: up when happy, level when meh, drooping when disgusted
+    # --- ears: up, or down for red
     if mood == "red":
-        d.polygon([(8, 18), (2, 12), (20, 12)], fill=L4)
-        d.polygon([(9, 17), (4, 13), (19, 13)], fill=L2)
-        d.polygon([(10, 15), (7, 14), (15, 14)], fill=L3)
-        d.polygon([(26, 11), (42, 8), (38, 17)], fill=L4)
-        d.polygon([(27, 12), (40, 9), (37, 16)], fill=L2)
-    elif mood == "yellow":
-        d.polygon([(8, 16), (4, 6), (20, 11)], fill=L4)
-        d.polygon([(9, 15), (6, 8), (19, 12)], fill=L2)
-        d.polygon([(10, 13), (8, 10), (15, 12)], fill=L3)
-        d.polygon([(26, 10), (38, 4), (38, 15)], fill=L4)
-        d.polygon([(27, 11), (36, 6), (37, 14)], fill=L2)
+        L, R = [(11, 27), (4, 12), (26, 17)], [(53, 27), (60, 12), (38, 17)]
     else:
-        d.polygon([(8, 16), (5, 0), (20, 10)], fill=L4)
-        d.polygon([(9, 15), (7, 2), (19, 11)], fill=L2)
-        d.polygon([(10, 13), (9, 5), (15, 11)], fill=L3)
-        d.polygon([(26, 9), (37, -2), (38, 15)], fill=L4)
-        d.polygon([(27, 10), (36, 0), (37, 14)], fill=L2)
-        d.polygon([(29, 10), (34, 3), (34, 12)], fill=L3)
+        L, R = [(10, 26), (5, 5), (26, 16)], [(54, 26), (59, 5), (38, 16)]
+    for pts in (L, R):
+        sgn = 1 if pts is L else -1
+        d.polygon([(X(x), Y(y)) for x, y in pts], fill=L4)
+        inner = [(pts[0][0] + sgn, pts[0][1] - 1), (pts[1][0] + 2 * sgn, pts[1][1] + 2), (pts[2][0] - 2 * sgn, pts[2][1])]
+        d.polygon([(X(x), Y(y)) for x, y in inner], fill=L2)
+        mid = [(pts[0][0] + 3 * sgn, pts[0][1] - 4), (pts[1][0] + 5 * sgn, pts[1][1] + 6), (pts[2][0] - 6 * sgn, pts[2][1] + 1)]
+        d.polygon([(X(x), Y(y)) for x, y in mid], fill=L3)
 
-    # head
-    d.ellipse([4, 6, 42, 42], fill=L4)
-    d.ellipse([3, 5, 40, 40], fill=L2)
-    d.ellipse([8, 8, 30, 26], fill=L1)
-    for (x, y, r) in [(34, 30, 3), (37, 22, 2), (30, 36, 2), (50, 30, 3), (54, 38, 2), (46, 26, 2), (56, 52, 2), (14, 46, 2)]:
-        d.ellipse([x - r, y - r, x + r, y + r], fill=L3)
-        d.point((x - r + 1, y - r + 1), fill=L4)
+    # --- head
+    d.ellipse([X(6), Y(16), X(58), Y(62)], fill=L4)
+    d.ellipse([X(7), Y(16), X(57), Y(60)], fill=L2)
+    d.chord([X(7), Y(16), X(57), Y(60)], 20, 160, fill=L3)
+    d.ellipse([X(9), Y(18), X(55), Y(54)], fill=L2)
+    d.ellipse([X(14), Y(20), X(44), Y(36)], fill=L1)
 
-    # face by mood
+    # --- eyes and brows
     if mood == "green":
-        # wide open eyes with two highlights, brows up, big smile, blush
-        d.ellipse([11, 16, 19, 25], fill=K)
-        d.rectangle([12, 17, 14, 19], fill=WHITE)
-        d.point((17, 22), fill=WHITE)
-        d.ellipse([26, 16, 34, 25], fill=K)
-        d.rectangle([27, 17, 29, 19], fill=WHITE)
-        d.point((32, 22), fill=WHITE)
-        d.arc([10, 11, 20, 17], 200, 340, fill=L4, width=1)
-        d.arc([25, 11, 35, 17], 200, 340, fill=L4, width=1)
-        d.ellipse([9, 30, 12, 32], fill=L3)          # blush
-        d.ellipse([31, 30, 34, 32], fill=L3)
+        d.ellipse([X(16), Y(28), X(26), Y(39)], fill=K)
+        d.ellipse([X(38), Y(28), X(48), Y(39)], fill=K)
+        d.rectangle([X(18), Y(30), X(20), Y(32)], fill=WHITE)
+        d.rectangle([X(40), Y(30), X(42), Y(32)], fill=WHITE)
+        d.point([(X(24), Y(36)), (X(46), Y(36))], fill=WHITE)
+        d.arc([X(14), Y(22), X(28), Y(29)], 200, 340, fill=L4, width=1)
+        d.arc([X(36), Y(22), X(50), Y(29)], 200, 340, fill=L4, width=1)
+        d.ellipse([X(11), Y(40), X(15), Y(43)], fill=L3)
+        d.ellipse([X(49), Y(40), X(53), Y(43)], fill=L3)
     elif mood == "yellow":
-        # half-lidded eyes, one brow raised, flat mouth
-        d.ellipse([12, 18, 18, 25], fill=K)
-        d.rectangle([12, 18, 18, 20], fill=L2)       # lid
-        d.rectangle([12, 20, 18, 20], fill=L4)
-        d.rectangle([13, 21, 14, 22], fill=WHITE)
-        d.ellipse([27, 18, 33, 25], fill=K)
-        d.rectangle([27, 18, 33, 20], fill=L2)
-        d.rectangle([27, 20, 33, 20], fill=L4)
-        d.rectangle([28, 21, 29, 22], fill=WHITE)
-        d.line([(12, 16), (18, 16)], fill=L4)        # flat brow
-        d.line([(26, 14), (33, 16)], fill=L4)        # raised brow
+        d.ellipse([X(17), Y(29), X(25), Y(38)], fill=K)
+        d.ellipse([X(39), Y(29), X(47), Y(38)], fill=K)
+        d.rectangle([X(19), Y(31), X(20), Y(32)], fill=WHITE)
+        d.rectangle([X(41), Y(31), X(42), Y(32)], fill=WHITE)
+        d.line([(X(16), Y(27)), (X(24), Y(28))], fill=L4, width=2)
+        d.line([(X(48), Y(24)), (X(40), Y(28))], fill=L4, width=2)                     # one brow up
     else:
-        # eyes squeezed shut, brows knotted, wavy mouth, tongue out, sweat
-        d.line([(11, 22), (18, 20)], fill=K, width=2)
-        d.line([(11, 22), (18, 24)], fill=K, width=2)
-        d.line([(34, 22), (27, 20)], fill=K, width=2)
-        d.line([(34, 22), (27, 24)], fill=K, width=2)
-        d.line([(10, 16), (18, 18)], fill=L4, width=2)
-        d.line([(35, 16), (27, 18)], fill=L4, width=2)
-        d.polygon([(38, 12), (40, 18), (36, 18)], fill=DIA)   # sweat drop
-        d.point((38, 15), fill=WHITE)
+        d.ellipse([X(17), Y(29), X(25), Y(38)], fill=K)
+        d.ellipse([X(39), Y(29), X(47), Y(38)], fill=K)
+        d.chord([X(17), Y(28), X(25), Y(38)], 180, 360, fill=L2)                       # heavy lids
+        d.chord([X(39), Y(28), X(47), Y(38)], 180, 360, fill=L2)
+        d.line([(X(17), Y(33)), (X(25), Y(33))], fill=L4)
+        d.line([(X(39), Y(33)), (X(47), Y(33))], fill=L4)
+        d.rectangle([X(19), Y(34), X(20), Y(35)], fill=WHITE)
+        d.rectangle([X(41), Y(34), X(42), Y(35)], fill=WHITE)
+        d.line([(X(15), Y(26)), (X(25), Y(29))], fill=L4, width=2)
+        d.line([(X(49), Y(26)), (X(39), Y(29))], fill=L4, width=2)
+        d.polygon([(X(52), Y(18)), (X(55), Y(26)), (X(49), Y(26))], fill=DIA)         # sweat
+        d.point((X(52), Y(22)), fill=WHITE)
+        d.point([(X(12), Y(44)), (X(52), Y(46)), (X(10), Y(50))], fill=L4)             # mud on the cheeks
 
-    # snout
-    d.ellipse([6, 24, 28, 38], fill=L4)
-    d.ellipse([7, 24, 27, 37], fill=L3)
-    d.ellipse([9, 25, 22, 32], fill=L2)
-    d.rectangle([11, 29, 13, 32], fill=K)
-    d.rectangle([19, 29, 21, 32], fill=K)
+    # --- snout
+    d.ellipse([X(16), Y(38), X(48), Y(60)], fill=L4)
+    d.ellipse([X(17), Y(38), X(47), Y(59)], fill=L3)
+    d.ellipse([X(20), Y(40), X(44), Y(48)], fill=L2)
+    d.rectangle([X(24), Y(47), X(28), Y(53)], fill=K)
+    d.rectangle([X(36), Y(47), X(40), Y(53)], fill=K)
+    d.point([(X(25), Y(48)), (X(37), Y(48))], fill=L4)
+    d.line([(X(20), Y(56)), (X(44), Y(56))], fill=L4)
     if mood == "green":
-        d.arc([10, 32, 26, 42], 15, 165, fill=K, width=2)     # big smile
-        d.rectangle([14, 38, 22, 39], fill=WHITE)             # teeth glint
+        d.arc([X(23), Y(54), X(41), Y(64)], 15, 165, fill=K, width=2)                 # smile
+        d.rectangle([X(28), Y(60), X(36), Y(61)], fill=WHITE)
     elif mood == "yellow":
-        d.line([(13, 37), (23, 37)], fill=K, width=1)         # flat
+        d.line([(X(27), Y(61)), (X(37), Y(61))], fill=K)
     else:
-        d.line([(11, 36), (14, 38), (17, 36), (20, 38), (23, 36), (26, 38)], fill=K, width=1)   # wavy
-        d.rectangle([16, 39, 20, 42], fill=(230, 90, 120))    # tongue
-        d.point((18, 40), fill=(250, 150, 170))
-    d.point([(8, 35), (24, 36), (26, 33), (10, 37)], fill=K)
+        d.arc([X(24), Y(60), X(40), Y(68)], 200, 340, fill=K, width=1)                # frown
+        d.point([(X(18), Y(56)), (X(45), Y(57)), (X(22), Y(58))], fill=K)             # mud on the snout
 
-    # raised hoof + item
-    d.rectangle([48, 30, 56, 44], fill=L4)
-    d.rectangle([48, 29, 55, 42], fill=L2)
-    d.line([(52, 29), (52, 42)], fill=L3)
-    d.rectangle([48, 41, 55, 42], fill=L4)
-    dx, dy = 57, 22
+    def ground():
+        # --- ground: mound off the bottom edge, the hole, what is in it
+        d.chord([X(-4), Y(64), X(68), Y(120)], 180, 360, fill=L4)
+        d.chord([X(-1), Y(66), X(65), Y(118)], 180, 360, fill=L3)
+        d.rectangle([X(2), Y(78), X(62), FH], fill=L3)
+        if mood == "green":
+            d.ellipse([X(18), Y(72), X(46), Y(80)], fill=K)                                # the empty hole it came from
+            d.ellipse([X(20), Y(73), X(44), Y(78)], fill=L4)
+            for (x, y) in [(6, 76), (56, 78)]:                                             # a couple more stones showing
+                d.polygon([(X(x + 1), Y(y)), (X(x + 4), Y(y)), (X(x + 5), Y(y + 2)), (X(x + 2), Y(y + 5)), (X(x), Y(y + 2))], fill=DIA)
+                d.point((X(x + 2), Y(y + 1)), fill=WHITE)
+        elif mood == "yellow":
+            d.ellipse([X(18), Y(72), X(46), Y(80)], fill=K)
+            d.ellipse([X(20), Y(73), X(44), Y(78)], fill=L4)
+            d.ellipse([X(8), Y(80), X(14), Y(83)], fill=(150, 150, 150))
+        else:
+            d.ellipse([X(18), Y(72), X(46), Y(82)], fill=K)
+            gx, gy = 32, 76
+            d.polygon([(X(gx - 7), Y(gy - 1)), (X(gx - 3), Y(gy - 5)), (X(gx + 5), Y(gy - 4)), (X(gx + 8), Y(gy + 2)), (X(gx + 4), Y(gy + 6)), (X(gx - 6), Y(gy + 5))], fill=(30, 24, 26))   # a lump of coal
+            d.line([(X(gx - 4), Y(gy - 3)), (X(gx), Y(gy - 4))], fill=(92, 78, 82))
+            for (x, y) in [(28, 62), (32, 58), (36, 62)]:                                  # its stink
+                d.line([(X(x), Y(y + 8)), (X(x + 1), Y(y + 5)), (X(x), Y(y + 2))], fill=L4)
+            for (x, y) in [(6, 82), (56, 84)]:
+                d.ellipse([X(x), Y(y), X(x + 4), Y(y + 3)], fill=(30, 24, 26))
+
+    # --- hooves
+    def hoof_at(x0, y0, raised=False):
+        d.ellipse([X(x0), Y(y0), X(x0 + 11), Y(y0 + 10)], fill=L4)
+        d.rectangle([X(x0), Y(y0 + 5), X(x0 + 11), Y(y0 + 14)], fill=L4)
+        d.ellipse([X(x0 + 1), Y(y0), X(x0 + 10), Y(y0 + 9)], fill=L2)
+        d.rectangle([X(x0 + 1), Y(y0 + 4), X(x0 + 10), Y(y0 + 12)], fill=L2)
+        d.rectangle([X(x0 + 2), Y(y0 + 2), X(x0 + 4), Y(y0 + 6)], fill=L1)
+        d.line([(X(x0 + 6), Y(y0 + 10)), (X(x0 + 6), Y(y0 + 12))], fill=K)
+
     if mood == "green":
-        d.polygon([(dx - 6, dy - 5), (dx + 6, dy - 5), (dx + 9, dy - 1), (dx, dy + 9), (dx - 9, dy - 1)], fill=DIA)
-        d.line([(dx - 9, dy - 1), (dx + 9, dy - 1)], fill=DIA2)
-        d.line([(dx - 6, dy - 5), (dx - 3, dy - 1)], fill=DIA2)
-        d.line([(dx + 6, dy - 5), (dx + 3, dy - 1)], fill=DIA2)
-        d.line([(dx - 3, dy - 1), (dx, dy + 9)], fill=DIA2)
-        d.line([(dx + 3, dy - 1), (dx, dy + 9)], fill=DIA2)
-        d.rectangle([dx - 5, dy - 4, dx - 3, dy - 4], fill=WHITE)
-        d.line([(68, 8), (68, 14)], fill=WHITE)
-        d.line([(65, 11), (71, 11)], fill=WHITE)
-        d.point([(46, 12), (48, 12), (47, 11), (47, 13)], fill=WHITE)
-        d.point([(64, 28), (66, 28), (65, 27), (65, 29)], fill=WHITE)
+        ground()
+        # both hooves up, presenting the stone right under the snout
+        hoof_at(14, 56)
+        hoof_at(39, 56)
+        gx, gy = 32, 64
+        d.polygon([(X(gx - 7), Y(gy - 5)), (X(gx + 7), Y(gy - 5)), (X(gx + 11), Y(gy)), (X(gx), Y(gy + 11)), (X(gx - 11), Y(gy))], fill=DIA)
+        d.line([(X(gx - 11), Y(gy)), (X(gx + 11), Y(gy))], fill=DIA2)
+        d.line([(X(gx - 4), Y(gy)), (X(gx), Y(gy + 11))], fill=DIA2)
+        d.line([(X(gx + 4), Y(gy)), (X(gx), Y(gy + 11))], fill=DIA2)
+        d.line([(X(gx - 7), Y(gy - 5)), (X(gx - 4), Y(gy))], fill=DIA2)
+        d.line([(X(gx + 7), Y(gy - 5)), (X(gx + 4), Y(gy))], fill=DIA2)
+        d.rectangle([X(gx - 6), Y(gy - 4), X(gx - 4), Y(gy - 4)], fill=WHITE)
+        d.point((X(gx - 2), Y(gy + 3)), fill=WHITE)
     elif mood == "yellow":
-        d.ellipse([dx - 6, dy - 3, dx + 6, dy + 6], fill=(150, 150, 150))   # dull grey pebble
-        d.ellipse([dx - 4, dy - 2, dx + 1, dy + 1], fill=(190, 190, 190))
-        d.point((dx + 3, dy + 4), fill=(110, 110, 110))
+        hoof_at(3, 48)
+        hoof_at(44, 52)                                                                # right one lifted a little, with the pebble
+        d.ellipse([X(46), Y(45), X(56), Y(52)], fill=(150, 150, 150))
+        d.ellipse([X(48), Y(46), X(52), Y(49)], fill=(190, 190, 190))
     else:
-        d.polygon([(dx - 6, dy - 2), (dx - 2, dy - 6), (dx + 5, dy - 5), (dx + 8, dy + 1), (dx + 4, dy + 7), (dx - 5, dy + 6)], fill=K)   # lump of coal
-        d.point([(dx - 2, dy - 1), (dx + 2, dy + 2)], fill=(70, 60, 60))
-        for (x, y) in [(52, 14), (58, 10), (63, 14)]:          # stink lines
-            d.line([(x, y), (x + 1, y - 3), (x, y - 6)], fill=L4)
+        hoof_at(3, 50)
+        hoof_at(49, 50)
 
+    if mood != "green":
+        ground()
     return outline(im, K)
 
 
@@ -236,58 +259,56 @@ def card(score: int, ticker: str, grade: str, lines: list[str], logo: Image.Imag
     W = H = size
     im = Image.new("RGBA", (W, H), (0, 0, 0, 255))
 
-    # faint coloured pool behind the pig
+    # coloured pool behind the pig
     pool = Image.new("RGBA", (W, H), (0, 0, 0, 0))
-    ImageDraw.Draw(pool).ellipse([W * 0.1, H * 0.55, W * 0.9, H * 1.25], fill=p["GLOW"] + (46,))
-    im.alpha_composite(pool.filter(ImageFilter.GaussianBlur(120)))
+    ImageDraw.Draw(pool).ellipse([W * 0.15, H * 0.5, W * 0.85, H * 1.3], fill=p["GLOW"] + (52,))
+    im.alpha_composite(pool.filter(ImageFilter.GaussianBlur(130)))
 
     d = ImageDraw.Draw(im)
-    M = 72                                            # margin
-
-    # ---- header: logo + ticker (left), score (right)
+    M = 72
     LOGO = 128
+
+    # ---- header
     if logo is not None:
         lg = logo.convert("RGBA").resize((LOGO, LOGO))
         mask = Image.new("L", (LOGO, LOGO), 0)
         ImageDraw.Draw(mask).ellipse([0, 0, LOGO - 1, LOGO - 1], fill=255)
         im.paste(lg, (M, M), mask)
     else:
-        d.ellipse([M, M, M + LOGO, M + LOGO], fill=(28, 28, 28), outline=(70, 70, 70), width=3)
+        d.ellipse([M, M, M + LOGO, M + LOGO], fill=(26, 26, 26))
         d.text((M + LOGO // 2, M + LOGO // 2), ticker[:1].upper(), font=font("Tiny5-Regular.ttf", 72), fill=(120, 120, 120), anchor="mm")
     d.ellipse([M - 4, M - 4, M + LOGO + 4, M + LOGO + 4], outline=ACC, width=4)
 
     score_font = font("Unbounded[wght].ttf", 150, "Black")
     sw = d.textlength(str(score), font=score_font)
     slash_font = font("JetBrainsMono[wght].ttf", 34, "Regular")
-    right_edge = W - M - sw - 16 - d.textlength("/100", font=slash_font) - 40   # ticker may not cross this
+    right_edge = W - M - sw - 16 - d.textlength("/100", font=slash_font) - 40
 
     dollar = font("JetBrainsMono[wght].ttf", 84, "Bold")
     tx = M + LOGO + 36
     d.text((tx, M + LOGO // 2), "$", font=dollar, fill=ACC, anchor="lm")
     tx += d.textlength("$", font=dollar) + 6
-    size = 112                                        # shrink long tickers in whole Tiny5 cells
-    while size > 48 and tx + d.textlength(ticker.upper(), font=font("Tiny5-Regular.ttf", size)) > right_edge:
-        size -= 8
-    d.text((tx, M + LOGO // 2), ticker.upper(), font=font("Tiny5-Regular.ttf", size), fill=WHITE, anchor="lm")
+    size_ = 112
+    while size_ > 48 and tx + d.textlength(ticker.upper(), font=font("Tiny5-Regular.ttf", size_)) > right_edge:
+        size_ -= 8
+    d.text((tx, M + LOGO // 2), ticker.upper(), font=font("Tiny5-Regular.ttf", size_), fill=WHITE, anchor="lm")
+
     d.text((W - M, M + LOGO // 2), str(score), font=score_font, fill=ACC, anchor="rm")
     d.text((W - M - sw - 16, M + LOGO // 2 + 36), "/100", font=slash_font, fill=(120, 120, 120), anchor="rm")
     d.text((W - M, M + LOGO + 40), grade, font=font("Tiny5-Regular.ttf", 56), fill=ACC, anchor="rm")
 
-    # ---- score bar with three zones
+    # ---- score bar
     by = M + LOGO + 118
     bx0, bx1 = M, W - M
     bw = bx1 - bx0
-    zones = [(0, 35, PALETTES["red"]["L4"]), (35, 70, PALETTES["yellow"]["L4"]), (70, 100, PALETTES["green"]["L4"])]
-    for lo, hi, col in zones:
+    for lo, hi, col in [(0, 35, PALETTES["red"]["L4"]), (35, 70, PALETTES["yellow"]["L4"]), (70, 100, PALETTES["green"]["L4"])]:
         d.rectangle([bx0 + bw * lo / 100, by, bx0 + bw * hi / 100 - 4, by + 14], fill=col)
     mx = bx0 + bw * max(0, min(100, score)) / 100
     d.rectangle([mx - 6, by - 10, mx + 6, by + 24], fill=ACC)
     d.rectangle([mx - 2, by - 10, mx + 2, by + 24], fill=WHITE)
     lab = font("JetBrainsMono[wght].ttf", 22, "Regular")
-    d.text((bx0, by + 32), "1", font=lab, fill=(90, 90, 90), anchor="la")
-    d.text((bx0 + bw * 0.35, by + 32), "35", font=lab, fill=(90, 90, 90), anchor="ma")
-    d.text((bx0 + bw * 0.70, by + 32), "70", font=lab, fill=(90, 90, 90), anchor="ma")
-    d.text((bx1, by + 32), "100", font=lab, fill=(90, 90, 90), anchor="ra")
+    for v, anc in ((0, "la"), (35, "ma"), (70, "ma"), (100, "ra")):
+        d.text((bx0 + bw * v / 100, by + 32), str(v if v else 1), font=lab, fill=(90, 90, 90), anchor=anc)
 
     # ---- description
     body = font("JetBrainsMono[wght].ttf", 30, "Regular")
@@ -296,20 +317,22 @@ def card(score: int, ticker: str, grade: str, lines: list[str], logo: Image.Imag
         d.text((M, ty), line, font=body, fill=(200, 200, 200))
         ty += 44
 
-    # ---- the pig
-    sp = up(draw_pig(mood), 6)                        # 432 px
-    px_ = W - sp.width - 56
-    py_ = H - sp.height - 44
-    g, pad = glow(sp, 60, 0.4, p["GLOW"])
+    # ---- the pig, centred, mound flush with the bottom edge
+    sp = up(draw_pig(mood), 6)                        # 624 x 552, mound flush with the bottom edge
+    px_ = W - M - sp.width + 40
+    py_ = H - sp.height + 24
+    g, pad = glow(sp, 60, 0.42, p["GLOW"])
     im.alpha_composite(g, (px_ - pad, py_ - pad))
     im.alpha_composite(sp, (px_, py_))
 
-    # ---- signature, bottom-left
+    # ---- corners
     d = ImageDraw.Draw(im)
-    d.text((M, H - M - 50), "GEMHOG", font=font("Tiny5-Regular.ttf", 56), fill=ACC, anchor="lm")
-    tw = d.textlength("GEMHOG", font=font("Tiny5-Regular.ttf", 56))
-    d.text((M + tw + 18, H - M - 46), "Terminal", font=font("JetBrainsMono[wght].ttf", 30, "Regular"), fill=(140, 140, 140), anchor="lm")
-    d.text((M, H - M - 6), observed or "gemhog.xyz  ·  read-only  ·  not financial advice", font=font("JetBrainsMono[wght].ttf", 22, "Regular"), fill=(90, 90, 90), anchor="lm")
+    d.text((M, H - M - 74), "GEMHOG", font=font("Tiny5-Regular.ttf", 56), fill=ACC, anchor="lm")
+    d.text((M, H - M - 34), "Terminal", font=font("JetBrainsMono[wght].ttf", 30, "Regular"), fill=(140, 140, 140), anchor="lm")
+    small = font("JetBrainsMono[wght].ttf", 22, "Regular")
+    d.text((M, H - M - 2), "gemhog.xyz", font=small, fill=(140, 140, 140), anchor="lm")
+    if observed:
+        d.text((M, H - M + 26), observed, font=small, fill=(90, 90, 90), anchor="lm")
 
     return im.convert("RGB")
 
@@ -324,6 +347,6 @@ if __name__ == "__main__":
                        lines=["early cohort 142 wallets · 84% still holding at 6h", "dev has not sold · 0 fee claims", "top 10 hold 14.2% · 611 holders"]),
     }
     for mood, kw in samples.items():
-        card(**kw, observed=f"graded 2026-09-11 21:22 UTC  ·  gemhog.xyz").save(OUT / f"card-{mood}.png")
-        up(draw_pig(mood), 10).save(OUT / f"pig-{mood}.png")
+        card(**kw, observed="2026-09-11 21:22 UTC").save(OUT / f"card-{mood}.png")
+        up(draw_pig(mood), 8).save(OUT / f"pig-{mood}.png")
     print("ok")

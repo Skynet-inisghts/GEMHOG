@@ -23,7 +23,7 @@ const PALETTES: Record<Mood, { L4: string; TEXT: string; GLOW: string }> = {
   green: { L4: "rgb(14,88,46)", TEXT: "rgb(96,240,128)", GLOW: "rgb(60,230,110)" },
 };
 
-export const SITE_HOST = "gemhog.vercel.app";
+export const SITE_HOST = "gemhog.xyz";
 
 export function band(score: number): Mood {
   if (score < 1) return "red";
@@ -107,10 +107,10 @@ export async function renderCard(cert: CertificateReport, options: CardOptions =
 
   // faint coloured pool behind the pig
   ctx.save();
-  ctx.filter = "blur(120px)";
-  ctx.fillStyle = p.GLOW.replace("rgb", "rgba").replace(")", ",0.18)");
+  ctx.filter = "blur(130px)";
+  ctx.fillStyle = p.GLOW.replace("rgb", "rgba").replace(")", ",0.2)");
   ctx.beginPath();
-  ctx.ellipse(W * 0.5, H * 0.9, W * 0.4, H * 0.35, 0, 0, Math.PI * 2);
+  ctx.ellipse(W * 0.5, H * 0.9, W * 0.35, H * 0.4, 0, 0, Math.PI * 2);
   ctx.fill();
   ctx.restore();
 
@@ -206,30 +206,31 @@ export async function renderCard(cert: CertificateReport, options: CardOptions =
     ty += 44;
   }
 
-  // ---- the pig (shipped sprite, scaled to 432px, pixels kept crisp)
+  // ---- the pig (shipped v2 sprite, native 104x92 at 6x, mound flush with the bottom edge)
   const sprite = await pigSprite(mood);
-  const SP = 432;
-  const px = W - SP - 56;
-  const py = H - SP - 44;
+  const SPW = 104 * 6;
+  const SPH = 92 * 6;
+  const px = W - M - SPW + 40;
+  const py = H - SPH + 24;
   ctx.save();
   ctx.filter = "blur(60px)";
-  ctx.globalAlpha = 0.4;
-  const silhouette = createCanvas(SP, SP);
+  ctx.globalAlpha = 0.42;
+  const silhouette = createCanvas(SPW, SPH);
   const sctx = silhouette.getContext("2d");
   sctx.imageSmoothingEnabled = false;
-  sctx.drawImage(sprite, 0, 0, SP, SP);
+  sctx.drawImage(sprite, 0, 0, SPW, SPH);
   sctx.globalCompositeOperation = "source-in";
   sctx.fillStyle = p.GLOW;
-  sctx.fillRect(0, 0, SP, SP);
+  sctx.fillRect(0, 0, SPW, SPH);
   ctx.drawImage(silhouette, px, py);
   ctx.restore();
   ctx.imageSmoothingEnabled = false;
-  ctx.drawImage(sprite, px, py, SP, SP);
+  ctx.drawImage(sprite, px, py, SPW, SPH);
   ctx.imageSmoothingEnabled = true;
 
   if (options.demo) {
     ctx.save();
-    ctx.translate(px + SP / 2, py + SP / 2);
+    ctx.translate(px + SPW / 2, py + SPH / 2);
     ctx.rotate(-0.22);
     ctx.font = "96px Tiny5";
     const dw = ctx.measureText("DEMO").width;
@@ -244,31 +245,27 @@ export async function renderCard(cert: CertificateReport, options: CardOptions =
     ctx.restore();
   }
 
-  // ---- signature, bottom-left
+  // ---- corners: signature stacked bottom-left, site and date under it
   ctx.textBaseline = "middle";
   ctx.font = "56px Tiny5";
   ctx.fillStyle = ACC;
-  ctx.fillText("GEMHOG", M, H - M - 50);
-  const tw = ctx.measureText("GEMHOG").width;
+  ctx.fillText("GEMHOG", M, H - M - 74);
   ctx.font = "400 30px JBMono";
   ctx.fillStyle = "rgb(140,140,140)";
-  ctx.fillText("Terminal", M + tw + 18, H - M - 46);
+  ctx.fillText("Terminal", M, H - M - 34);
   ctx.font = "400 22px JBMono";
+  ctx.fillText(SITE_HOST, M, H - M - 2);
   ctx.fillStyle = "rgb(90,90,90)";
-  const observed = `graded ${cert.observedAt.slice(0, 16).replace("T", " ")} UTC  ·  ${SITE_HOST}`;
-  ctx.fillText(observed, M, H - M - 6);
+  ctx.fillText(`${cert.observedAt.slice(0, 16).replace("T", " ")} UTC`, M, H - M + 26);
 
   return canvas.toBuffer("image/png");
 }
 
 function drawInitialCircle(ctx: SKRSContext2D, M: number, LOGO: number, symbol: string): void {
-  ctx.fillStyle = "rgb(28,28,28)";
+  ctx.fillStyle = "rgb(26,26,26)";
   ctx.beginPath();
   ctx.arc(M + LOGO / 2, M + LOGO / 2, LOGO / 2, 0, Math.PI * 2);
   ctx.fill();
-  ctx.strokeStyle = "rgb(70,70,70)";
-  ctx.lineWidth = 3;
-  ctx.stroke();
   ctx.font = "72px Tiny5";
   ctx.fillStyle = "rgb(120,120,120)";
   ctx.textBaseline = "middle";

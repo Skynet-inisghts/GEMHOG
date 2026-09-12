@@ -48,7 +48,7 @@ const program = new Command();
 program
   .name("gemhog")
   .description("Diamond-hands terminal for Pons V2 tokens on Robinhood Chain. Read only: no keys, no signing, no transactions.")
-  .version("0.7.3");
+  .version("0.8.0");
 
 program
   .command("doctor")

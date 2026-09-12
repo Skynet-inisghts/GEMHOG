@@ -11,7 +11,7 @@
 </p>
 
 <p align="center"><strong>Grade the hands before the bag.</strong><br/>A browser and local CLI for grading holder retention of Pons V2 tokens on Robinhood Chain.</p>
-<p align="center"><a href="https://gemhog.vercel.app">Website</a> · <a href="https://gemhog.vercel.app/terminal">Terminal</a> · <a href="https://gemhog.vercel.app/holders">Holder Check</a> · <a href="https://gemhog.vercel.app/docs">Docs</a></p>
+<p align="center"><a href="https://gemhog.xyz">Website</a> · <a href="https://gemhog.xyz/terminal">Terminal</a> · <a href="https://gemhog.xyz/holders">Holder Check</a> · <a href="https://gemhog.xyz/docs">Docs</a></p>
 <p align="center"><a href="#start-in-one-minute">Start locally</a> · <a href="#holder-check">Holder Check</a> · <a href="#live-grading">Live grading</a> · <a href="docs/COMMANDS.md">Commands</a> · <a href="docs/METHODOLOGY.md">Methodology</a> · <a href="docs/ARCHITECTURE.md">Architecture</a></p>
 
 ## Why GEMHOG
