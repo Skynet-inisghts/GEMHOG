@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.8.1 — 2026-09-12
+
+- Dig loop v2: 32 frames at 104x96 with a proper dirt mound — the pig dives in, earth flies, the diamond surfaces. Same steps() sprite-sheet technique, same reduced-motion fallback (the stone-in-mouth frame).
+
 ## 0.8.0 — 2026-09-12
 
 - The site lives at gemhog.xyz: the domain is wired through the share-card signature, OG unfurls and the README.
