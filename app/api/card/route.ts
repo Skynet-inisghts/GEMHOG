@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { getAddress, isAddress } from "viem";
 import { CheckError } from "@/lib/gemhog/check";
-import { getCertificate } from "@/lib/gemhog/service";
+import { getCertificate, peekCertificate } from "@/lib/gemhog/service";
 import { renderCard } from "@/lib/gemhog/card";
 import { fetchTokenLogo } from "@/lib/gemhog/read/logo";
 import { demoReport } from "@/lib/gemhog/demo";
@@ -75,11 +75,27 @@ export async function GET(request: Request) {
 
   try {
     const result = await coalesce(`card:${token}`, async () => {
-      const [cert, logo] = await Promise.all([getCertificate(token), fetchTokenLogo(token)]);
+      // The card never digs for minutes: it renders from a certificate this
+      // instance already has, or computes one only for a young token. An old
+      // token's card arrives through the grade route's warm-up; until that
+      // lands in the CDN the answer is "still baking", and the page retries.
+      let cert = peekCertificate(token);
+      if (!cert) {
+        const { readLaunch } = await import("@/lib/gemhog/read/launches");
+        const launch = await readLaunch(token);
+        if (!launch) throw new CheckError(`${token} was not launched through the pons v2 factory`);
+        const ageSec = Date.now() / 1000 - launch.launchedAt;
+        if (ageSec > 86_400) return { baking: true as const };
+        cert = await getCertificate(token);
+      }
       if (cert.tooEarly) return { tooEarly: true as const };
+      const logo = await fetchTokenLogo(token).catch(() => null);
       const buf = await renderCard(cert, { logo: logo ?? undefined });
       return { buf, ttlMs: certTtlMs(cert.ageSec) };
     });
+    if ("baking" in result) {
+      return NextResponse.json({ baking: true }, { status: 202, headers: { "retry-after": "8" } });
+    }
     if ("tooEarly" in result) return NextResponse.json({ tooEarly: true }, { status: 425 });
     cache.set(token, result.buf, result.ttlMs);
     return png(result.buf);

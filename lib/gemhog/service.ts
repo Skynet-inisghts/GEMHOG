@@ -11,6 +11,11 @@ import { certTtlMs, coalesce, TtlCache } from "./web.js";
 
 const certificates = new TtlCache<CertificateReport>(300);
 
+/** The cached certificate if this instance has it; no reads either way. */
+export function peekCertificate(token: Address): CertificateReport | undefined {
+  return certificates.get(token.toLowerCase());
+}
+
 export async function getCertificate(token: Address, options?: CheckOptions): Promise<CertificateReport> {
   const key = token.toLowerCase();
   const hit = certificates.get(key);

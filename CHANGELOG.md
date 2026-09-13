@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.8.7 — 2026-09-13
+
+- The card route never digs for minutes. It renders from a certificate already in memory, computes one only for tokens younger than a day, and otherwise answers "still baking" (202) while the grade route's warm-up lands the PNG in the CDN; the page retries on its own until it appears.
+
 ## 0.8.6 — 2026-09-13
 
 - Holder snapshots now have a chain of sources: the Pons API first, the keyed Blockscout instance when that hits its 8-per-minute ceiling, and the full Transfer replay only when both are out. Under load the engine used to fall straight to the slow replay; now it stays in the fast gear.
