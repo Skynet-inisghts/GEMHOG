@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { resolveInput, enrichCluster } from "@/lib/gemhog/resolve";
-import { checkToken, CheckError } from "@/lib/gemhog/check";
+import { CheckError } from "@/lib/gemhog/check";
+import { getCertificate } from "@/lib/gemhog/service";
 import { certTtlMs, clientIp, coalesce, RateLimiter, TtlCache } from "@/lib/gemhog/web";
 
 export const dynamic = "force-dynamic";
@@ -47,7 +48,7 @@ export async function POST(request: Request) {
       if (resolved.kind === "cluster") {
         return { status: 200, body: { cluster: await enrichCluster(resolved.cluster), note: resolved.note }, ttlMs: 120_000 };
       }
-      const report = await checkToken(resolved.token!);
+      const report = await getCertificate(resolved.token!);
       return { status: 200, body: report, ttlMs: report.tooEarly ? 30_000 : certTtlMs(report.ageSec) };
     } catch (error) {
       if (error instanceof CheckError) {

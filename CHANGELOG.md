@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.8.3 — 2026-09-13
+
+- The share card no longer recomputes the certificate the page just computed: both API routes read one certificate store, so the card renders seconds after the grade instead of digging the chain a second time.
+- A card that is still baking retries itself twice before offering a Retry button; no more endless shimmer.
+
 ## 0.8.2 — 2026-09-12
 
 - Grading a busy multi-day token dropped from about four minutes to under thirty seconds. Three changes: the log-read gate spaces eth_getLogs at 150 ms instead of 400 (the 429 backoff still guards the ceiling), chunks grow back after every clean read instead of every second one (hot zones are narrow; a timid climb wastes requests), and the holder page grades two tokens in parallel lanes.

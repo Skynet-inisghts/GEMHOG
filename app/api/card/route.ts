@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getAddress, isAddress } from "viem";
-import { checkToken, CheckError } from "@/lib/gemhog/check";
+import { CheckError } from "@/lib/gemhog/check";
+import { getCertificate } from "@/lib/gemhog/service";
 import { renderCard } from "@/lib/gemhog/card";
 import { fetchTokenLogo } from "@/lib/gemhog/read/logo";
 import { demoReport } from "@/lib/gemhog/demo";
@@ -55,7 +56,7 @@ export async function GET(request: Request) {
 
   try {
     const result = await coalesce(`card:${token}`, async () => {
-      const [cert, logo] = await Promise.all([checkToken(token), fetchTokenLogo(token)]);
+      const [cert, logo] = await Promise.all([getCertificate(token), fetchTokenLogo(token)]);
       if (cert.tooEarly) return { tooEarly: true as const };
       const buf = await renderCard(cert, { logo: logo ?? undefined });
       return { buf, ttlMs: certTtlMs(cert.ageSec) };
