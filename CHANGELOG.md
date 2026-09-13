@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.8.6 — 2026-09-13
+
+- Holder snapshots now have a chain of sources: the Pons API first, the keyed Blockscout instance when that hits its 8-per-minute ceiling, and the full Transfer replay only when both are out. Under load the engine used to fall straight to the slow replay; now it stays in the fast gear.
+
 ## 0.8.5 — 2026-09-13
 
 - Two gears for the transfer read. When the Pons API supplies the holder snapshot, the engine reads only the transfers touching the cohort and the dev — topic-filtered queries whose results stay tiny on a token with tens of thousands of swaps — and the declared bundle's balances come from one multicall. The full replay remains the honest fallback when that API is down.
