@@ -467,6 +467,8 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 }
 
 .term-card { max-width: 540px; }
+.term-card-failed { padding: 22px; border: 1px solid var(--line); display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
+.term-card-failed p { margin: 0; color: var(--muted); font-size: 13px; }
 .term-card img {
   width: 100%;
   height: auto;

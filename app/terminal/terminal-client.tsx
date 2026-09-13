@@ -349,10 +349,7 @@ function ReadableCertificate({ report, rawText, demo, cardSrc, onShare, onCopyLi
 
         {cardSrc && (
           <aside className="cert-side">
-            <div className="term-card">
-              {/* eslint-disable-next-line @next/next/no-img-element -- generated at request time, next/image adds nothing */}
-              <img src={cardSrc} alt="Share card for this certificate" loading="lazy" width={1080} height={1080} />
-            </div>
+            <CardImage src={cardSrc} />
             <div className="term-tools">
               <button className="cta-secondary" onClick={onShare}>Download card</button>
               {onCopyLink && (
@@ -368,6 +365,40 @@ function ReadableCertificate({ report, rawText, demo, cardSrc, onShare, onCopyLi
           ? "no network requests were made · reproduce locally: pnpm demo"
           : `block ${report.block} · observed ${report.observedAt.slice(0, 19).replace("T", " ")} UTC · ${report.rpcCalls} rpc calls · holders via ${report.holdersSource} · sources: robinhood rpc, pons api`}
       </span>
+    </div>
+  );
+}
+
+
+/** The share card with patience: the server may still be rendering it, so a
+ *  failed load retries twice on its own before asking for a click. */
+function CardImage({ src }: { src: string }) {
+  const [attempt, setAttempt] = useState(0);
+  const [failed, setFailed] = useState(false);
+  const url = attempt > 0 ? `${src}${src.includes("?") ? "&" : "?"}r=${attempt}` : src;
+  if (failed) {
+    return (
+      <div className="term-card term-card-failed">
+        <p>the card is still baking on the server</p>
+        <button className="cta-secondary" onClick={() => { setFailed(false); setAttempt((a) => a + 1); }}>Retry card</button>
+      </div>
+    );
+  }
+  return (
+    <div className="term-card">
+      {/* eslint-disable-next-line @next/next/no-img-element -- generated at request time, next/image adds nothing */}
+      <img
+        key={url}
+        src={url}
+        alt="Share card for this certificate"
+        loading="lazy"
+        width={1080}
+        height={1080}
+        onError={() => {
+          if (attempt < 2) setTimeout(() => setAttempt((a) => a + 1), 6000);
+          else setFailed(true);
+        }}
+      />
     </div>
   );
 }
