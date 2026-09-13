@@ -1,6 +1,6 @@
 {
   "name": "gemhog",
-  "version": "0.8.5",
+  "version": "0.8.6",
   "description": "Diamond-hands terminal for Pons V2 tokens on Robinhood Chain.",
   "private": true,
   "type": "module",

@@ -5,7 +5,7 @@ import { rpcCallCount } from "./rpc.js";
 import { readLaunch } from "./read/launches.js";
 import { makeClock } from "./read/blocks.js";
 import { readCurveTrades, readEscrowActivity, readTransfers, readTransfersFor } from "./read/logs.js";
-import { holdersFromTransfers, readHoldersFromPonsApi } from "./read/holders.js";
+import { holdersFromTransfers, readHoldersFromBlockscout, readHoldersFromPonsApi } from "./read/holders.js";
 import { assembleCertificate } from "./grade/grade.js";
 import { buildCohort } from "./grade/cohort.js";
 import { CHECKPOINTS } from "./grade/types.js";
@@ -60,7 +60,8 @@ export async function checkToken(token: Address, options: CheckOptions = {}): Pr
     readEscrowActivity(launch.creatorFeeRecipient, launch.launchBlock, toBlock),
     options.holdersVia === "transfers"
       ? Promise.resolve(null)
-      : readHoldersFromPonsApi(launch.token, launch.curve, launch.totalSupply),
+      : readHoldersFromPonsApi(launch.token, launch.curve, launch.totalSupply)
+          .then((snap) => snap ?? readHoldersFromBlockscout(launch.token, launch.curve, launch.totalSupply)),
   ]);
 
   // The cohort falls out of the curve trades alone, before any transfer read.

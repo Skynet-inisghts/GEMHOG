@@ -19,7 +19,7 @@ export interface HolderSnapshot {
   /** Real holder count; when capped, `countIsFloor` is true and this is "at least". */
   holderCount: number;
   countIsFloor: boolean;
-  source: "pons-api" | "transfers";
+  source: "pons-api" | "blockscout" | "transfers";
   complete: boolean;
 }
 
@@ -66,6 +66,42 @@ export async function readHoldersFromPonsApi(token: Address, curve: Address, tot
     source: "pons-api",
     complete: true,
   };
+}
+
+/**
+ * The keyed Blockscout instance as the second fast source: exact holder count
+ * from the token counters, top-50 page for concentration. Used when the Pons
+ * API is rate-limited; the full Transfer replay stays the last resort.
+ */
+export async function readHoldersFromBlockscout(token: Address, curve: Address, totalSupply: bigint): Promise<HolderSnapshot | null> {
+  const { blockscoutFetch, blockscoutKey } = await import("../blockscout.js");
+  if (!blockscoutKey()) return null;
+  try {
+    const [info, page] = await Promise.all([
+      blockscoutFetch(`/api/v2/tokens/${token}`) as Promise<{ holders_count?: string; holders?: string }>,
+      blockscoutFetch(`/api/v2/tokens/${token}/holders`) as Promise<{ items?: { address: { hash: string } | string; value: string }[] }>,
+    ]);
+    const rawCount = Number(info.holders_count ?? info.holders ?? 0);
+    const real: { wallet: string; balance: bigint }[] = [];
+    let infraSeen = 0;
+    for (const item of page.items ?? []) {
+      const wallet = typeof item.address === "string" ? item.address : item.address.hash;
+      if (isInfra(wallet, curve)) { infraSeen++; continue; }
+      real.push({ wallet, balance: BigInt(item.value) });
+    }
+    if (!rawCount && !real.length) return null;
+    const top10 = real.slice(0, 10).reduce((sum, h) => sum + h.balance, 0n);
+    return {
+      top: real.slice(0, 25),
+      top10Pct: totalSupply > 0n ? Number((top10 * 10_000n) / totalSupply) / 100 : 0,
+      holderCount: Math.max(0, rawCount - infraSeen),
+      countIsFloor: false,
+      source: "blockscout",
+      complete: true,
+    };
+  } catch {
+    return null;
+  }
 }
 
 /** Balance map for every wallet, replayed from the full Transfer history. */
