@@ -403,7 +403,7 @@ function CardImage({ src }: { src: string }) {
         width={1080}
         height={1080}
         onError={() => {
-          if (attempt < 2) setTimeout(() => setAttempt((a) => a + 1), 6000);
+          if (attempt < 5) setTimeout(() => setAttempt((a) => a + 1), 6000);
           else setFailed(true);
         }}
       />
