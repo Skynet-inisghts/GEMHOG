@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-09-13T14:27:50.422Z",
+  "generatedAt": "2026-09-13T14:44:55.136Z",
   "window": "6h",
-  "launches": 5703,
-  "withBuyers": 472,
-  "graded": 60,
+  "launches": 5716,
+  "withBuyers": 492,
+  "graded": 62,
   "byGrade": {
     "I1": 19,
-    "SI2": 29,
-    "VS2": 3,
-    "SI1": 7,
+    "SI2": 31,
+    "VS2": 2,
+    "SI1": 8,
     "VVS2": 1,
     "I2": 1
   },
-  "vs2plus": 4
+  "vs2plus": 3
 }
