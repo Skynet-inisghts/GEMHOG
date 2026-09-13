@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.8.9 — 2026-09-13
+
+- The share card on the terminal opens full screen on click; Esc or a click closes it.
+
 ## 0.8.8 — 2026-09-13
 
 - Creator fees on token-pair launches (GOOGL and friends) were invisible: the escrow emits CreditedToken/ClaimedToken for those, not the ETH Credited/Claimed the engine listened for. Both flows are read now, filtered by the launch's pair token.

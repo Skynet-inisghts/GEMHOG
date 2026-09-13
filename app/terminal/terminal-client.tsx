@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import Link from "next/link";
 import { renderCertificate } from "@/lib/gemhog/certificate";
@@ -373,10 +374,12 @@ function ReadableCertificate({ report, rawText, demo, cardSrc, onShare, onCopyLi
 
 
 /** The share card with patience: the server may still be rendering it, so a
- *  failed load retries twice on its own before asking for a click. */
+ *  failed load retries twice on its own before asking for a click. Clicking
+ *  the loaded card opens it full screen; Esc or any click closes it. */
 function CardImage({ src }: { src: string }) {
   const [attempt, setAttempt] = useState(0);
   const [failed, setFailed] = useState(false);
+  const [zoomed, setZoomed] = useState(false);
   // Give the server's warm render a head start so the first request lands on
   // the CDN copy instead of racing it.
   const [ready, setReady] = useState(false);
@@ -384,6 +387,13 @@ function CardImage({ src }: { src: string }) {
     const id = setTimeout(() => setReady(true), 2_500);
     return () => clearTimeout(id);
   }, []);
+  useEffect(() => {
+    if (!zoomed) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setZoomed(false); };
+    window.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => { window.removeEventListener("keydown", onKey); document.body.style.overflow = ""; };
+  }, [zoomed]);
   const url = attempt > 0 ? `${src}${src.includes("?") ? "&" : "?"}r=${attempt}` : src;
   if (!ready) return <div className="term-card"><div className="term-card-baking" aria-hidden="true" /></div>;
   if (failed) {
@@ -395,20 +405,34 @@ function CardImage({ src }: { src: string }) {
     );
   }
   return (
-    <div className="term-card">
-      {/* eslint-disable-next-line @next/next/no-img-element -- generated at request time, next/image adds nothing */}
-      <img
-        key={url}
-        src={url}
-        alt="Share card for this certificate"
-        loading="lazy"
-        width={1080}
-        height={1080}
-        onError={() => {
-          if (attempt < 5) setTimeout(() => setAttempt((a) => a + 1), 6000);
-          else setFailed(true);
-        }}
-      />
-    </div>
+    <>
+      <div className="term-card">
+        <button type="button" className="term-card-zoom" onClick={() => setZoomed(true)} aria-label="View the card full screen">
+          {/* eslint-disable-next-line @next/next/no-img-element -- generated at request time, next/image adds nothing */}
+          <img
+            key={url}
+            src={url}
+            alt="Share card for this certificate"
+            loading="lazy"
+            width={1080}
+            height={1080}
+            onError={() => {
+              if (attempt < 5) setTimeout(() => setAttempt((a) => a + 1), 6000);
+              else setFailed(true);
+            }}
+          />
+        </button>
+      </div>
+      {zoomed && createPortal(
+        // A portal to <body>: the terminal layout's stacking contexts would
+        // otherwise let the sticky header paint over the overlay.
+        <div className="card-lightbox" role="dialog" aria-modal="true" aria-label="Share card, full screen" onClick={() => setZoomed(false)}>
+          {/* eslint-disable-next-line @next/next/no-img-element -- same generated image, just larger */}
+          <img src={url} alt="Share card for this certificate" />
+          <span className="card-lightbox-hint">click anywhere or press Esc to close</span>
+        </div>,
+        document.body,
+      )}
+    </>
   );
 }

@@ -480,6 +480,20 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
   animation: card-shimmer 1.4s linear infinite;
 }
 @keyframes card-shimmer { to { background-position: -200% 0; } }
+.term-card-zoom { display: block; width: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; }
+.term-card-zoom:focus-visible { outline: 2px solid var(--pink); outline-offset: 2px; }
+.card-lightbox {
+  position: fixed; inset: 0; z-index: 60;
+  background: rgba(0, 0, 0, 0.92);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 14px; padding: 24px; cursor: zoom-out;
+}
+.card-lightbox img {
+  max-width: min(92vw, 88vh); max-height: 88vh;
+  width: auto; height: auto;
+  border: 1px solid var(--line-hot);
+}
+.card-lightbox-hint { color: var(--faint); font-size: 12px; }
 .term-provenance { color: var(--faint); font-size: 11.5px; line-height: 1.6; }
 
 @media (max-width: 900px) {
