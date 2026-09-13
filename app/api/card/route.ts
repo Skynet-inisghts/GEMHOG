@@ -34,6 +34,25 @@ const png = (buf: Buffer) =>
 export async function GET(request: Request) {
   const url = new URL(request.url);
 
+  // The warm path: the grade route just computed this certificate and hands
+  // it over under a shared secret, so the card renders in a second and the
+  // response settles into the CDN for everyone else. No secret, no shortcut.
+  const warmCert = request.headers.get("x-gemhog-cert");
+  const warmSecret = request.headers.get("x-gemhog-secret");
+  const expected = process.env.CARD_WARM_SECRET?.trim();
+  if (warmCert && expected && warmSecret === expected) {
+    try {
+      const cert = JSON.parse(Buffer.from(warmCert, "base64").toString("utf8"));
+      const raw = url.searchParams.get("token") ?? "";
+      if (isAddress(raw) && cert.token?.toLowerCase() === raw.toLowerCase() && !cert.tooEarly) {
+        const logo = await fetchTokenLogo(getAddress(raw)).catch(() => null);
+        const buf = await renderCard(cert, { logo: logo ?? undefined });
+        cache.set(getAddress(raw), buf, certTtlMs(cert.ageSec ?? 0));
+        return png(buf);
+      }
+    } catch { /* fall through to the normal path */ }
+  }
+
   if (url.searchParams.get("demo")) {
     const hit = cache.get("demo");
     if (hit) return png(hit);

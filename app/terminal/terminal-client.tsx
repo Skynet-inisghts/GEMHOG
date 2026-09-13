@@ -375,7 +375,15 @@ function ReadableCertificate({ report, rawText, demo, cardSrc, onShare, onCopyLi
 function CardImage({ src }: { src: string }) {
   const [attempt, setAttempt] = useState(0);
   const [failed, setFailed] = useState(false);
+  // Give the server's warm render a head start so the first request lands on
+  // the CDN copy instead of racing it.
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    const id = setTimeout(() => setReady(true), 2_500);
+    return () => clearTimeout(id);
+  }, []);
   const url = attempt > 0 ? `${src}${src.includes("?") ? "&" : "?"}r=${attempt}` : src;
+  if (!ready) return <div className="term-card"><div className="term-card-baking" aria-hidden="true" /></div>;
   if (failed) {
     return (
       <div className="term-card term-card-failed">
