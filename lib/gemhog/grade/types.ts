@@ -61,6 +61,9 @@ export interface GradeSource {
   transfers: SourceTransfer[];
   holders: SourceHolders;
   escrow: SourceEscrow;
+  /** Current balances of the declared bundle, read directly when the fast
+   *  transfer path is used; otherwise clarity replays them from transfers. */
+  bundleBalances?: { wallet: string; balance: bigint }[];
   /** Unix seconds of the observation; fixtures pin it for determinism. */
   now: number;
   secPerBlock: number;

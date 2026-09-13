@@ -55,10 +55,15 @@ export function caratScore(input: { holders: number; cohortQuoteEth: number; top
 export function computeComponents(source: GradeSource, cohort: Cohort, retention: Retention): Components {
   const { launch, trades, transfers, holders, escrow, secPerBlock } = source;
 
-  // Bundle share of supply right now, from the replayed balances.
-  const balances = balancesFromTransfers(transfers);
+  // Bundle share of supply right now: read directly on the fast path,
+  // replayed from transfers otherwise.
   let bundleHolds = 0n;
-  for (const wallet of cohort.bundleWallets) bundleHolds += balances.get(wallet.toLowerCase()) ?? 0n;
+  if (source.bundleBalances) {
+    for (const b of source.bundleBalances) bundleHolds += b.balance;
+  } else {
+    const balances = balancesFromTransfers(transfers);
+    for (const wallet of cohort.bundleWallets) bundleHolds += balances.get(wallet.toLowerCase()) ?? 0n;
+  }
   const bundleHoldsPct = launch.totalSupply > 0n ? Number((bundleHolds * 10_000n) / launch.totalSupply) / 100 : 0;
 
   // Dev exits: curve sells by the deployer or fee recipient, plus outbound

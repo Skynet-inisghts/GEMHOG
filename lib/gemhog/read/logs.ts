@@ -94,6 +94,53 @@ export async function readTransfers(token: Address, fromBlock: number, toBlock: 
   return { events, complete };
 }
 
+/**
+ * Transfers touching a known set of wallets only, via indexed-topic filters:
+ * two queries per chunk (from-in-set, to-in-set) whose results stay tiny even
+ * through a launch-hour hot zone, so the chunks never shrink. This is the
+ * fast path when the holder snapshot comes from the Pons API and the full
+ * Transfer replay is not needed.
+ */
+export async function readTransfersFor(
+  token: Address,
+  wallets: string[],
+  fromBlock: number,
+  toBlock: number,
+): Promise<ChunkedResult<TokenTransfer>> {
+  const event = erc20Abi.find((e) => e.type === "event" && e.name === "Transfer")!;
+  const set = wallets.map((w) => w as Address);
+  const seen = new Set<string>();
+  const events: TokenTransfer[] = [];
+  let complete = true;
+  let chunk = START_CHUNK;
+  let start = fromBlock;
+  while (start <= toBlock) {
+    const end = Math.min(toBlock, start + chunk - 1);
+    try {
+      const [outgoing, incoming] = await Promise.all([
+        publicClient.getLogs({ address: token, event, args: { from: set }, fromBlock: BigInt(start), toBlock: BigInt(end) }),
+        publicClient.getLogs({ address: token, event, args: { to: set }, fromBlock: BigInt(start), toBlock: BigInt(end) }),
+      ]);
+      for (const log of [...outgoing, ...incoming]) {
+        const key = `${log.blockNumber}:${log.logIndex}`;
+        if (seen.has(key)) continue;
+        seen.add(key);
+        const args = (log as { args: { from?: Address; to?: Address; value?: bigint } }).args;
+        if (!args.from || !args.to || args.value === undefined) continue;
+        events.push({ from: args.from, to: args.to, value: args.value, block: Number(log.blockNumber) });
+      }
+      start = end + 1;
+      if (chunk < START_CHUNK) chunk = Math.min(START_CHUNK, chunk * 2);
+    } catch {
+      if (chunk > MIN_CHUNK) { chunk = Math.max(MIN_CHUNK, Math.floor(chunk / 4)); continue; }
+      complete = false;
+      start = end + 1;
+    }
+  }
+  events.sort((a, b) => a.block - b.block);
+  return { events, complete };
+}
+
 export interface EscrowActivity {
   creditedWei: bigint;
   claims: { block: number; amountWei: bigint }[];

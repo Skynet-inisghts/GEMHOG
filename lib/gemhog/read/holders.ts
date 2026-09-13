@@ -82,7 +82,7 @@ export function balancesFromTransfers(transfers: { from: string; to: string; val
   return balances;
 }
 
-export function holdersFromTransfers(transfers: TokenTransfer[], curve: string, totalSupply: bigint, complete: boolean): HolderSnapshot {
+export function holdersFromTransfers(transfers: { from: string; to: string; value: bigint }[], curve: string, totalSupply: bigint, complete: boolean): HolderSnapshot {
   const balances = balancesFromTransfers(transfers);
   const real: { wallet: string; balance: bigint }[] = [];
   for (const [wallet, balance] of balances) {

@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.8.5 — 2026-09-13
+
+- Two gears for the transfer read. When the Pons API supplies the holder snapshot, the engine reads only the transfers touching the cohort and the dev — topic-filtered queries whose results stay tiny on a token with tens of thousands of swaps — and the declared bundle's balances come from one multicall. The full replay remains the honest fallback when that API is down.
+- A token that timed out at five minutes on the public RPC now grades in about twenty seconds, with identical scores on both gears.
+
 ## 0.8.3 — 2026-09-13
 
 - The share card no longer recomputes the certificate the page just computed: both API routes read one certificate store, so the card renders seconds after the grade instead of digging the chain a second time.
