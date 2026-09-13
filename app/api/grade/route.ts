@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextResponse, after } from "next/server";
 import { resolveInput, enrichCluster } from "@/lib/gemhog/resolve";
 import { CheckError } from "@/lib/gemhog/check";
 import { getCertificate } from "@/lib/gemhog/service";
@@ -58,5 +58,26 @@ export async function POST(request: Request) {
     }
   });
   cache.set(key, { status, body }, ttlMs);
+
+  // Warm the share card into the CDN while the reader is still looking at the
+  // certificate: this instance hands its freshly computed report to /api/card
+  // under the shared secret, and the PNG settles at the edge for every
+  // instance and every social unfurl.
+  const report = body as { token?: string; tooEarly?: boolean };
+  const secret = process.env.CARD_WARM_SECRET?.trim();
+  if (status === 200 && report.token && !report.tooEarly && secret) {
+    const origin = new URL(request.url).origin;
+    after(async () => {
+      try {
+        await fetch(`${origin}/api/card?token=${report.token}`, {
+          headers: {
+            "x-gemhog-secret": secret,
+            "x-gemhog-cert": Buffer.from(JSON.stringify(body)).toString("base64"),
+          },
+          signal: AbortSignal.timeout(30_000),
+        });
+      } catch { /* the card bakes on demand instead */ }
+    });
+  }
   return NextResponse.json(body, { status });
 }

@@ -467,6 +467,7 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 }
 
 .term-card { max-width: 540px; }
+.term-card-baking { aspect-ratio: 1; background: linear-gradient(110deg, var(--panel) 40%, var(--panel-2) 50%, var(--panel) 60%); background-size: 200% 100%; animation: card-shimmer 1.4s linear infinite; border: 1px solid var(--line-hot); }
 .term-card-failed { padding: 22px; border: 1px solid var(--line); display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
 .term-card-failed p { margin: 0; color: var(--muted); font-size: 13px; }
 .term-card img {
