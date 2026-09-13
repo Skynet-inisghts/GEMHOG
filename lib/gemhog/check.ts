@@ -57,7 +57,7 @@ export async function checkToken(token: Address, options: CheckOptions = {}): Pr
 
   const [trades, escrow, holdersViaApi] = await Promise.all([
     readCurveTrades(launch.curve, launch.launchBlock, toBlock),
-    readEscrowActivity(launch.creatorFeeRecipient, launch.launchBlock, toBlock),
+    readEscrowActivity(launch.creatorFeeRecipient, launch.pairIsEth ? null : launch.pairToken, launch.launchBlock, toBlock),
     options.holdersVia === "transfers"
       ? Promise.resolve(null)
       : readHoldersFromPonsApi(launch.token, launch.curve, launch.totalSupply)

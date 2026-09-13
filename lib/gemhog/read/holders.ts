@@ -1,6 +1,5 @@
 import type { Address } from "viem";
 import { BURN_ADDRESSES, INFRA_ADDRESSES, SOURCES } from "../chain.js";
-import type { TokenTransfer } from "./logs.js";
 
 /**
  * Who holds the token now. Primary source is the Pons Portal holders endpoint

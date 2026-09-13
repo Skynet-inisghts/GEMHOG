@@ -49,8 +49,13 @@ export const erc20Abi = parseAbi([
 
 export const escrowAbi = parseAbi([
   "function balanceOf(address recipient) view returns (uint256)",
+  // ETH-pair launches: fees are credited and claimed as native ETH.
   "event Credited(address indexed recipient, address indexed depositor, uint256 amount)",
   "event Claimed(address indexed recipient, uint256 amount)",
+  // Token-pair launches (GOOGL, etc): the same escrow holds the pair token
+  // and emits the *Token variants instead — one CreditedToken per sweep.
+  "event CreditedToken(address indexed recipient, address indexed token, address indexed depositor, uint256 amount)",
+  "event ClaimedToken(address indexed recipient, address indexed token, uint256 amount)",
 ]);
 
 export const routerAbi = parseAbi([

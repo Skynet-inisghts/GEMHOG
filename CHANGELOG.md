@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.8.8 — 2026-09-13
+
+- Creator fees on token-pair launches (GOOGL and friends) were invisible: the escrow emits CreditedToken/ClaimedToken for those, not the ETH Credited/Claimed the engine listened for. Both flows are read now, filtered by the launch's pair token.
+- The certificate prints fees in the pair token's own symbol instead of a hard-coded ETH, says "claimed 4x (4 in first 24h)" instead of the ambiguous "4 claims in 24h", and "not claimed yet" when nothing was.
+
 ## 0.8.7 — 2026-09-13
 
 - The card route never digs for minutes. It renders from a certificate already in memory, computes one only for tokens younger than a day, and otherwise answers "still baking" (202) while the grade route's warm-up lands the PNG in the CDN; the page retries on its own until it appears.

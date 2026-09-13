@@ -62,7 +62,7 @@ Transfer (address indexed from, address indexed to, uint256 value)
 PoolGraduated(address indexed token, uint256 positionId, uint256 tokenAmount, uint256 pairTokenAmount)
 ```
 `tax` в CurveBuy — сколько покупатель отдал на opening tax. ~9900 bps = бот, гнавший первый блок; ~0 = человек, который ждал. Бесплатный детектор людей в когорте.
-Escrow `V2FeeEscrow`: события `Credited` / `Claimed` — кто получает creator fees и когда клеймит.
+Escrow `V2FeeEscrow`: события `Credited` / `Claimed` (ETH-пары) и `CreditedToken` / `ClaimedToken` (пары с токеном — GOOGL и т.п.) — кто получает creator fees и когда клеймит. Для токен-пар суммы печатаются в символе pair-токена, не в ETH.
 
 ---
 
@@ -121,7 +121,7 @@ GRADE  VVS1   87 / 100
 cut      34/40   early cohort 142 wallets (117 human) · still holding: 5m 96% · 15m 91% · 1h 84% · 6h 79%
                  half-life: not reached
 clarity  16/20   top 10 hold 14.2% · no bundle
-color    17/20   dev bought 2.1% · dev has not sold · fees credited 0.41 ETH, 0 claims
+color    17/20   dev bought 2.1% · dev has not sold · fees credited 0.41 ETH · not claimed yet
 carat    20/20   611 holders · 3.8 ETH in the early cohort · top 3 of cohort 22%
 
 phase    curve 74% → pool                    source  live · robinhood chain 4663 · 14 rpc calls · 2.9s

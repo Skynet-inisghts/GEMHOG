@@ -1,4 +1,4 @@
-import { parseEventLogs, type Address } from "viem";
+import { parseEventLogs, type AbiEvent, type Address } from "viem";
 import { curveAbi, erc20Abi, escrowAbi } from "../abi/pons.js";
 import { ADDR, publicClient } from "../chain.js";
 
@@ -147,22 +147,28 @@ export interface EscrowActivity {
   complete: boolean;
 }
 
-/** Creator-fee escrow flow for one recipient: what was credited, when it was claimed. */
-export async function readEscrowActivity(recipient: Address, fromBlock: number, toBlock: number): Promise<EscrowActivity> {
+/**
+ * Creator-fee escrow flow for one recipient: what was credited, when it was
+ * claimed. ETH-pair launches emit Credited/Claimed; token-pair launches emit
+ * CreditedToken/ClaimedToken on the same escrow, filtered here by pair token
+ * so a creator with several launches only shows this one's fees.
+ */
+export async function readEscrowActivity(recipient: Address, pairToken: Address | null, fromBlock: number, toBlock: number): Promise<EscrowActivity> {
   const out: EscrowActivity = { creditedWei: 0n, claims: [], complete: true };
-  const credited = escrowAbi.find((e) => e.type === "event" && e.name === "Credited")!;
-  const claimed = escrowAbi.find((e) => e.type === "event" && e.name === "Claimed")!;
+  const credited = escrowAbi.find((e) => e.type === "event" && e.name === (pairToken ? "CreditedToken" : "Credited")) as AbiEvent;
+  const claimed = escrowAbi.find((e) => e.type === "event" && e.name === (pairToken ? "ClaimedToken" : "Claimed")) as AbiEvent;
+  const args = pairToken ? { recipient, token: pairToken } : { recipient };
   let chunk = START_CHUNK;
   let start = fromBlock;
   while (start <= toBlock) {
     const end = Math.min(toBlock, start + chunk - 1);
     try {
       const [creditedLogs, claimedLogs] = await Promise.all([
-        publicClient.getLogs({ address: ADDR.ponsEscrow, event: credited, args: { recipient }, fromBlock: BigInt(start), toBlock: BigInt(end) }),
-        publicClient.getLogs({ address: ADDR.ponsEscrow, event: claimed, args: { recipient }, fromBlock: BigInt(start), toBlock: BigInt(end) }),
+        publicClient.getLogs({ address: ADDR.ponsEscrow, event: credited, args, fromBlock: BigInt(start), toBlock: BigInt(end) }),
+        publicClient.getLogs({ address: ADDR.ponsEscrow, event: claimed, args, fromBlock: BigInt(start), toBlock: BigInt(end) }),
       ]);
-      for (const log of creditedLogs) out.creditedWei += log.args.amount ?? 0n;
-      for (const log of claimedLogs) out.claims.push({ block: Number(log.blockNumber), amountWei: log.args.amount ?? 0n });
+      for (const log of creditedLogs) out.creditedWei += (log as { args?: { amount?: bigint } }).args?.amount ?? 0n;
+      for (const log of claimedLogs) out.claims.push({ block: Number(log.blockNumber), amountWei: (log as { args?: { amount?: bigint } }).args?.amount ?? 0n });
       start = end + 1;
     } catch {
       if (chunk > MIN_CHUNK) { chunk = Math.max(MIN_CHUNK, Math.floor(chunk / 4)); continue; }

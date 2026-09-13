@@ -19,6 +19,8 @@ export interface LaunchInfo {
   creatorFeeRecipient: Address;
   pairToken: Address;
   pairIsEth: boolean;
+  /** "ETH" for native pairs, the pair token's symbol otherwise — fees and quote print in this unit. */
+  pairSymbol: string;
   phase: number;
   phaseLabel: string;
   graduated: boolean;
@@ -64,6 +66,14 @@ export async function readLaunch(token: Address, hint?: LaunchHint): Promise<Lau
   const ok = <T,>(i: number): T | null => (r[i].status === "success" ? (r[i].result as T) : null);
   const launchedAt = Number(ok<bigint>(3) ?? 0n);
   if (!launchedAt) return null;
+
+  const pairIsEth = record.pairToken === ZERO;
+  let pairSymbol = "ETH";
+  if (!pairIsEth) {
+    try {
+      pairSymbol = await publicClient.readContract({ address: record.pairToken, abi: erc20Abi, functionName: "symbol" });
+    } catch { pairSymbol = "QUOTE"; }
+  }
   const raised = ok<bigint>(5) ?? 0n;
   const threshold = ok<bigint>(6) ?? record.graduationThreshold;
 
@@ -130,7 +140,8 @@ export async function readLaunch(token: Address, hint?: LaunchHint): Promise<Lau
     deployer: record.deployer,
     creatorFeeRecipient: record.creatorFeeRecipient,
     pairToken: record.pairToken,
-    pairIsEth: record.pairToken === ZERO,
+    pairIsEth,
+    pairSymbol,
     phase: Number(record.phase),
     phaseLabel: PHASE_NAME[Number(record.phase)] ?? String(record.phase),
     graduated: ok<boolean>(4) ?? Number(record.phase) === 2,

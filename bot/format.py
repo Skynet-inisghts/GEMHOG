@@ -41,7 +41,7 @@ def format_check(report: dict[str, Any], site_base: str | None = None) -> str:
         f"holding  {_held_line(cut['held'])}",
         f"halflife {cut['halfLife']}",
         f"clarity  top 10 hold {clarity['top10Pct']:.1f}%",
-        f"color    {dev} · {color['feeClaims24h']} fee claims in 24h",
+        f"color    {dev} · {color.get('feeClaims', color['feeClaims24h'])} fee claims ({color['feeClaims24h']} in first 24h)",
         f"carat    {carat['holders']}{'+' if carat.get('holdersIsFloor') else ''} holders",
         f"phase    {report['phase']}",
     ]

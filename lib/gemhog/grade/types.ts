@@ -13,6 +13,8 @@ export interface SourceLaunch {
   deployer: string;
   creatorFeeRecipient: string;
   pairIsEth: boolean;
+  /** Unit fees and quote are denominated in; fixtures may omit it ("ETH" / "QUOTE" is assumed). */
+  pairSymbol?: string;
   phase: number;
   phaseLabel: string;
   graduated: boolean;
@@ -134,8 +136,10 @@ export interface CertificateReport {
   score: number;
   cut: { score: number; cohort: number; human: number; scoredIsHuman: boolean; held: Partial<Record<CheckpointLabel, number>>; halfLife: string };
   clarity: { score: number; top10Pct: number; bundleDeclared: number; bundleHoldsPct: number };
-  color: { score: number; devBoughtPct: number; devSells: number; feesCreditedEth: number; feeClaims24h: number };
+  color: { score: number; devBoughtPct: number; devSells: number; feesCredited: number; feeClaims: number; feeClaims24h: number };
   carat: { score: number; holders: number; holdersIsFloor: boolean; cohortEth: number; top3Pct: number; pairIsEth: boolean };
+  /** Unit of feesCredited and cohortEth: "ETH" for native pairs, the pair token's symbol otherwise. */
+  pairSymbol: string;
   phase: string;
   holdersSource: string;
   source: string;

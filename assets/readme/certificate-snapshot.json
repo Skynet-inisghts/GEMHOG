@@ -3,7 +3,7 @@
   "symbol": "COPY",
   "name": "COPY",
   "launchedAt": "2026-09-10 09:07 UTC",
-  "ageSec": 186349,
+  "ageSec": 275419,
   "tooEarly": false,
   "grade": "I1",
   "score": 35,
@@ -23,7 +23,7 @@
   },
   "clarity": {
     "score": 18,
-    "top10Pct": 21.98,
+    "top10Pct": 21.51,
     "bundleDeclared": 0,
     "bundleHoldsPct": 0
   },
@@ -31,7 +31,8 @@
     "score": 4,
     "devBoughtPct": 0.69,
     "devSells": 1,
-    "feesCreditedEth": 10.729643619631902,
+    "feesCredited": 10.729643619631902,
+    "feeClaims": 4,
     "feeClaims24h": 2
   },
   "carat": {
@@ -42,11 +43,12 @@
     "top3Pct": 46.9,
     "pairIsEth": true
   },
+  "pairSymbol": "ETH",
   "phase": "pool",
   "holdersSource": "pons-api",
   "source": "live",
-  "observedAt": "2026-09-12T12:52:54.000Z",
-  "block": 61120772,
-  "rpcCalls": 47,
-  "ms": 43029
+  "observedAt": "2026-09-13T13:37:24.000Z",
+  "block": 61997835,
+  "rpcCalls": 37,
+  "ms": 32562
 }

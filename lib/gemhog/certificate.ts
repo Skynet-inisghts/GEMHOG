@@ -34,7 +34,10 @@ export function renderCertificate(report: CertificateReport, markdown = false): 
 
   const cohortNote = report.cut.scoredIsHuman ? "" : " · scored on the full cohort";
   const holders = `${report.carat.holders}${report.carat.holdersIsFloor ? "+" : ""} holders`;
-  const quoteUnit = report.carat.pairIsEth ? "ETH" : "quote";
+  const quoteUnit = report.pairSymbol;
+  const claims = report.color.feeClaims === 0
+    ? "not claimed yet"
+    : `claimed ${report.color.feeClaims}x (${report.color.feeClaims24h} in first 24h)`;
   const bundle = report.clarity.bundleDeclared > 0
     ? `bundle: ${report.clarity.bundleDeclared} declared, holds ${report.clarity.bundleHoldsPct.toFixed(1)}%`
     : "no bundle";
@@ -50,7 +53,7 @@ export function renderCertificate(report: CertificateReport, markdown = false): 
     `cut      ${pad(`${report.cut.score}/40`, 6)}  early cohort ${report.cut.cohort} wallets (${report.cut.human} human)${cohortNote} · still holding: ${heldLine(report.cut.held)}`,
     `                 half-life: ${report.cut.halfLife}`,
     `clarity  ${pad(`${report.clarity.score}/20`, 6)}  top 10 hold ${report.clarity.top10Pct.toFixed(1)}% · ${bundle}`,
-    `color    ${pad(`${report.color.score}/20`, 6)}  dev bought ${report.color.devBoughtPct.toFixed(1)}% · ${devSold} · fees credited ${report.color.feesCreditedEth.toFixed(2)} ETH, ${report.color.feeClaims24h} claims in 24h`,
+    `color    ${pad(`${report.color.score}/20`, 6)}  dev bought ${report.color.devBoughtPct.toFixed(1)}% · ${devSold} · fees credited ${report.color.feesCredited.toFixed(2)} ${quoteUnit} · ${claims}`,
     `carat    ${pad(`${report.carat.score}/20`, 6)}  ${holders} · ${report.carat.cohortEth.toFixed(1)} ${quoteUnit} in the early cohort · top 3 of cohort ${Math.round(report.carat.top3Pct)}%`,
     "",
     footer(report),

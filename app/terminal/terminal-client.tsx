@@ -276,7 +276,9 @@ function ReadableCertificate({ report, rawText, demo, cardSrc, onShare, onCopyLi
       facts: [
         report.color.devBoughtPct > 0 ? `dev bought ${report.color.devBoughtPct.toFixed(1)}% of the supply` : "dev did not buy their own token",
         report.color.devSells === 0 ? "dev has not sold" : `dev sold ${report.color.devSells === 1 ? "once" : `${report.color.devSells} times`}`,
-        `${report.color.feeClaims24h} creator-fee claims in the first 24h`,
+        report.color.feeClaims === 0
+          ? "creator fees not claimed yet"
+          : `creator fees claimed ${report.color.feeClaims} times (${report.color.feeClaims24h} in the first 24h, the window the grade judges)`,
       ],
     },
     {
@@ -284,7 +286,7 @@ function ReadableCertificate({ report, rawText, demo, cardSrc, onShare, onCopyLi
       question: "Is anyone actually here?",
       facts: [
         `${report.carat.holders}${report.carat.holdersIsFloor ? "+" : ""} holders right now`,
-        `the early cohort spent ${report.carat.cohortEth.toFixed(1)} ${report.carat.pairIsEth ? "ETH" : "quote"}`,
+        `the early cohort spent ${report.carat.cohortEth.toFixed(1)} ${report.pairSymbol}`,
         `its top 3 buyers took ${Math.round(report.carat.top3Pct)}% of that`,
       ],
     },

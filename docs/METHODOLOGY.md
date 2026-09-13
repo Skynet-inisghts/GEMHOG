@@ -84,7 +84,7 @@ carat = min(10, holders / 25)
 
 ## Sources and their limits
 
-- **RPC** (publicnode for state, the official Robinhood endpoint for logs): launch record, curve state, `CurveBuy`/`CurveSell`, `Transfer`, escrow `Credited`/`Claimed`. Log reads are chunked adaptively; a chunk the RPC refuses even at the minimum size is reported as `partial`, never silently treated as empty.
+- **RPC** (publicnode for state, the official Robinhood endpoint for logs): launch record, curve state, `CurveBuy`/`CurveSell`, `Transfer`, escrow `Credited`/`Claimed` (ETH pairs) or `CreditedToken`/`ClaimedToken` (token pairs, filtered by pair token; amounts print in the pair symbol). Log reads are chunked adaptively; a chunk the RPC refuses even at the minimum size is reported as `partial`, never silently treated as empty.
 - **Pons Portal API**: holder pages (a Blockscout proxy). Holder counts stop mattering to carat past 250, so pagination stops soon after and the certificate prints `N+` for a floor.
 - **Blockscout API** (optional key): ticker search for bonding-curve tokens.
 - **DexScreener**: ticker search for graduated tokens.

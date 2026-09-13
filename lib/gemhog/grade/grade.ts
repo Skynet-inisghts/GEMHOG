@@ -68,7 +68,8 @@ export function assembleCertificate(source: GradeSource): CertificateReport {
       score: components.color,
       devBoughtPct: components.detail.devBoughtPct,
       devSells: components.detail.devSells,
-      feesCreditedEth: Number(source.escrow.creditedWei) / 1e18,
+      feesCredited: Number(source.escrow.creditedWei) / 1e18,
+      feeClaims: source.escrow.claims.length,
       feeClaims24h: components.detail.feeClaims24h,
     },
     carat: {
@@ -79,6 +80,7 @@ export function assembleCertificate(source: GradeSource): CertificateReport {
       top3Pct: components.detail.top3OfCohortPct,
       pairIsEth: launch.pairIsEth,
     },
+    pairSymbol: launch.pairSymbol ?? (launch.pairIsEth ? "ETH" : "QUOTE"),
     phase,
     holdersSource: source.holders.source,
     source: "live",

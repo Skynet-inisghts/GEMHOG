@@ -44,8 +44,8 @@ export function cardLines(cert: CertificateReport): string[] {
   const sells = cert.color.devSells;
   const soldTimes = sells === 1 ? "once" : sells === 2 ? "twice" : `${sells} times`;
   let line2: string;
-  if (sells === 0 && cert.color.devBoughtPct === 0) line2 = `dev did not buy · ${cert.color.feeClaims24h} fee claims`;
-  else if (sells === 0) line2 = `dev has not sold · ${cert.color.feeClaims24h} fee claims`;
+  if (sells === 0 && cert.color.devBoughtPct === 0) line2 = `dev did not buy · ${cert.color.feeClaims} fee claims`;
+  else if (sells === 0) line2 = `dev has not sold · ${cert.color.feeClaims} fee claims`;
   else if (cert.color.devBoughtPct > 0) line2 = `dev bought ${cert.color.devBoughtPct.toFixed(1)}% and sold ${soldTimes}`;
   else line2 = `dev sold ${soldTimes}`;
 
