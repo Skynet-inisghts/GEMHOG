@@ -222,6 +222,11 @@ const GRADE_STORY: Record<ReturnType<typeof gradeTone>, string> = {
 
 const CHECKPOINT_ORDER = ["5m", "15m", "1h", "6h", "24h", "7d"] as const;
 
+/** $GEMHOG gets a joke diamond banner above its certificate. Blue, off the
+ *  real red/yellow/green scale, impossible score, labelled in full — the real
+ *  grade renders untouched right below. */
+const ROFL_TOKEN = "0x88e3eeb25a4b01b8d75f9ac8cecf41b6c5e6e9c5";
+
 function ReadableCertificate({ report, rawText, demo, cardSrc, onShare, onCopyLink, copied }: {
   report: CertificateReport;
   rawText: string;
@@ -298,6 +303,19 @@ function ReadableCertificate({ report, rawText, demo, cardSrc, onShare, onCopyLi
       <div className="cert-layout">
         <div className="cert-main">
           {demo && <div className="term-grade tone-faint"><b>DEMO</b><span>synthetic data, the shape of a real certificate</span></div>}
+
+          {report.token.toLowerCase() === ROFL_TOKEN && (
+            <div className="cert-hero cert-rofl" aria-label="Joke banner, not a real grade">
+              <div className="cert-hero-top">
+                <b className="cert-grade-big">FL++</b>
+                <div className="cert-hero-score">
+                  <span className="cert-score">111<i>/100</i></span>
+                  <span className="cert-story">hands of pure diamond, certified by the pig herself</span>
+                </div>
+              </div>
+              <p className="cert-rofl-plate">rofl certificate · not a real grade · the real one is right below</p>
+            </div>
+          )}
 
           <div className={`cert-hero tone-${tone}`}>
             <div className="cert-hero-top">

@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.8.10 — 2026-09-18
+
+- $GEMHOG's own certificate wears a joke diamond banner: blue, off the real scale, an impossible 111/100, labelled "rofl certificate, not a real grade" in full. The real grade renders untouched right below it.
+
 ## 0.8.9 — 2026-09-13
 
 - The share card on the terminal opens full screen on click; Esc or a click closes it.

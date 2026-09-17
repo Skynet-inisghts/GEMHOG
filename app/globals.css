@@ -396,6 +396,16 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 .cert-main { min-width: 0; display: flex; flex-direction: column; gap: 16px; }
 .cert-side { position: sticky; top: 76px; display: flex; flex-direction: column; gap: 12px; }
 .cert-hero { padding: 20px 22px; border: 1px solid var(--line-hot); background: var(--panel); }
+.cert-rofl { border: 1px solid #78c8f0; background: linear-gradient(180deg, rgba(120, 200, 240, 0.12), rgba(120, 200, 240, 0.02)); }
+.cert-rofl .cert-grade-big { color: #aee2ff; text-shadow: 4px 4px 0 #1d4a66; }
+.cert-rofl .cert-score { color: #ecfaff; }
+.cert-rofl .cert-story { color: #9fd4f2; }
+.cert-rofl-plate {
+  margin: 14px 0 0; padding: 8px 12px;
+  border: 1px dashed #78c8f0;
+  color: #cdeeff; font-size: 13px; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase;
+}
 .cert-hero-top { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
 .cert-grade-big { font-family: var(--font-display); font-weight: 400; font-size: clamp(52px, 6vw, 84px); letter-spacing: 0.04em; line-height: 1; }
 .tone-vvs .cert-grade-big { color: var(--grade-vvs); text-shadow: 4px 4px 0 var(--accent-dark); }
